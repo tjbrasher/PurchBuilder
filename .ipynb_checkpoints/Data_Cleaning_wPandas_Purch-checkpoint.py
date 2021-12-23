@@ -11,8 +11,18 @@ pick_list = pick_list.drop(
     )
 
 # Conditionally remove unncessary rows from the dataset
-pick_list = pick_list[pick_list['Item'] != 'EAVI Travel']
-pick_list = pick_list[pick_list['Item'] != 'EAVI System Design Services']
+i=0
+for i, row in pick_list.iterrows():
+    if pick_list[pick_list['Item'].apply(lambda x: "EAVI" not in x)]:
+        print(i)
+        i+1
+    else:
+        break
+    
+    
+#pick_list = pick_list[pick_list['Item'] != 'EAVI Travel']
+#pick_list = pick_list[pick_list['Item'] != 'EAVI System Design Services']
+
 
 # Re-order and add new columns to the dataset
 columns=['Project ID', 'PO Number', 'Date Ordered', 'Tracking Date', 
