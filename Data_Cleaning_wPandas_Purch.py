@@ -2,7 +2,8 @@ import pandas as pd
 
 pd.set_option('display.max_columns', None)
 # Import the dataset
-pick_list = pd.read_csv(r"C:\Users\tbrasher\Downloads\Pool Speaker System_pick_list.csv")
+#pick_list = pd.read_csv(r"C:\Users\travi\Downloads\Worship Center Changes_pick_list.csv")
+pick_list = pd.read_csv("Files\Worship Center Changes_pick_list.csv")
 
 # Removed unnecessary columns from the dataset
 pick_list = pick_list.drop(
@@ -11,20 +12,9 @@ pick_list = pick_list.drop(
     )
 
 # Conditionally remove unncessary rows from the dataset
-#i=0
 word= ("EAVI")
-#cond = pick_list[pick_list.Item.str.contains(word)]
-#for i, row in pick_list.iterrows():
-#   pick_list = pick_list.drop(index=pick_list[cond])
-#   i+1
-
-items=[]
-items = [pick_list[pick_list.Item.str.contains(word)]]
-pick_list = pick_list.drop(
-    [items],
-    axis=0
-    )
-
+items= pick_list[ pick_list.Item.str.contains(word)].index
+pick_list.drop(items, inplace = True)
 
 # Re-order and add new columns to the dataset
 columns=['Project ID', 'PO Number', 'Date Ordered', 'Tracking Date', 
