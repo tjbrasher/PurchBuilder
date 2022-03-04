@@ -1,6 +1,11 @@
 from cProfile import label
+from ctypes import alignment
+import tkinter.filedialog
 import tkinter as tk
-from turtle import window_height, window_width
+import tkinter.ttk
+from turtle import color, left, position, window_height, window_width
+
+from numpy import size
 
 window = tk.Tk()
 
@@ -35,20 +40,34 @@ def fileExplore():
                                         filetypes = (("Comma Separated Values (*.csv)", "*.csv*"), ("Text Files (*.txt)", "*.txt*"),
                                         ("Microsoft Excel Files (*.xls, *.xlsx)", ".xlsx"), ("All Files", "*.*")))
 
-    label_file_explorer.configure(text = "File Opened: " + fileName)
+    if(len(fileName) < label_file_explorer.winfo_width()): 
+        fName_length = label_file_explorer.winfo_width()-3
+        fName = fileName[0:fName_length] + "..."
+        print(len(fileName))
+        print(label_file_explorer.winfo_width())
+        print(fName)
+    else: fName = fileName
+    print(len(fileName))
+    print(label_file_explorer.winfo_width())
+    print(fName)
+    label_file_explorer.configure(text = fName, anchor = "w")
 
 label_file_explorer = tk.Label(window, text = "...", 
                                background = "grey", foreground = "black",
-                               width = 80, height = 25)
-label_file_explorer.grid(columnspan=2, column=0, row=1)
+                               width = 58, height = 1, anchor = "w")
+label_file_explorer.place(x=45, y=127.5)
 
 fileBrowse = tk.Button(window, text = "Browse Files",
                         command = fileExplore)
+fileBrowse.place(x=475, y=125)
  
 #n setting and positioning submit button
-submit = tk.Button(window, text = "Submit")
+submit = tk.Button(window, text = "Submit", width = 10, height = 1)
+submit.place(x=259, y=200)
 
-label_file_explorer.pack()
+
+#tk.ttk.Separator(window, orient=tk.VERTICAL).place(x=300, y=0, height=300)
+
 
 
 window.mainloop()
