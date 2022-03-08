@@ -46,7 +46,7 @@ window.resizable(False, False)
 
 
 # setting and positiong the prompt
-prompt = c.create_text(297.5, 120, text="Please Select an Equipment List to Compare to the Inventory List", fill = "white", font=("Arial 12 bold"))
+prompt = c.create_text(297.5, 120, text="Please Select an Equipment List to Use for Creating PURCH List", fill = "white", font=("Arial 12 bold"))
 #prompt = tk.Label(text = "Please Select an Equipment List to Compare to the Inventory List",
  #                foreground="white")
 #prompt['bg'] = prompt.master['bg']
@@ -55,7 +55,7 @@ prompt = c.create_text(297.5, 120, text="Please Select an Equipment List to Comp
 
 # setting and positioning the file selection
 def fileExplore():
-    fileName = tk.filedialog.askopenfilename(initialdir = "/", title = "Please Select a File to Compare",
+    fileName = tk.filedialog.askopenfilename(initialdir = "/", title = "Please Select a File to Transform",
                                         filetypes = (("Comma Separated Values (*.csv)", "*.csv*"), ("Text Files (*.txt)", "*.txt*"),
                                         ("Microsoft Excel Files (*.xls, *.xlsx)", ".xlsx"), ("All Files", "*.*")))
 
