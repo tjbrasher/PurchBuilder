@@ -2,6 +2,7 @@ from tkinter import *
 from cProfile import label
 from ctypes import alignment
 from PIL import ImageTk
+from PIL import Image
 import tkinter.filedialog
 import tkinter as tk
 import tkinter.ttk
@@ -20,7 +21,7 @@ window = tk.Tk()
 #bckgnd_label.pack()
 
 # canvas setup
-c = tk.Canvas(window, bg="black", width = 600, height = 300)
+c = tk.Canvas(window, bg="black", width = 620, height = 300)
 c.pack()
 background_image = ImageTk.PhotoImage(file = "Files\\background.png")
 c.create_image(10, 10, image = background_image, anchor = NW)
@@ -33,7 +34,7 @@ window.title("PURCH List Creator")
 
 
 # window sizing and positioning
-window_width = 600
+window_width = 620
 window_height = 300
 scr_width = window.winfo_screenwidth()
 scr_height = window.winfo_screenheight()
@@ -45,12 +46,15 @@ window.geometry(f'{window_width}x{window_height}+{ctr_x}+{ctr_y}')
 window.resizable(False, False)
 
 
+# setting and positioning the logo header
+logo = Image.open("Files\\Logos\\EAlogoHorizonalBlackbg.jpg")
+logo_resize = logo.resize((459,161))
+logo_header = ImageTk.PhotoImage(logo_resize)
+c.create_image(312.5,-10, image = logo_header, anchor = N)
+
+
 # setting and positiong the prompt
-prompt = c.create_text(297.5, 120, text="Please Select an Equipment List to Use for Creating PURCH List", fill = "white", font=("Arial 12 bold"))
-#prompt = tk.Label(text = "Please Select an Equipment List to Compare to the Inventory List",
- #                foreground="white")
-#prompt['bg'] = prompt.master['bg']
-#prompt.place(x=12, y=12)
+prompt = c.create_text(307.5, 142.5, text="Please Select an Equipment List to Use for Creating PURCH List", fill = "white", font=("Arial 12 bold"))
 
 
 # setting and positioning the file selection
@@ -59,33 +63,38 @@ def fileExplore():
                                         filetypes = (("Comma Separated Values (*.csv)", "*.csv*"), ("Text Files (*.txt)", "*.txt*"),
                                         ("Microsoft Excel Files (*.xls, *.xlsx)", ".xlsx"), ("All Files", "*.*")))
 
-    if(len(fileName) < label_file_explorer.winfo_width()): 
-        fName_length = label_file_explorer.winfo_width()-3
-        fName = fileName[0:fName_length] + "..."
-        print(len(fileName))
-        print(label_file_explorer.winfo_width())
-        print(fName)
-    else: fName = fileName
-    print(len(fileName))
-    print(label_file_explorer.winfo_width())
-    print(fName)
-    label_file_explorer.configure(text = fName, anchor = "w")
 
-label_file_explorer = tk.Label(window, text = "...", 
-                               background = "grey", foreground = "black",
-                               width = 58, height = 1, anchor = "w")
-label_file_explorer.place(x=45, y=157.5)
+#    if(len(fileName) > 50): 
+#        fName_length = 50
+#        print("file explore window length: " + str(fName_length))
+#        fName = fileName[0:fName_length] + "..."
+#        print("file name length: " + str(len(fileName)))
+#        print(label_file_explorer.winfo_width())
+#        print(fileName[0:fName])
+#    else: fName = fileName
+#    print(len(fileName))
+#    print(label_file_explorer.winfo_width())
+#    print(fName)
+    label_file_explorer.delete("1.0", tk.END)
+    label_file_explorer.insert(tk.END, fileName)
+
+label_file_explorer = tk.Text(window, background = "light grey", foreground = "black",
+                               width = 50, height = 1)
+
+label_file_explorer.insert("1.0", "...")
+label_file_explorer.place(x=57.5, y=179)
 
 fileBrowse = tk.Button(window, text = "Browse Files",
                         command = fileExplore)
-fileBrowse.place(x=475, y=155)
+fileBrowse.place(x=485, y=175.5)
  
+
 # setting and positioning submit button
 submit = tk.Button(window, text = "Submit", width = 10, height = 1)
-submit.place(x=259, y=210)
+submit.place(x=265, y=225)
 
 
-#tk.ttk.Separator(window, orient=tk.VERTICAL).place(x=300, y=0, height=300)
+tk.ttk.Separator(window, orient=tk.VERTICAL).place(x=305, y=0, height=300)
 
 
 
