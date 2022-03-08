@@ -1,12 +1,14 @@
+from cgitb import text
 from tkinter import *
 from cProfile import label
 from ctypes import alignment
+from unittest import skip
 from PIL import ImageTk
 from PIL import Image
 import tkinter.filedialog
 import tkinter as tk
 import tkinter.ttk
-from turtle import color, left, position, window_height, window_width
+from turtle import color, end_fill, left, position, window_height, window_width
 
 from numpy import size
 
@@ -79,9 +81,9 @@ def fileExplore():
     label_file_explorer.insert(tk.END, fileName)
 
 label_file_explorer = tk.Text(window, background = "light grey", foreground = "black",
-                               width = 50, height = 1)
+                               width = 60, height = 1, font = ("Helvetica", 10))
 
-label_file_explorer.insert("1.0", "...")
+label_file_explorer.insert("1.0", "....")
 label_file_explorer.place(x=57.5, y=179)
 
 fileBrowse = tk.Button(window, text = "Browse Files",
@@ -93,8 +95,11 @@ fileBrowse.place(x=485, y=175.5)
 submit = tk.Button(window, text = "Submit", width = 10, height = 1)
 submit.place(x=265, y=225)
 
+#def submit_click():
+    #open file and print to console to test functionality
 
-tk.ttk.Separator(window, orient=tk.VERTICAL).place(x=305, y=0, height=300)
+
+#tk.ttk.Separator(window, orient=tk.VERTICAL).place(x=305, y=0, height=300)
 
 
 
