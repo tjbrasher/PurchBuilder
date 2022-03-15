@@ -16,6 +16,8 @@ from turtle import color, end_fill, left, position, window_height, window_width
 from tkinter.filedialog import askopenfilename
 from tkinter.messagebox import showerror
 from numpy import size
+from Data_Cleaning_wPandas_Purch import formatFile
+from Data_Cleaning_wPandas_Purch import getFile
 import fileinput
 
 
@@ -28,21 +30,13 @@ class fileObject:
 
     def set_file(self, fileName):
         self._file = fileName
-
+        
 file1 = fileObject()
 
 class mainApp(tk.Tk):
 
     def __init__(self):
         super().__init__()
-        file = None
-        self._file = file
-
-        def get_file(self):
-            return self._file
-
-        def set_file(self, inputFile):
-            self._file = inputFile
 
         self.c = tk.Canvas(self, bg="black", width = 620, height = 300)
         self.c.pack()
@@ -94,13 +88,11 @@ class mainApp(tk.Tk):
             label_file_explorer.insert(tk.END, inputfile)
 
             def submitClick():
-                submitFile = tk.filedialog.asksaveasfilename(initialfile=inputfile, defaultextension=".csv", title = "Please select a location to save your file",
-                                                filetypes = (("Comma Separated Values (*.csv)", "*.csv*"), ("Text Files (*.txt)", "*.txt*"),
-                                                ("Microsoft Excel Files (*.xls, *.xlsx)", ".xlsx"), ("All Files", "*.*")))
-                if submitFile:
-                    file1.set_file(inputfile)
-                    print("THIS IS THE SELECTED FILE: ", file1.get_file())
-                    import Data_Cleaning_wPandas_Purch 
+                file1.set_file(inputfile)
+                getFile(file1)
+                print("THIS IS THE SELECTED FILE: ", file1.get_file()) 
+                formatFile(file1)
+                
                 
                 
                                    
@@ -122,5 +114,5 @@ class mainApp(tk.Tk):
 
 if __name__ == "__main__":
     app = mainApp()
-    print('fcheck = ', file1.get_file())
     app.mainloop()
+    print('fcheck = ', file1.get_file())   
