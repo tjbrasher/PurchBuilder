@@ -1,9 +1,14 @@
 import pandas as pd
+import purchGUI as fileSelect
+
+file = fileSelect.file1
+
+print("THIS IS YOUR FILE NAME", file.get_file())
 
 pd.set_option('display.max_columns', None)
 # Import the dataset
 #pick_list = pd.read_csv(r"C:\Users\travi\Downloads\Worship Center Changes_pick_list.csv")
-pick_list = pd.read_csv("Files\Worship Center Changes_pick_list.csv")
+pick_list = pd.read_csv(file)
 
 # Removed unnecessary columns from the dataset
 pick_list = pick_list.drop(
