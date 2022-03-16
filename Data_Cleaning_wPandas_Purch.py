@@ -1,5 +1,6 @@
 import tkinter as tk
 import pandas as pd
+from ErrorTest import showError
 
 
 def getFile(file1):
@@ -68,7 +69,4 @@ def formatFile(file1):
         
         
     except:
-        print("The process could not be completed. Please try selecting a different file.")
-        #error = ErrorWindow()
-        #error.mainloop()  
-        
+        showError()

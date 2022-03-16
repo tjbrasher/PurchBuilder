@@ -11,12 +11,11 @@ from tkinter.filedialog import askopenfilename
 from tkinter.messagebox import showerror
 from turtle import color, end_fill, left, position, window_height, window_width
 from unittest import skip
-
 from numpy import size
 from PIL import Image, ImageTk
 
 from Data_Cleaning_wPandas_Purch import formatFile, getFile
-
+from filePrompt import showPrompt
 #import Data_Cleaning_wPandas_Purch as purch
 
 
@@ -33,6 +32,7 @@ class fileObject:
         
 file1 = fileObject()
 
+
 class mainApp(tk.Tk):
 
     def __init__(self):
@@ -40,7 +40,7 @@ class mainApp(tk.Tk):
 
         self.c = tk.Canvas(self, bg="black", width = 620, height = 300)
         self.c.pack()
-        self.background_image = ImageTk.PhotoImage(file = "Files\\background.png")
+        self.background_image = ImageTk.PhotoImage(file = "Files\\Logos\\background.png")
         self.c.create_image(10, 10, image = self.background_image, anchor = NW)
 
         # setting and positioning the logo header
@@ -71,7 +71,7 @@ class mainApp(tk.Tk):
         self.c.create_text(307.5, 142.5, text="Please Select an Equipment List to Use for Creating PURCH List", fill = "white", font=("Arial 12 bold"))
 
         label_file_explorer = tk.Text(self, background = "light grey", foreground = "black",
-                            width = 57, height = 1, font = ("Helvetica", 10))
+                                      width = 57, height = 1, font = ("Helvetica", 10))
         label_file_explorer.insert("1.0", "....")
         label_file_explorer.place(x=57.5, y=179)
 
@@ -92,11 +92,9 @@ class mainApp(tk.Tk):
                 getFile(file1)
                 print("THIS IS THE SELECTED FILE: ", file1.get_file()) 
                 formatFile(file1)
+                showPrompt()
                 
                 
-                
-                                   
-
             #open file and print to console to test functionality
 
             submit.configure(command = lambda: submitClick())
@@ -106,9 +104,6 @@ class mainApp(tk.Tk):
                                  command = lambda: (fileExplore()))
         
         fileBrowse.place(x=485, y=175.5)
-
-       
-
 
 #tk.ttk.Separator(window, orient=tk.VERTICAL).place(x=305, y=0, height=300)
 
