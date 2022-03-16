@@ -1,24 +1,24 @@
-from hashlib import new
+import os
 import tkinter as tk
 import tkinter.filedialog
 import tkinter.ttk
-import os
-#import Data_Cleaning_wPandas_Purch as purch
-
-from tkinter import *
-from PIL import ImageTk
 from cgitb import text
 from cProfile import label
 from ctypes import alignment
-from unittest import skip
-from PIL import Image
-from turtle import color, end_fill, left, position, window_height, window_width
+from hashlib import new
+from tkinter import *
 from tkinter.filedialog import askopenfilename
 from tkinter.messagebox import showerror
+from turtle import color, end_fill, left, position, window_height, window_width
+from unittest import skip
+
 from numpy import size
-from Data_Cleaning_wPandas_Purch import formatFile
-from Data_Cleaning_wPandas_Purch import getFile
-import fileinput
+from PIL import Image, ImageTk
+
+from Data_Cleaning_wPandas_Purch import formatFile, getFile
+
+#import Data_Cleaning_wPandas_Purch as purch
+
 
 
 class fileObject:
