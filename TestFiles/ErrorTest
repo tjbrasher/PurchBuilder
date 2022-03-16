@@ -1,0 +1,57 @@
+from hashlib import new
+import tkinter as tk
+import tkinter.filedialog
+import tkinter.ttk
+import os
+#import Data_Cleaning_wPandas_Purch as purch
+
+from tkinter import *
+from PIL import ImageTk
+from cgitb import text
+from cProfile import label
+from ctypes import alignment
+from unittest import skip
+from PIL import Image
+from turtle import color, end_fill, left, position, window_height, window_width
+from tkinter.filedialog import askopenfilename
+from tkinter.messagebox import showerror
+from numpy import size
+
+class ErrorWindow(tk.Tk):
+
+    def __init__(self):
+        super().__init__()
+        
+        self.c = tk.Canvas(self, bg="black", width = 300, height = 150)
+        self.c.pack()
+
+        # initial window setup
+        self.rowconfigure(3, {'minsize': 40})
+        self.columnconfigure(3, {'minsize': 40})
+        self.title("PURCH List Creator")
+
+        # window sizing and positioning
+        window_width = 300
+        window_height = 150
+        scr_width = self.winfo_screenwidth()
+        scr_height = self.winfo_screenheight()
+
+        ctr_x = int(scr_width/2 - window_width/2)
+        ctr_y = int(scr_height/2 - window_height/2)
+
+        self.geometry(f'{window_width}x{window_height}+{ctr_x}+{ctr_y}')
+        self.resizable(False, False)
+
+        # setting and positiong the prompt
+        message = Label(307.5, 142.5, text="Please Select an Equipment List to Use for Creating PURCH List", fill = "white", font=("Arial 12 bold"))
+
+        label_file_explorer = tk.Text(self, background = "light grey", foreground = "black",
+                            width = 57, height = 1, font = ("Helvetica", 10))
+        label_file_explorer.insert("1.0", "....")
+        label_file_explorer.place(x=57.5, y=179)
+
+        submit = tk.Button(self, text = "Submit", width = 10, height = 1)
+        submit.place(x=265, y=225)
+
+error = ErrorWindow()
+error.mainloop()
