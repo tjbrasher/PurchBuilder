@@ -1,23 +1,10 @@
-import os
 import tkinter as tk
 import tkinter.filedialog
 import tkinter.ttk
-from cgitb import text
-from cProfile import label
-from ctypes import alignment
-from hashlib import new
 from tkinter import *
-from tkinter.filedialog import askopenfilename
-from tkinter.messagebox import showerror
-from turtle import color, end_fill, left, position, window_height, window_width
-from unittest import skip
-from numpy import size
 from PIL import Image, ImageTk
 
 from Data_Cleaning_wPandas_Purch import formatFile, getFile
-from filePrompt import showPrompt
-#import Data_Cleaning_wPandas_Purch as purch
-
 
 
 class fileObject:
@@ -70,12 +57,13 @@ class mainApp(tk.Tk):
         # setting and positiong the prompt
         self.c.create_text(307.5, 142.5, text="Please Select an Equipment List to Use for Creating PURCH List", fill = "white", font=("Arial 12 bold"))
 
-        label_file_explorer = tk.Text(self, background = "light grey", foreground = "black",
-                                      width = 57, height = 1, font = ("Helvetica", 10))
-        label_file_explorer.insert("1.0", "....")
+        label_file_explorer = tk.Text(self, background = "light gray", foreground = "gray",
+                                      width = 57, height = 1, font = ("Arial", 10))
+        label_file_explorer.insert("1.0", "Please select a file")
         label_file_explorer.place(x=57.5, y=179)
+    
 
-        submit = tk.Button(self, text = "Submit", width = 10, height = 1)
+        submit = tk.Button(self, text = "Submit", width = 10, height = 1, bg = "silver")
         submit.place(x=265, y=225)
 
 
@@ -84,15 +72,19 @@ class mainApp(tk.Tk):
             inputfile = tk.filedialog.askopenfilename(initialdir = "/", title = "Please Select a File to Transform",
                                                 filetypes = (("Comma Separated Values (*.csv)", "*.csv*"), ("Text Files (*.txt)", "*.txt*"),
                                                 ("Microsoft Excel Files (*.xls, *.xlsx)", ".xlsx"), ("All Files", "*.*")))
-            label_file_explorer.delete("1.0", tk.END)
-            label_file_explorer.insert(tk.END, inputfile)
+            if inputfile == "":
+                label_file_explorer.insert("1.0", "Please select a file")
+            else:
+                label_file_explorer.delete("1.0", tk.END)
+                label_file_explorer.configure(foreground = "black")
+                label_file_explorer.insert(tk.END, inputfile)
 
             def submitClick():
                 file1.set_file(inputfile)
                 getFile(file1)
                 print("THIS IS THE SELECTED FILE: ", file1.get_file()) 
-                formatFile(file1)
-                showPrompt()
+                formatFile(file1, label_file_explorer)
+
                 
                 
             #open file and print to console to test functionality
@@ -100,14 +92,15 @@ class mainApp(tk.Tk):
             submit.configure(command = lambda: submitClick())
             
         
-        fileBrowse = tk.Button(self, text = "Browse Files",
+        fileBrowse = tk.Button(self, text = "Browse Files", bg = "silver",
                                  command = lambda: (fileExplore()))
         
         fileBrowse.place(x=485, y=175.5)
+        
 
 #tk.ttk.Separator(window, orient=tk.VERTICAL).place(x=305, y=0, height=300)
 
 if __name__ == "__main__":
     app = mainApp()
     app.mainloop()
-    print('fcheck = ', file1.get_file())   
+    print('fcheck = ', file1.get_file())

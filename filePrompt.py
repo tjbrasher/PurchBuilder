@@ -1,12 +1,13 @@
 import tkinter as tk
 from tkinter import *
-from turtle import bgcolor
-from PIL import Image, ImageTk
+from turtle import color
+from PIL import ImageTk
+from ErrorTest import resetFileBox
 
 
-class promptWindow(tk.Tk):
+class promptWindow(tk.Toplevel):
         
-    def __init__(self):
+    def __init__(self, label_file_explorer):
         super().__init__()     
         
         self.focus_set()
@@ -20,7 +21,7 @@ class promptWindow(tk.Tk):
         
 
         #f = tk.Frame(width = 300, height = 150)
-        self.c = tk.Canvas(self, bg= "white", width = 300, height = 125)
+        self.c = tk.Canvas(self, bg= "white", width = 300, height =125)
         self.c.pack()      
         
         self.background_image = ImageTk.PhotoImage(file = "Files\\Logos\\background.png")
@@ -31,7 +32,7 @@ class promptWindow(tk.Tk):
 
         # window sizing and positioning
         window_width = 300
-        window_height = 130
+        window_height = 125
         scr_width = self.winfo_screenwidth()
         scr_height = self.winfo_screenheight()
 
@@ -42,34 +43,44 @@ class promptWindow(tk.Tk):
         self.resizable(False, False)
 
         # setting and positiong the prompt
-        promptTitle = self.c.create_text(150, 17, text="Message",
-                            fill = "gray", font=("Arial 10"), justify=CENTER)
+        #promptTitle = self.c.create_text(150, 17, text="Continue Program?",
+        #                    fill = "gray", font=("Arial 10"), justify=CENTER)
         
-        windowBackground = self.c.create_rectangle(10, 35, 290, 120, outline='dark gray', width=2)
+        #promptBorder = self.c.create_rectangle(10, 10, 290, 115, outline='silver', width=2)
    
-        message = self.c.create_text(150, 52, text="Would You Like to Process Another File?",
+        message = self.c.create_text(150, 25, text="PURCH List Successfully Created!",
+                                fill = "white", font=("Arial 11"), width = 280, justify=CENTER)
+   
+        prompt = self.c.create_text(150, 50, text="Would You Like to Process Another File?",
                         fill = "white", font=("Arial 11"), width = 280, justify=CENTER)
 
-        yesButton = tk.Button(self, text = "Yes", width = 10, height = 1)
+        yesButton = tk.Button(self, text = "Yes", width = 10, height = 1, bg="silver")
         yesButton.place(x=52.5, y=78)
         
-        noButton = tk.Button(self, text = "No", width = 10, height = 1)
+        noButton = tk.Button(self, text = "No", width = 10, height = 1, bg="silver")
         noButton.place(x=170, y=78)
               
         def NoClick():
             self.grab_release()
             exit()
             
-        def YesClick():
-            self.grab_release()
-            self.destroy()
+        def YesClick(label_file_explorer):
+            try:
+                resetFileBox(label_file_explorer)
+                self.grab_release()
+                self.destroy()
+                
+            except:
+                print("This is throwing an error")
              
         noButton.configure(command = lambda: NoClick())
         
+        yesButton.configure(command = lambda: YesClick(label_file_explorer))
+        
         
                 
-def showPrompt():
-    programPrompt = promptWindow()
+def showPrompt(label_file_explorer):
+    programPrompt = promptWindow(label_file_explorer)
     programPrompt.mainloop()
     
     

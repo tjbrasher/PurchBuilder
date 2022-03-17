@@ -1,11 +1,17 @@
 import tkinter as tk
 from tkinter import *
-from PIL import Image, ImageTk
+from PIL import ImageTk
 
 
-class ErrorWindow(tk.Tk):
+def resetFileBox(self):
+    self.delete("1.0", tk.END)
+    self.configure(foreground = "gray")         
+    self.insert("1.0", "Please select a file")
+   
+class ErrorWindow(tk.Toplevel):
+    
         
-    def __init__(self):
+    def __init__(self, label_file_explorer):
         super().__init__()     
         
         self.focus_set()
@@ -49,20 +55,20 @@ class ErrorWindow(tk.Tk):
                                      + "\n" + "Please Select a Different File",
                         fill = "white", font=("Arial 11"), width = 280, justify=CENTER)
 
-        okButton = tk.Button(self, text = "OK", width = 10, height = 1)
+        okButton = tk.Button(self, text = "OK", width = 10, height = 1, bg = "silver")
         okButton.place(x=112.5, y=86)
               
-        def OKClick():
+        def OKClick(label_file_explorer):
+            resetFileBox(label_file_explorer)
             self.grab_release()
-            self.destroy()
+            self.destroy()            
             
               
-        okButton.configure(command = lambda: OKClick())
-        
-        
+        okButton.configure(command = lambda: OKClick(label_file_explorer))
+
                 
-def showError():
-    error = ErrorWindow()
+def showError(label_file_explorer):
+    error = ErrorWindow(label_file_explorer)
     error.mainloop()
     
     
