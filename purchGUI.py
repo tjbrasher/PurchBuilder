@@ -3,8 +3,7 @@ import tkinter.filedialog
 import tkinter.ttk
 from tkinter import *
 from PIL import Image, ImageTk
-
-from Data_Cleaning_wPandas_Purch import formatFile, getFile
+from Data_Cleaning_wPandas_Purch import formatFile
 
 
 class fileObject:
@@ -73,23 +72,24 @@ class mainApp(tk.Tk):
                                                 filetypes = (("Comma Separated Values (*.csv)", "*.csv*"), ("Text Files (*.txt)", "*.txt*"),
                                                 ("Microsoft Excel Files (*.xls, *.xlsx)", ".xlsx"), ("All Files", "*.*")))
             if inputfile == "":
+                label_file_explorer.delete("1.0", tk.END)
                 label_file_explorer.insert("1.0", "Please select a file")
             else:
                 label_file_explorer.delete("1.0", tk.END)
                 label_file_explorer.configure(foreground = "black")
                 label_file_explorer.insert(tk.END, inputfile)
 
-            def submitClick():
+            def submitClick(inputfile):
                 file1.set_file(inputfile)
-                getFile(file1)
+                #getFile(file1)
                 print("THIS IS THE SELECTED FILE: ", file1.get_file()) 
                 formatFile(file1, label_file_explorer)
 
-                
-                
-            #open file and print to console to test functionality
+                    
+                    
+                #open file and print to console to test functionality
 
-            submit.configure(command = lambda: submitClick())
+            submit.configure(command = lambda: submitClick(inputfile))
             
         
         fileBrowse = tk.Button(self, text = "Browse Files", bg = "silver",

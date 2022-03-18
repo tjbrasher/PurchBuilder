@@ -2,7 +2,12 @@ import tkinter as tk
 import pandas as pd
 from ErrorTest import showError
 from filePrompt import showPrompt
+from ErrorTest import resetFileBox
 
+
+class programError(Exception):
+    print("File Could Not Be Saved!")    
+            
 
 
 def getFile(file1):
@@ -13,7 +18,7 @@ def getFile(file1):
     #print("THIS MAY ALSO BE THE FILE NAME: ", fileSelect.fileObject.get_file(fileSelect.file1))
     #print("IS THIS THE FILE NAME? ", str(file.get_file))
 
-    pd.set_option('display.max_columns', None)
+    
 
     # Import the dataset
     #pick_list = pd.read_csv(r"C:\Users\travi\Downloads\Worship Center Changes_pick_list.csv")
@@ -23,6 +28,8 @@ def getFile(file1):
 def formatFile(file1, label_file_explorer):
     while True:
         try:
+
+            pd.set_option('display.max_columns', None)
             
             pick_list = pd.read_csv(file1._file)
             
@@ -65,19 +72,21 @@ def formatFile(file1, label_file_explorer):
                                                     filetypes = (("Comma Separated Values (*.csv)", "*.csv*"), ("Text Files (*.txt)", "*.txt*"),
                                                     ("Microsoft Excel Files (*.xls, *.xlsx)", ".xlsx"), ("All Files", "*.*")))
                 pick_list.to_csv(saveAs, index=False, line_terminator="\n")
-                
+            
             saveAs(file1)
-            print("File Saved!")
-            showPrompt(label_file_explorer)
+
+            if saveAs(file1) == "":
+                break
+            else:
+                showPrompt(label_file_explorer)          
+                print("File Saved!")
+                break
 
         
         
-        except:
-            print("File Could Not Be Saved!")    
+        except Exception:
             showError(label_file_explorer)
-                
-        else:
             break
-            
+
             
             

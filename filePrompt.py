@@ -62,16 +62,13 @@ class promptWindow(tk.Toplevel):
               
         def NoClick():
             self.grab_release()
+            self.destroy()
             exit()
             
         def YesClick(label_file_explorer):
-            try:
                 resetFileBox(label_file_explorer)
                 self.grab_release()
                 self.destroy()
-                
-            except:
-                print("This is throwing an error")
              
         noButton.configure(command = lambda: NoClick())
         
