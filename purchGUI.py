@@ -1,9 +1,11 @@
+from calendar import c
 import tkinter as tk
 import tkinter.filedialog
 import tkinter.ttk
 from tkinter import *
 from PIL import Image, ImageTk
 from Data_Cleaning_wPandas_Purch import formatFile
+from ErrorTest import showError
 
 
 class fileObject:
@@ -64,7 +66,7 @@ class mainApp(tk.Tk):
 
         submit = tk.Button(self, text = "Submit", width = 10, height = 1, bg = "silver")
         submit.place(x=265, y=225)
-
+        
 
         # setting and positioning the file selection
         def fileExplore():
@@ -96,6 +98,33 @@ class mainApp(tk.Tk):
                                  command = lambda: (fileExplore()))
         
         fileBrowse.place(x=485, y=175.5)
+        
+        help = self.c.create_text(590, 275, text="Help", fill="gray", font=("Arial 11"), width=30, tags=["help", "normal","highlight"]) 
+        
+        helpPrompt = tk.Text(self, background = "dark gray", foreground = "black",
+                                      width = 10, height = 2, font = ("Arial", 8))
+        helpPrompt.insert("1.0", "Click Here" + "\n" + "for Help", "center")
+        helpPrompt.tag_configure("center", justify='center')
+        helpPrompt.tag_add("center", 1.0, "end")
+        
+        def showHelp(event):
+            showError(label_file_explorer)
+            #open Read_Me file
+            
+            
+        def normalState(event):
+            self.c.itemconfigure(help, fill="gray")
+            helpPrompt.place_forget()
+        
+        def highlightHelp(event):            
+            helpPrompt.place(x=550, y=230)
+            self.c.itemconfigure(help, fill="white")
+            
+        self.c.tag_bind("help", '<Button-1>', showHelp)        
+        
+        self.c.tag_bind("highlight", '<Enter>', highlightHelp)
+
+        self.c.tag_bind("normal", '<Leave>', normalState)
         
 
 #tk.ttk.Separator(window, orient=tk.VERTICAL).place(x=305, y=0, height=300)
