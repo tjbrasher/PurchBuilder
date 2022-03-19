@@ -99,10 +99,10 @@ class mainApp(tk.Tk):
         
         fileBrowse.place(x=485, y=175.5)
         
-        help = self.c.create_text(590, 275, text="Help", fill="gray", font=("Arial 11"), width=30, tags=["help", "normal","highlight"]) 
+        help = self.c.create_text(577.5, 275, text="Help", fill="gray", font=("Arial 10"), width=30, tags=["help", "normal","highlight"]) 
         
         helpPrompt = tk.Text(self, background = "dark gray", foreground = "black",
-                                      width = 10, height = 2, font = ("Arial", 8))
+                                      width = 10, height = 2, font = ("Arial", 7))
         helpPrompt.insert("1.0", "Click Here" + "\n" + "for Help", "center")
         helpPrompt.tag_configure("center", justify='center')
         helpPrompt.tag_add("center", 1.0, "end")
