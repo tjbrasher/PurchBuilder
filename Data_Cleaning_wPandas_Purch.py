@@ -62,6 +62,14 @@ def formatFile(file1, label_file_explorer):
                     'Cost Extended', 'Status']
 
             pickList = pickList.reindex(columns, axis = 1)
+            
+            
+            #switch(selection) {
+                # if 
+            #}
+            
+            #if sort by "items":
+            pickList = pickList.sort_values('Item')
 
             # Print the data set and the list of column names
             #print(pick_list)

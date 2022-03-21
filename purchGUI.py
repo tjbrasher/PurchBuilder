@@ -1,7 +1,7 @@
 from calendar import c
 import tkinter as tk
 import tkinter.filedialog
-import tkinter.ttk
+from tkinter import ttk
 from tkinter import *
 from PIL import Image, ImageTk
 from Data_Cleaning_wPandas_Purch import formatFile
@@ -99,6 +99,51 @@ class mainApp(tk.Tk):
         
         fileBrowse.place(x=485, y=175.5)
         
+        # setting up sort selection drop down menu
+        options = [
+            "None",
+            "Source",
+            "Item",
+            "Cost",
+            "Order Status",
+            "Source & Item",
+            "Item & Cost",
+            "Source & Status",
+            "Item & Status",
+            "Cost & Status",
+        ]
+        
+        # setting up the help button
+        sorting = self.c.create_text(530, 225, text="Sorting Options", fill="gray", font=("Arial 10"), width=200, tags=["sort", "normalSort","highlightSort"]) 
+        
+        sortPrompt = tk.Text(self, background = "dark gray", foreground = "black",
+                                      width = 15, height = 2, font = ("Arial", 7))
+        sortPrompt.insert("1.0", "Click Here for" + "\n" + "Sorting Options", "center")
+        sortPrompt.tag_configure("center", justify='center')
+        sortPrompt.tag_add("center", 1.0, "end")
+        
+        def showSort(event):
+            showError(label_file_explorer)
+            #open Read_Me file
+            
+            
+        def normalSortState(event):
+            self.c.itemconfigure(sorting, fill="gray")
+            sortPrompt.place_forget()
+        
+        def highlightSort(event):            
+            #sortPrompt.place(x=490, y=185)
+            self.c.itemconfigure(sorting, fill="white")
+            
+        self.c.tag_bind("sort", '<Button-1>', showSort)        
+        
+        self.c.tag_bind("highlightSort", '<Enter>', highlightSort)
+
+        self.c.tag_bind("normalSort", '<Leave>', normalSortState)
+
+        
+        
+        # setting up the help button
         help = self.c.create_text(577.5, 275, text="Help", fill="gray", font=("Arial 10"), width=30, tags=["help", "normal","highlight"]) 
         
         helpPrompt = tk.Text(self, background = "dark gray", foreground = "black",
