@@ -51,8 +51,8 @@ class ErrorWindow(tk.Toplevel):
         
         windowBackground = self.c.create_rectangle(10, 35, 290, 120, outline='dark gray', width=2)
    
-        message = self.c.create_text(150, 58, text="--- File Could Not Be Processed! ---"
-                                     + "\n" + "Please Select a Different File",
+        message = self.c.create_text(150, 58, text="--- Request Could Not Be Processed! ---"
+                                     + "\n" + "Please Try Again",
                         fill = "white", font=("Arial 11"), width = 280, justify=CENTER)
 
         okButton = tk.Button(self, text = "OK", width = 10, height = 1, bg = "silver")

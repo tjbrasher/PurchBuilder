@@ -1,8 +1,9 @@
 import tkinter as tk
 from tkinter import *
-from turtle import color
+from turtle import color, width
 from PIL import ImageTk
 from ErrorTest import resetFileBox
+from tkinter import ttk
 
 
 class sortWindow(tk.Toplevel):
@@ -51,8 +52,36 @@ class sortWindow(tk.Toplevel):
         Sortprompt = self.c.create_text(100, 30, text="Please Select Options" + "\n" + "for Sorting File",
                                 fill = "white", font=("Arial 11"), width = 180, justify=CENTER)
         
-        r1 = Radiobutton(self, fg="white", bg="black", selectcolor="gray", text="None")
-        r1.place(x=100, y=150)
+        #buttonStyle = ttk.Style(self)
+        #buttonStyle.theme_use('alt')
+
+        cbVar = StringVar(self)
+        def onCheck():
+            cbVar.set(1)
+        cbVar.set(0)
+        cb1 = Checkbutton(self, onvalue=1, offvalue=0, 
+                          variable=cbVar, fg="white", bg="black",
+                          activeforeground="white", activebackground="black",
+                          selectcolor="black", command=onCheck()) 
+        cb1.place(x=60, y=80)
+        #r1.configure(foreground="red", background="black")
+                        
+        #style_name = r1.winfo_class()
+        #buttonStyle.configure(style_name, indicatoron=True, foreground="red",
+        #                      background="black", indicatorcolor="blue")
+        #buttonStyle.map(style_name,
+        #                foreground = [("disabled", "gray"),
+        #                              ("pressed", "blue"),
+        #                              ("active", "red")],
+        #                background = [("disabled", "black"),
+        #                              ("pressed", "green"),
+        #                              ("active", "yellow")],
+        #                indicatorcolor= [("disabled", "purple"),
+        #                             ("pressed", "blue"),
+        #                             ("active", "magenta")])
+        
+        
+       
    
         #prompt = self.c.create_text(150, 50, text="Would You Like to Process Another File?",
         #                fill = "white", font=("Arial 11"), width = 280, justify=CENTER)
@@ -60,10 +89,10 @@ class sortWindow(tk.Toplevel):
         #yesButton = tk.Button(self, text = "Yes", width = 10, height = 1, bg="silver")
         #yesButton.place(x=52.5, y=78)
         
-        noButton = tk.Button(self, text = "Done", width = 10, height = 1, bg="silver")
-        noButton.place(x=62.5, y=250)
+        doneButton = tk.Button(self, text = "Done", width = 10, height = 1, bg="silver")                               
+        doneButton.place(x=62.5, y=250)
               
-        def NoClick():
+        def doneClick():
             self.grab_release()
             self.destroy()
             exit()
@@ -73,7 +102,7 @@ class sortWindow(tk.Toplevel):
         #        self.grab_release()
         #        self.destroy()
              
-        noButton.configure(command = lambda: NoClick())
+        doneButton.configure(command = lambda: doneClick())
         
         #yesButton.configure(command = lambda: YesClick(label_file_explorer))
         
@@ -84,9 +113,9 @@ class sortWindow(tk.Toplevel):
 #    programPrompt.mainloop()
     
 
-def showPrompt():
-    programPrompt = sortWindow()
-    programPrompt.mainloop()
+def showSort():
+    programSortWindow = sortWindow()
+    programSortWindow.mainloop()
     
     
-showPrompt()
+showSort()

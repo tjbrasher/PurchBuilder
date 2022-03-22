@@ -6,6 +6,7 @@ from tkinter import *
 from PIL import Image, ImageTk
 from Data_Cleaning_wPandas_Purch import formatFile
 from ErrorTest import showError
+import traceback
 
 
 class fileObject:
@@ -19,6 +20,8 @@ class fileObject:
         self._file = fileName
         
 file1 = fileObject()
+
+inputfile = fileObject()
 
 
 class mainApp(tk.Tk):
@@ -67,31 +70,44 @@ class mainApp(tk.Tk):
         submit = tk.Button(self, text = "Submit", width = 10, height = 1, bg = "silver")
         submit.place(x=265, y=225)
         
+        inputfile.set_file("")
 
         # setting and positioning the file selection
         def fileExplore():
-            inputfile = tk.filedialog.askopenfilename(initialdir = "/", title = "Please Select a File to Transform",
+            inputfile1 = tk.filedialog.askopenfilename(initialdir = "/", title = "Please Select a File to Transform",
                                                 filetypes = (("Comma Separated Values (*.csv)", "*.csv*"), ("Text Files (*.txt)", "*.txt*"),
                                                 ("Microsoft Excel Files (*.xls, *.xlsx)", ".xlsx"), ("All Files", "*.*")))
-            if inputfile == "":
+            inputfile.set_file(inputfile1)
+            if inputfile.get_file() == "":
                 label_file_explorer.delete("1.0", tk.END)
                 label_file_explorer.insert("1.0", "Please select a file")
             else:
                 label_file_explorer.delete("1.0", tk.END)
                 label_file_explorer.configure(foreground = "black")
-                label_file_explorer.insert(tk.END, inputfile)
+                label_file_explorer.insert(tk.END, inputfile.get_file())
+                
 
-            def submitClick(inputfile):
-                file1.set_file(inputfile)
+        def submitClick(inputfile):
+            try:
+                print("Else statement executed")
+                print(label_file_explorer.get("1.0", 'end-1c'))
+                file1.set_file(label_file_explorer.get("1.0", 'end-1c'))
+                print(file1.get_file())
                 #getFile(file1)
-                print("THIS IS THE SELECTED FILE: ", file1.get_file()) 
+                print("THIS IS THE SELECTED FILE: ", file1.get_file())
                 formatFile(file1, label_file_explorer)
-
-                    
+                
+            except Exception as e: 
+                print("file not found error")
+                print(e)
+                traceback.print_exc()
+                showError(label_file_explorer)
+                
                     
                 #open file and print to console to test functionality
+           
+        submit.configure(command = lambda: submitClick(inputfile.get_file()))
 
-            submit.configure(command = lambda: submitClick(inputfile))
             
         
         fileBrowse = tk.Button(self, text = "Browse Files", bg = "silver",
@@ -114,7 +130,7 @@ class mainApp(tk.Tk):
         ]
         
         # setting up the help button
-        sorting = self.c.create_text(530, 225, text="Sorting Options", fill="gray", font=("Arial 10"), width=200, tags=["sort", "normalSort","highlightSort"]) 
+        sorting = self.c.create_text(530, 225, text="Sorting Options", fill="white", font=("Arial 10"), width=200, tags=["sort", "normalSort","highlightSort"]) 
         
         sortPrompt = tk.Text(self, background = "dark gray", foreground = "black",
                                       width = 15, height = 2, font = ("Arial", 7))
@@ -128,12 +144,12 @@ class mainApp(tk.Tk):
             
             
         def normalSortState(event):
-            self.c.itemconfigure(sorting, fill="gray")
+            self.c.itemconfigure(sorting, fill="white")
             sortPrompt.place_forget()
         
         def highlightSort(event):            
             #sortPrompt.place(x=490, y=185)
-            self.c.itemconfigure(sorting, fill="white")
+            self.c.itemconfigure(sorting, fill="red")
             
         self.c.tag_bind("sort", '<Button-1>', showSort)        
         
@@ -163,7 +179,7 @@ class mainApp(tk.Tk):
         
         def highlightHelp(event):            
             helpPrompt.place(x=550, y=230)
-            self.c.itemconfigure(help, fill="white")
+            self.c.itemconfigure(help, fill="red")
             
         self.c.tag_bind("help", '<Button-1>', showHelp)        
         
