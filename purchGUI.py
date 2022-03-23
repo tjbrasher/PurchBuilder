@@ -3,6 +3,7 @@ import tkinter as tk
 import tkinter.filedialog
 from tkinter import ttk
 from tkinter import *
+from tkinter import Tk
 from PIL import Image, ImageTk
 from Data_Cleaning_wPandas_Purch import formatFile
 from ErrorTest import showError
@@ -28,6 +29,11 @@ class mainApp(tk.Tk):
 
     def __init__(self):
         super().__init__()
+        
+        self.programIcon = Image.open("Files\\EA Logo Bug.png")
+        self.icon_resize = self.programIcon.resize((30,30))
+        self.programIcon_resized = ImageTk.PhotoImage(self.icon_resize)
+        self.iconphoto(False, self.programIcon_resized)
 
         self.c = tk.Canvas(self, bg="black", width = 620, height = 300)
         self.c.pack()
