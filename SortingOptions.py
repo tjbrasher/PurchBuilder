@@ -105,40 +105,44 @@ class sortWindow(tk.Toplevel):
                      activebackground="black", activeforeground="black",  highlightcolor="black", border=0,
                      highlightbackground="black", borderwidth=0, variable=bt5SelectState, onvalue=1, offvalue=0)
         
-        totalBtState = getButtonStatus()
-        
-        while totalBtState == 0:
-            bt1.select()
-            break
-        
+
         def bt1Selected():
             rb1state = getRb1Status()
-            if rb1state == 0:
+            if rb1state == 1:
                 bt1.configure(selectimage=self.rbSelected, selectcolor="black")
+                bt1.select()
                 bt2.deselect()
                 bt3.deselect()
                 bt4.deselect()
                 bt5.deselect()
-            if rb1state == 1:
-                bt1.invoke()
-
+            if rb1state == 0:
+                bt1.select()
+                bt1Selected()
                        
         def bt2Selected():
-            bt1.deselect()
-            bt2.configure(selectimage=self.rbSelected, selectcolor="black")
-            getButtonStatus()
+            btstate = getButtonStatus()
+            if btstate == 0:
+                bt1Selected()
+            else:
+                bt1.deselect()
+                bt1.deselect()
+                bt2.configure(selectimage=self.rbSelected, selectcolor="black")
             
         def bt3Selected():
-            bt1.deselect()
-            bt3.configure(selectimage=self.rbSelected, selectcolor="black")
-            getButtonStatus()
-            
+            btstate = getButtonStatus()
+            if btstate == 0:
+                bt1Selected()
+            else:
+                bt1.deselect()
+                bt1.deselect()
+                bt3.configure(selectimage=self.rbSelected, selectcolor="black")
+              
         def bt4Selected():
             btstate = getButtonStatus()
             if btstate == 0:
-                bt1.configure(selectimage=self.rbSelected, selectcolor="black")
-                bt1.deselect()
+                bt1Selected()
             else:
+                bt1.deselect()
                 bt1.deselect()
                 bt4.configure(selectimage=self.rbSelected, selectcolor="black")
 
@@ -147,7 +151,7 @@ class sortWindow(tk.Toplevel):
             if btstate == 0:
                 bt1Selected()
             else:
-                bt1.configure(selectimage=self.rbSelected, selectcolor="black")
+                bt1.deselect()
                 bt1.deselect()
                 bt5.configure(selectimage=self.rbSelected, selectcolor="black")
 
@@ -167,8 +171,16 @@ class sortWindow(tk.Toplevel):
         bt5.configure(command=lambda: bt5Selected())
         bt5.place(x=37, y=192)
         
-       
         
+        totalBtState = getButtonStatus()
+        
+        while totalBtState == 0:
+            bt1Selected()
+            break
+        else:
+            pass
+        
+     
         
         doneButton = tk.Button(self, text = "Done", width = 10, height = 1, bg="silver")                               
         doneButton.place(x=62.5, y=250)
