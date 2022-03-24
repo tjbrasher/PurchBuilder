@@ -48,7 +48,7 @@ class sortWindow(tk.Toplevel):
         #promptTitle = self.c.create_text(150, 17, text="Continue Program?",
         #                    fill = "gray", font=("Arial 10"), justify=CENTER)
         
-        promptBorder = self.c.create_rectangle(15, 60, 185, 235, outline='silver', width=2)
+        promptBorder = self.c.create_rectangle(15, 60, 185, 235, outline='silver', width=2, fill="black")
    
         Sortprompt = self.c.create_text(100, 30, text="Please Select Options" + "\n" + "for Sorting File",
                                 fill = "white", font=("Arial 12"), width = 180, justify=CENTER)
