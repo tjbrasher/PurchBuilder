@@ -7,8 +7,10 @@ from tkinter import Tk
 from PIL import Image, ImageTk
 from Data_Cleaning_wPandas_Purch import formatFile
 from ErrorTest import showError
+from SortingOptions import sortWindow
 import traceback
 
+#programSortWindow = sortWindow()
 
 class fileObject:
     def __init__(self, file=None):
@@ -30,6 +32,7 @@ class mainApp(tk.Tk):
     def __init__(self):
         super().__init__()
         
+            
         self.programIcon = Image.open("Files\\EA Logo Bug.png")
         self.icon_resize = self.programIcon.resize((30,30))
         self.programIcon_resized = ImageTk.PhotoImage(self.icon_resize)
@@ -121,19 +124,6 @@ class mainApp(tk.Tk):
         
         fileBrowse.place(x=485, y=175.5)
         
-        # setting up sort selection drop down menu
-        options = [
-            "None",
-            "Source",
-            "Item",
-            "Cost",
-            "Order Status",
-            "Source & Item",
-            "Item & Cost",
-            "Source & Status",
-            "Item & Status",
-            "Cost & Status",
-        ]
         
         # setting up the help button
         sorting = self.c.create_text(530, 225, text="Sorting Options", fill="white", font=("Arial 10"), width=200, tags=["sort", "normalSort","highlightSort"]) 
@@ -144,10 +134,15 @@ class mainApp(tk.Tk):
         sortPrompt.tag_configure("center", justify='center')
         sortPrompt.tag_add("center", 1.0, "end")
         
-        def showSort(event):
-            showError(label_file_explorer)
-            #open Read_Me file
-            
+        programSortWindow = sortWindow()
+        programSortWindow.grab_release()
+        programSortWindow.withdraw()
+        def showSortPrompt(event): 
+            if 'withdrawn' == programSortWindow.state():
+                programSortWindow.deiconify()
+            elif 'normal' == self.state():
+                programSortWindow.deiconify()
+
             
         def normalSortState(event):
             self.c.itemconfigure(sorting, fill="white")
@@ -157,7 +152,7 @@ class mainApp(tk.Tk):
             #sortPrompt.place(x=490, y=185)
             self.c.itemconfigure(sorting, fill="red")
             
-        self.c.tag_bind("sort", '<Button-1>', showSort)        
+        self.c.tag_bind("sort", '<Button-1>', showSortPrompt)        
         
         self.c.tag_bind("highlightSort", '<Enter>', highlightSort)
 
