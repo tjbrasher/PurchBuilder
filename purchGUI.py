@@ -139,8 +139,12 @@ class mainApp(tk.Tk):
         programSortWindow.withdraw()
         def showSortPrompt(event): 
             if 'withdrawn' == programSortWindow.state():
+                programSortWindow.focus_set()
+                programSortWindow.grab_set_global()
                 programSortWindow.deiconify()
             elif 'normal' == self.state():
+                programSortWindow.focus_set()
+                programSortWindow.grab_set_global()
                 programSortWindow.deiconify()
 
             
