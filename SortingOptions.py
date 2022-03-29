@@ -4,10 +4,10 @@ from turtle import color, width
 from PIL import Image, ImageTk
 from ErrorTest import resetFileBox
 from tkinter import ttk
-from Data_Cleaning_wPandas_Purch import setBtnStatus, getBtnStatus
+from Data_Cleaning_wPandas_Purch import button1, button2, button3, button4, button5
 from Data_Cleaning_wPandas_Purch import getBtnSelection
 from Data_Cleaning_wPandas_Purch import bt1State, bt2State, bt3State, bt4State, bt5State
-from Data_Cleaning_wPandas_Purch import printSortList
+from Data_Cleaning_wPandas_Purch import SortList
 
 class sortWindow(tk.Toplevel):
     
@@ -77,18 +77,30 @@ class sortWindow(tk.Toplevel):
         bt4SelectState = IntVar()
         bt5SelectState = IntVar()
         
+        #bt1SelectState = button1.getBtnStatus()
+        #bt2SelectState = button2.getBtnStatus()
+        #bt3SelectState = button3.getBtnStatus()
+        #bt4SelectState = button4.getBtnStatus()
+        #bt5SelectState = button5.getBtnStatus()
         
+        print("BT1 Selected Status: ", button1.getBtnStatus())
+        
+        #button1.setBtnStatus(bt1SelectState)
+        #button2.setBtnStatus(bt2SelectState)
+        #button3.setBtnStatus(bt3SelectState)
+        #button4.setBtnStatus(bt4SelectState)
+        #button5.setBtnStatus(bt5SelectState)
           
         
-        bt1Set = getBtnStatus(bt1SelectState)
+        bt1Set = button1.getBtnStatus()
         print("bt1 = ", bt1Set)
-        bt2Set = getBtnStatus(bt2SelectState)
+        bt2Set = button2.getBtnStatus()
         print("bt2 = ", bt2Set)
-        bt3Set = getBtnStatus(bt3SelectState)
+        bt3Set = button3.getBtnStatus()
         print("bt3 = ", bt3Set)
-        bt4Set = getBtnStatus(bt4SelectState)
+        bt4Set = button4.getBtnStatus()
         print("bt4 = ", bt4Set)
-        bt5Set = getBtnStatus(bt5SelectState)
+        bt5Set = button5.getBtnStatus()
         print("bt5 = ", bt5Set)
                   
         
@@ -104,8 +116,8 @@ class sortWindow(tk.Toplevel):
         #bt4SelectState.set(setRb4Status(bt4SelectState, bt4Set))
         #bt5SelectState.set(setRb5Status(bt5SelectState, bt5Set))
         
-        print("bt1SelectState = ", bt1SelectState.get())
-        print("bt2SelectState = ", bt2SelectState.get())
+        #print("bt1SelectState = ", button1.get())
+        #print("bt2SelectState = ", button2.get())
 
         def getButtonState(bt2Set, bt3Set, bt4Set, bt5Set):   
             btstate1 = bt2Set + bt3Set + bt4Set + bt5Set
@@ -182,6 +194,10 @@ class sortWindow(tk.Toplevel):
                 bt3.deselect()
                 bt4.deselect()
                 bt5.deselect()
+                button2.setBtnStatus(0)
+                button3.setBtnStatus(0)
+                button4.setBtnStatus(0)
+                button5.setBtnStatus(0)
             if rb1state == 0:
                 bt1.select()
                 #setBtnStatus(bt1SelectState, bt1SelectState.get())
@@ -190,23 +206,25 @@ class sortWindow(tk.Toplevel):
         def bt2Selected():
             btstate = getButtonStatus()
             if btstate == 0:
-                setBtnStatus(bt2SelectState, bt2SelectState.get())
+                button2.setBtnStatus(bt2SelectState.get())
                 bt1Selected()
             else:
                 bt1.deselect()
                 bt1.deselect()
-                setBtnStatus(bt2SelectState, bt2SelectState.get())
+                button1.setBtnStatus(0)
+                button2.setBtnStatus(bt2SelectState.get())
                 bt2.configure(selectimage=self.rbSelected, selectcolor="black")
             
         def bt3Selected():
             btstate = getButtonStatus()
             if btstate == 0:
-                setBtnStatus(bt3SelectState, bt3SelectState.get())
+                button3.setBtnStatus(bt3SelectState.get())
                 bt1Selected()
             else:
                 bt1.deselect()
                 bt1.deselect()
-                setBtnStatus(bt3SelectState, bt3SelectState.get())
+                button1.setBtnStatus(0)
+                button3.setBtnStatus(bt3SelectState.get())
                 bt3.configure(selectimage=self.rbSelected, selectcolor="black")
               
         def bt4Selected():
@@ -216,7 +234,8 @@ class sortWindow(tk.Toplevel):
             else:
                 bt1.deselect()
                 bt1.deselect()
-                setBtnStatus(bt4SelectState, bt4SelectState.get())
+                button1.setBtnStatus(0)
+                button4.setBtnStatus(bt4SelectState.get())
                 bt4.configure(selectimage=self.rbSelected, selectcolor="black")
 
         def bt5Selected():
@@ -226,7 +245,8 @@ class sortWindow(tk.Toplevel):
             else:
                 bt1.deselect()
                 bt1.deselect()
-                setBtnStatus(bt5SelectState, bt5SelectState.get())
+                button1.setBtnStatus(0)
+                button5.setBtnStatus(bt5SelectState.get())
                 bt5.configure(selectimage=self.rbSelected, selectcolor="black")
                 
             
@@ -248,6 +268,7 @@ class sortWindow(tk.Toplevel):
         
         
         totalBtState = getButtonState(bt2Set, bt3Set, bt4Set, bt5Set)
+        print("button selection total: ", totalBtState)
         
         while bstate1 == 0:
             bt1Selected()
@@ -256,16 +277,16 @@ class sortWindow(tk.Toplevel):
             pass
         
         def setButtons():
-            bt1State(bt1Set)
-            bt2State(bt2Set)
-            bt3State(bt3Set)
-            bt4State(bt4Set)
-            bt5State(bt5Set)
+            button1.setBtnStatus(button1.getBtnStatus())
+            button2.setBtnStatus(button2.getBtnStatus())
+            button3.setBtnStatus(button3.getBtnStatus())
+            button4.setBtnStatus(button4.getBtnStatus())
+            button5.setBtnStatus(button5.getBtnStatus())
             
               
         def doneClick():
             setButtons()
-            printSortList()
+            SortList()
             self.grab_release()
             self.withdraw()
             #exit()

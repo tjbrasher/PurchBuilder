@@ -14,50 +14,82 @@ class button():
             
     def setBtnStatus(self, btState):
         if btState == 0:
+            self._state = 0
             print(self, " selected = False", btState)
         else:
+            self._state = btState
             print(self, " selected = True ", btState)
     
     def getBtnStatus(self):
         return self._state
     
-bt1 = button()
-bt2 = button()
-bt3 = button()
-bt4 = button()
-bt5 = button()
+button1 = button()
+button2 = button()
+button3 = button()
+button4 = button()
+button5 = button()
+
+def setInitialStatus():
+    button1.setBtnStatus(1)
+    button2.setBtnStatus(0)
+    button3.setBtnStatus(0)
+    button4.setBtnStatus(0)
+    button5.setBtnStatus(0)
+
+if button1.getBtnStatus() == None:
+    setInitialStatus()
+    
+elif button2.getBtnStatus() == None:
+    setInitialStatus()
+
+elif button3.getBtnStatus() == None:
+    setInitialStatus()
+
+elif button4.getBtnStatus() == None:
+    setInitialStatus()
+
+elif button5.getBtnStatus() == None:
+    setInitialStatus()
+
+
+
+
+
+
+
+
 
 # var = function that retrieve button state from sortingOptions
-def bt1State(b1State):
-    bt1 = b1State
-    return bt1
+def bt1State():
+    bt1Var = button1.getBtnStatus()
+    return bt1Var
 
-def bt2State(b2State):
-    bt2 = b2State
-    return bt2
+def bt2State():
+    bt2Var = button2.getBtnStatus()
+    return bt2Var
 
-def bt3State(b3State):
-    bt3 = b3State
-    return bt3
+def bt3State():
+    bt3Var = button3.getBtnStatus()
+    return bt3Var
 
-def bt4State(b4State):
-    bt4 = b4State
-    return bt4
+def bt4State():
+    bt4Var = button4.getBtnStatus()
+    return bt4Var
 
-def bt5State(b5State):
-    bt5 = b5State
-    return bt5
+def bt5State():
+    bt5Var = button5.getBtnStatus()
+    return bt5Var
 
 
-def getBtnSelection(bt2, bt3, bt4, bt5):
-    btSelected = bt2 + bt3 + bt4 + bt5
+def getBtnSelection(bt2Var, bt3Var, bt4Var, bt5Var):
+    btSelected = bt2Var + bt3Var + bt4Var + bt5Var
     print("button selection = ", btSelected)
     return btSelected
 
-def printSortList():
+def SortList():
 
     sortList=[]
-    bt1.getBtnStatus()
+    rb1State = bt1State()
     rb2State = bt2State()
     rb3State = bt3State()
     rb4State = bt4State()
@@ -89,9 +121,11 @@ def printSortList():
     else:
         pass
     
-    print(sortList) 
-
-
+    print(sortList)
+    
+    return sortList
+    
+    
 class programError(Exception):
     def printError():
         print("File Could Not Be Saved!")    
@@ -129,6 +163,7 @@ def formatFile(file1, label_file_explorer):
             print("THIS IS YOUR FILE NAME: ", file1.get_file)
             print("THIS IS YOUR FILE NAME: ", file1._file)
             
+            
             # Removed unnecessary columns from the dataset
             pickList = pickList.drop(
                 columns=['Project Name', 'Client', 'Order Quantity'],
@@ -152,7 +187,7 @@ def formatFile(file1, label_file_explorer):
            
            
             #if sort by "items":
-            #pickList = pickList.sort_values(sortList)
+            pickList = pickList.sort_values(SortList(), key=int)
 
             # Print the data set and the list of column names
             #print(pick_list)
