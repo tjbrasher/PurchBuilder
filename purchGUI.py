@@ -4,11 +4,13 @@ import tkinter.filedialog
 from tkinter import ttk
 from tkinter import *
 from tkinter import Tk
+import webbrowser
 from PIL import Image, ImageTk
 from Data_Cleaning_wPandas_Purch import formatFile
 from ErrorTest import showError
 from SortingOptions import sortWindow
 import traceback
+import codecs
 
 #programSortWindow = sortWindow()
 
@@ -173,8 +175,11 @@ class mainApp(tk.Tk):
         helpPrompt.tag_add("center", 1.0, "end")
         
         def showHelp(event):
-            showError(label_file_explorer)
-            #open Read_Me file
+            #showError(label_file_explorer)
+            new = 2
+            url = "Files\\READ_ME f03ed.html"
+            webbrowser.open(url, new=new)
+            
             
             
         def normalState(event):
