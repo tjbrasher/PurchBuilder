@@ -1,0 +1,670 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>READ_ME</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+}
+
+.simple-table-header {
+	background: rgb(247, 246, 243);
+	color: black;
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="f03eddd8-35d6-453d-92c7-452fe19ee28b" class="page mono"><header><h1 class="page-title">READ_ME</h1><table class="properties"><tbody><tr class="property-row property-row-date"><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesDate"><path d="M10.8889,5.5 L3.11111,5.5 L3.11111,7.05556 L10.8889,7.05556 L10.8889,5.5 Z M12.4444,1.05556 L11.6667,1.05556 L11.6667,0 L10.1111,0 L10.1111,1.05556 L3.88889,1.05556 L3.88889,0 L2.33333,0 L2.33333,1.05556 L1.55556,1.05556 C0.692222,1.05556 0.00777777,1.75556 0.00777777,2.61111 L0,12.5 C0,13.3556 0.692222,14 1.55556,14 L12.4444,14 C13.3,14 14,13.3556 14,12.5 L14,2.61111 C14,1.75556 13.3,1.05556 12.4444,1.05556 Z M12.4444,12.5 L1.55556,12.5 L1.55556,3.94444 L12.4444,3.94444 L12.4444,12.5 Z M8.55556,8.61111 L3.11111,8.61111 L3.11111,10.1667 L8.55556,10.1667 L8.55556,8.61111 Z"></path></svg></span>Property</th><td><time>@March 30, 2022</time></td></tr></tbody></table></header><div class="page-body"><p id="636b5972-c318-4937-8c3d-90c8766f8445" class=""><strong>NOTE:</strong>  If you are experiencing issues with converting a csv file into a purchasing list, please check all fields for any foreign characters or symbols. These will need to be removed in order for the program to properly read and write the files.</p><hr id="5648fa56-4e80-4090-ae37-e3395febb48b"/><p id="4edc8809-5a0e-4579-afcd-b9d93441c4de" class="">
+</p><h2 id="0cd5c21a-12f0-4425-ab56-68e08f59ca94" class="">READ_ME</h2><hr id="2e90fe39-242a-4827-bc49-e67f000af7eb"/><h3 id="50814ed6-7709-4c53-8ae9-2a4281c21d58" class="">Program Brief</h3><p id="194f5d1c-dcbb-415e-8fd6-a6a3a61c43a8" class="">The purpose of this program is to read purchasing files generated from JetBuilt and clean, reformat and sort the data into the same format used in the PURCH lists that are used by the EAVI purchasing department.</p><hr id="4cf5a8e8-5ea2-4856-9959-8babebbb4145"/><p id="bd69cf08-f25d-4bdc-8597-60dfb43e9203" class="">
+</p><p id="2d664e8c-f00c-4df1-a7b8-2c7c3d46f395" class="">
+</p><hr id="e9bb89a8-c69b-4855-a773-60e0bfcf6b58"/><p id="8dc52e75-1053-474c-8867-2bc8c9657966" class=""><strong>Instructions:</strong></p><ol type="1" id="cc4cbf86-bfee-46d5-9921-88b49f70e2d3" class="numbered-list" start="1"><li>Upon launching the program, press the “Browse Files” button and select the file that you would like to convert to a PURCH list. Note that the program is designed to work with files generated via the <em>Purchasing</em> tab on JetBuilt</li></ol><ol type="1" id="408db27c-0efc-4440-82f6-77a80ebcdb07" class="numbered-list" start="2"><li>Once a file has been selected, click on “Sorting Options” and select the desired sorting options and press “Done”. If no options are selected, the program will not sort the data and the order of the data in the file that will be output by the program will match the order of the data in the file selected by the user. Refer to the “Sorting Options” section under <em>Program Components</em> for more information on this topic.</li></ol><ol type="1" id="7777a193-6352-4c3f-a35b-532fbd3fc3f6" class="numbered-list" start="3"><li>Once the file has been selected and any desired sorting options have been chosen, press “Submit”.<ol type="a" id="6c62b9bd-fdbb-4563-9561-1653f386d446" class="numbered-list" start="1"><li>If the file can be processed, a save file dialog should appear. Select the desired location to save the file and rename the file if desired and press “Save”.</li></ol><ol type="a" id="1f736989-420f-406a-a809-0fa03cc6b4ef" class="numbered-list" start="2"><li>If the file cannot be processed, an error message will appear. If this occurs, confirm the file type and open the selected file outside of the program to confirm that there are no formatting issues within the document. Correct any issues and try again.</li></ol></li></ol><ol type="1" id="cf7af242-a6b3-4c1d-84e4-2dab130aef0d" class="numbered-list" start="4"><li>Upon a successful save, the file will display a prompt asking if the user would like to continue the program. Select “Yes” to process another file or select “No” to terminate and close the program.</li></ol><hr id="6de6f666-293e-424e-88a0-8534ec050817"/><p id="48dc6746-af53-4d8f-a797-683aaaa8ced7" class="">
+</p><p id="203c00e5-e45a-48d1-be19-878cb30927ef" class="">
+</p><hr id="674ae6b7-806c-47a9-9d8e-f08ff5ca9c35"/><h3 id="cf463d32-e680-43d9-89cb-f1f64e59bc92" class="">Program Components</h3><ol type="1" id="7e6ac4c0-684d-44fb-a650-d0f201014260" class="numbered-list" start="1"><li><strong>Main Window</strong><ol type="a" id="e8606a7a-81c5-44a7-9faa-9d0ce36bfc7e" class="numbered-list" start="1"><li>Upon launching the program you will be presented with a window that has a file explorer (comprised of the text box and the “Browse” buttons), a “Submit” button, a “Sort Options” selection, and a “Help” selection. The main window launches in the center of the screen and cannot be resized. However, the window can still be minimized or the program can be closed by pressing the “X” in the top right corner of the window. </li></ol></li></ol><ol type="1" id="f17a13d4-fd9b-46b4-9dd6-c5dad632c882" class="numbered-list" start="2"><li><strong>File Explorer (File Text Box and Browse Files Button): </strong><ol type="a" id="e39ad718-58af-4a4c-b15b-0f298e869025" class="numbered-list" start="1"><li>The file explorer is how files are loaded into the program.</li></ol><ol type="a" id="7722f257-21ce-4c27-a492-6f7d697e3518" class="numbered-list" start="2"><li>To select a file, press the “Browse” button and a file explorer window will open allowing you to find the appropriate file to load into the program. Once the file has been selected press the “Open” button and you will see the file name has been loaded into the text box, indicating that the file has loaded. Note that this program was designed to work only with txt files, csv files, and appropriately formatted Microsoft Excel files.</li></ol></li></ol><ol type="1" id="ebc81601-1635-42e7-9708-087a82624981" class="numbered-list" start="3"><li><strong>Sorting Options:</strong><ol type="a" id="cd4975ce-fe93-48e3-ad61-cc74d3adae45" class="numbered-list" start="1"><li>Sorting Options refers to the ways in which the items in the new PURCH list can be organized. </li></ol><ol type="a" id="bb94c3da-03d6-4ba9-aa4b-fffd80c15f73" class="numbered-list" start="2"><li>Once the file has been loaded, you can select how you would like the information to be sorted when the file is formatted and the PURCH list is created. Sorting options include sorting by “Source”, “Item”, “Cost” and “Order Status”. </li></ol><ol type="a" id="fe91e76c-8b6a-4dcf-9612-3afa9451caef" class="numbered-list" start="3"><li>Multiple sorting options can be selected but the sorting order will always occur in the order in which the options are listed (i.e; sorted by “Source” first, “Item” second, “Cost” third, and “Order Status” last assuming all sort options are selected. If not all options are selected, sorting will only apply to the options that have been chosen by the user).</li></ol><ol type="a" id="eb22edb1-4ece-4170-b8da-505b5b4200ac" class="numbered-list" start="4"><li>By default, No sorting options are applied to the file meaning that the order of the items remains the same as it is in the original file.</li></ol></li></ol><ol type="1" id="6e16749a-e39e-4819-a5b1-2b906d2563f1" class="numbered-list" start="4"><li><strong>Submit:</strong><ol type="a" id="f888cdfc-da13-4335-bd63-8e813ee2c342" class="numbered-list" start="1"><li>The submit button will take the file that the user selected along with the selected sorting options and output a cleaned and reformatted file and save the file based on the location the user has designated.</li></ol><ol type="a" id="309160b8-8ae3-4718-8866-76ebc2b550e0" class="numbered-list" start="2"><li>Upon pressing the “Submit” button one of two things will happen:<ol type="i" id="9382f495-815a-48d4-9409-9f9439326eb8" class="numbered-list" start="1"><li>If the file is valid, the program will display a “Save As” file dialog and the user will be prompted to save the file to a location of their choosing. This dialog is also where the user will have the option to rename their file before they save it if desired.<ol type="1" id="c86b4aac-f903-4950-a00e-095b13afe3df" class="numbered-list" start="1"><li>Upon a successful save, the program will ask the user if they would like to process another file.<ol type="a" id="c1565524-a2b9-448c-8273-c98081eac177" class="numbered-list" start="1"><li>Selecting “Yes” resets the file explorer and allows the user to continue the process</li></ol><ol type="a" id="9c830629-3458-419f-928e-94048826b544" class="numbered-list" start="2"><li>Selecting “No” will terminate and close the program</li></ol></li></ol></li></ol><ol type="i" id="9e7192e8-c86c-4cc2-a423-ea6334e0c183" class="numbered-list" start="2"><li>If the file is not valid, an error message will appear notifying the user that the request could not be processed. The user will not be able to proceed until this message has been cleared by pressing the “Okay” button.</li></ol></li></ol></li></ol><ol type="1" id="e4b074d2-c1aa-4e4f-82d2-7fd3aafd4dda" class="numbered-list" start="5"><li><strong>Help:</strong><ol type="a" id="06d0d9a4-b4a4-458c-a0df-278b0ee2a5e1" class="numbered-list" start="1"><li>Selecting the help option will display this Read_Me file in order to provide guidance to the user about the operation of the program as well as notes on known issues and troubleshooting help.</li></ol></li></ol><hr id="43756d84-240c-4edf-a153-bddef05b4a28"/><p id="33ce361f-32ab-4886-8f68-2d338da44456" class="">
+</p><p id="249ef774-0469-40e6-95a6-adf252a8cbe7" class="">
+</p><h3 id="46981160-4c0e-46f5-b1e1-81bf4811f8d6" class="">Source Code Composition</h3><hr id="65c892f7-4214-494f-914c-d873891561fe"/><p id="44d52145-5549-47d8-9518-e97f0ee38887" class="">The program consists of five (5) separate Python modules; four (4) for the different GUI windows utilized within the program and a separate single file that handles the data cleaning, formatting and saving of the new, reformatted file.</p><p id="f7243690-3132-4c33-ab3c-6a196cc00c6c" class="">
+</p><p id="4181d355-5bba-4ab4-9da7-f80ae2c81d76" class=""><strong>purchGUI - (Main User Interface Window for the Program)</strong></p><hr id="67144dc3-0c18-4034-b1d5-5a31a831da3a"/><p id="cc72b332-3c7a-469f-ab96-852406fc21cd" class="">This is the file for the main window that the user will interact with and is the first window that will appear upon launching the program. Within this window there is a file explorer for selecting the file to be converted as well as a “submit” button, a “sorting options” selection and a “help” selection. Each of these opens separate dialogs and windows that the user can interact with.</p><p id="84973fee-198c-4a6c-b25c-6923eff3256f" class="">
+</p><p id="8df963ca-7bd9-4a60-990e-901fba9823c9" class=""><strong>SortingOptions - (Allows the user to select how they want the file to be sorted)</strong></p><hr id="18d539be-d30f-4aa2-8f01-10f073d46dc1"/><p id="02a48708-64ac-48f1-8fb2-da4f70d86ab4" class="">This file provides the framework to construct the interface by which the user will select how they want the PURCH list items to be sorted. Users are able to select multiple buttons and their selections are stored within the <em>Data_Cleaning_wPandas_Purch </em>file where the main logic of the program is executed. If all buttons are unselected or no selection is made, the program defaults to no sorting.</p><p id="e26e434c-f364-458c-8ff3-0f049c2840ef" class="">
+</p><p id="d778d943-088b-4db4-b4d8-be35cdbbebc9" class=""><strong>filePrompt - (Displays when the program has successfully formatted and saved a file)</strong></p><hr id="8487a09b-871e-4a07-b768-ea27e8b2d924"/><p id="c7dda9a9-72bf-4fa7-a6b9-992453b5edb4" class="">This file provides the framework for the prompt that asks the user if they would like to process another file. If “Yes” is selected, the dialog closes, the file explorer resets and the user can process another file. If “No” is selected, the dialog closes and the program terminates, closing all windows.</p><p id="6cfb0ccc-f59a-485f-8e80-32d47187065d" class="">
+</p><p id="f397f02b-e307-4c85-9cd3-a89ea1f2a363" class=""><strong>ErrorTest - (Displays when the program has encountered an error)</strong></p><hr id="a522013f-9d7b-4dd6-baac-07b6d62fe002"/><p id="d589fd40-8563-4595-83ac-e66fb6ab7c7e" class="">This file provides the framework for the window that display whenever the program encounters an error. This window is trigged through exception handling within all files so if an error occurs in any part of the program, the error window should display and the user will be able to close the dialog and continue the program</p><p id="b8cee6dc-e8a3-47f9-a341-cd42da762c5e" class="">
+</p><p id="9e5aee2b-ea41-4288-8b71-25b59a52e750" class=""><strong>Data_Cleaning_wPandas_Purch - (Performs the majority of the logic for the program including cleaning, formatting, and saving the files)</strong></p><hr id="ae78fb44-3413-42c4-8397-83f9476792fd"/><p id="1f7f6db7-9a34-4e10-aa87-d5b83748e62f" class="">This file is where the main logic of the program is executed. Upon hitting the “Submit” button on the purchGUI window, the file name and location that was selected by the user is retrieved from the file explorer and opened within this file. It is then, cleaned, formatted and sorted as needed. Upon successful formatting, the program presents a save file dialog to the user where the location and name of the new file can be entered. Upon pressing “Save”, the filePrompt file will open to ask the user to continue the program. However, if the save file dialog window is closed before saving the file, the file will not be saved. </p><p id="4d097bf6-0f4f-481c-b66c-4adcd1829342" class="">
+</p></div></article></body></html>
