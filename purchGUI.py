@@ -98,7 +98,6 @@ class mainApp(tk.Tk):
 
         def submitClick(inputfile):
             try:
-                print("Else statement executed")
                 print(label_file_explorer.get("1.0", 'end-1c'))
                 file1.set_file(label_file_explorer.get("1.0", 'end-1c'))
                 print(file1.get_file())

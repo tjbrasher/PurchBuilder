@@ -53,12 +53,6 @@ elif button5.getBtnStatus() == None:
 
 
 
-
-
-
-
-
-
 # var = function that retrieve button state from sortingOptions
 def bt1State():
     bt1Var = button1.getBtnStatus()
@@ -175,6 +169,21 @@ def formatFile(file1, label_file_explorer):
             items= pickList[pickList.Item.str.contains(word)].index
             pickList.drop(items, inplace = True)
 
+            pickList['Cost'] = pickList['Cost'].map(lambda x: x.lstrip('$'))
+            pickList['Cost'] = (pickList['Cost'].str.split()).apply(lambda x: float(x[0].replace(',','')))
+            
+            pickList.Cost = pickList.Cost.astype(float)
+
+            types = pickList.dtypes
+
+            print(types)
+           
+            #if sort by "items":
+            pickList = pickList.sort_values(SortList())
+
+            pickList['Cost'] = pickList['Cost'].apply(lambda x: "${:.2f}".format((x/1)))
+
+            
             # Re-order and add new columns to the dataset
             columns=['Project ID', 'PO Number', 'Date Ordered', 'Tracking Date', 
                     'B\O Lead Time', 'Received Date', 'Warehouse Location', 'Notes',
@@ -183,11 +192,6 @@ def formatFile(file1, label_file_explorer):
 
             pickList = pickList.reindex(columns, axis = 1)
             
-                       
-           
-           
-            #if sort by "items":
-            pickList = pickList.sort_values(SortList(), key=int)
 
             # Print the data set and the list of column names
             #print(pick_list)
@@ -205,21 +209,21 @@ def formatFile(file1, label_file_explorer):
                 saveAs = tk.filedialog.asksaveasfile(initialfile=file1._file, defaultextension=".csv", title = "Please select a location to save your file",
                                                     filetypes = (("Comma Separated Values (*.csv)", "*.csv*"), ("Text Files (*.txt)", "*.txt*"),
                                                    ("Microsoft Excel Files (*.xls, *.xlsx)", ".xlsx"), ("All Files", "*.*")))
-                pickList.to_csv(saveAs, index=False, line_terminator="\n")
-            
+
+
+                if saveAs:
+                    pickList.to_csv(saveAs, index=False, line_terminator="\n")
+                    showPrompt(label_file_explorer)          
+                    print("File Saved!")
+                else:
+                    pass
+                    
+
             #pickList.to_csv(saveAs(pickList), index=False, line_terminator="\n", encoding="utf-8")
             
-            saveAs(pickList)
-
-            if saveAs == "":
-                pass
-            else:
-                showPrompt(label_file_explorer)          
-                print("File Saved!")
-                break
-        
-
-        
+            saveAs(pickList)  
+            break      
+                
         
         except Exception as e:
             print(e)
