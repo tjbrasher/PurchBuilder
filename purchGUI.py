@@ -11,6 +11,7 @@ from ErrorTest import showError
 from SortingOptions import sortWindow
 import traceback
 import codecs
+from tkinterdnd2 import *
 
 #programSortWindow = sortWindow()
 

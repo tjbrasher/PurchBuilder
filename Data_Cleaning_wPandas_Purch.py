@@ -4,6 +4,7 @@ import traceback
 import pandas as pd
 from ErrorTest import showError
 from filePrompt import showPrompt
+import xlsxwriter
 
 #import chardet
 
@@ -206,13 +207,15 @@ def formatFile(file1, label_file_explorer):
             print("Your list: ", pickList)  
         
             def saveAs(pickList):
-                saveAs = tk.filedialog.asksaveasfile(initialfile=file1._file, defaultextension=".csv", title = "Please select a location to save your file",
+                saveAs = tk.filedialog.asksaveasfile(initialfile=file1._file, defaultextension=".xlsx", title = "Please select a location to save your file",
                                                     filetypes = (("Comma Separated Values (*.csv)", "*.csv*"), ("Text Files (*.txt)", "*.txt*"),
                                                    ("Microsoft Excel Files (*.xls, *.xlsx)", ".xlsx"), ("All Files", "*.*")))
 
 
                 if saveAs:
-                    pickList.to_csv(saveAs, index=False, line_terminator="\n")
+                    #pickList.to_csv(saveAs, index=False, line_terminator="\n")
+                    #writer = pd.ExcelWriter(saveAs, engine='xlsxwriter')
+                    pickList.to_excel(saveAs, sheet_name="PURCH", startrow=0, index=False)
                     showPrompt(label_file_explorer)          
                     print("File Saved!")
                 else:
