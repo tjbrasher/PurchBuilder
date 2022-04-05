@@ -4,6 +4,8 @@ import traceback
 import pandas as pd
 from ErrorTest import showError
 from filePrompt import showPrompt
+from openpyxl.styles import Border, Side
+from xlsxwriter.utility import xl_rowcol_to_cell
 import xlsxwriter
 
 #import chardet
@@ -206,22 +208,94 @@ def formatFile(file1, label_file_explorer):
             # Export the file
             print("Your list: ", pickList)  
             
-            str_df = pickList.stack().str.decode('utf-8').unstack()
+            #str_df = pickList.stack().str.decode('utf-8').unstack()
             
-            for col in str_df:
-                pickList[col] = str_df[col]
+            #for col in str_df:
+            #    pickList[col] = str_df[col]
+            #print(pickList)
         
             def saveAs(pickList):
-                saveAs = tk.filedialog.asksaveasfile(initialfile=file1._file, defaultextension=".xlsx", title = "Please select a location to save your file",
-                                                    filetypes = (("Comma Separated Values (*.csv)", "*.csv*"), ("Text Files (*.txt)", "*.txt*"),
-                                                   ("Microsoft Excel Files (*.xls, *.xlsx)", ".xlsx"), ("All Files", "*.*")))
+                saveAs = tk.filedialog.asksaveasfilename(initialfile=file1._file, defaultextension=".xlsx", title = "Please select a location to save your file",
+                                                    filetypes = (("Microsoft Excel Files (*.xls, *.xlsx)", "*.xlsx*"), ("Comma Separated Values (*.csv)", "*.csv*"),
+                                                                 ("Text Files (*.txt)", "*.txt*"), ("All Files", "*.*")))
 
-                file1._file.set_file(saveAs)
+                #file1._file.set_file(saveAs)
                 
                 if saveAs:
                     #pickList.to_csv(saveAs, index=False, line_terminator="\n")
-                    writer = pd.ExcelWriter(file1._file, engine='xlsxwriter')
-                    pickList.to_excel(writer, sheet_name="PURCH", encoding = 'utf-8', startrow=0, index=False)
+                    #print(file1._file)
+                    writer = pd.ExcelWriter(saveAs, engine='xlsxwriter')
+                    pickList.to_excel(writer, sheet_name="PURCH", index=False)
+                    purchList = writer.book
+                    purchSheet = writer.sheets['PURCH']
+                    borderFormat = purchList.add_format({'border': 1})
+                    headerFormat = purchList.add_format({
+                        'font_color': 'white',
+                        'bg_color': '#800000',
+                        'bold': True,
+                        'border': 1,
+                        'text_wrap': True})
+                    
+                    col_num = pickList.shape[1]
+                    row_num = pickList.shape[0]
+                    last_col_cell = xl_rowcol_to_cell(row_num, col_num)
+                    
+                    for col_num, value in enumerate(pickList.columns.values):
+                        purchSheet.write(0, col_num, value, headerFormat)      
+                        col_num+1
+  
+                    #headerFormat.set_bg_color('red')
+
+
+                    #purchSheet.autofilter(0, 0, 0, col_num)
+                    
+                    bg_green = purchList.add_format({'bg_color': 'green'})
+                    bg_red = purchList.add_format({'bg_color': 'red'})
+                    
+                    # Setting column widths
+                    purchSheet.set_column(0, 0, 9)
+                    purchSheet.set_column(0, 5, 9)
+                    purchSheet.set_column(6, 6, 12)
+                    purchSheet.set_column(7, 7, 33)
+                    purchSheet.set_column(8, 8, 11)
+                    purchSheet.set_column(9, 9, 25)
+                    purchSheet.set_column(10, 11, 40)
+                    purchSheet.set_column(12, 12, 12)
+                    purchSheet.set_column(13, 13, 16)
+                    purchSheet.set_column(14, 14, 14)
+                    
+                    def set_border(ws, cell_range):
+                        border = Side(border_style = "thin", color="000000")
+                        for row in ws(cell_range):
+                            for cell in row:
+                                cell.border = Border(top=border, left=border, right=border, bottom=border)
+                    #last_col_cell
+                    set_border(purchList, 'B1:' + last_col_cell)
+                
+                    
+                    #print('total rows = ', row_num)
+                    #print('total columns = ', col_num)
+                    
+                    # Setting conditional formatting (green if ready to order, yellow if not ready, (purple if in stock - later implementation))
+                    ready = ("Ready To Order")
+                    items_ready = pickList[pickList['Status'] == ready].index
+                    
+                    notReady = ("Not Ordered")
+                    items_notReady = pickList[pickList['Status'] == notReady].index
+                    
+                    for i in items_ready:
+                        purchSheet.conditional_format(i, 8, i, 11, 
+                                                                     {'type':     'cell',
+                                                                      'criteria': 'equal to',
+                                                                      'value':    '"Ready To Order"',
+                                                                      'format':    bg_green})
+                    
+                    #purchSheet.conditional_format(rowsNotReady, 8, rowsNotReady, 11, {'type':     'cell',
+                    #                                                  'criteria': 'equal to',
+                    #                                                  'value':    '"Not Ordered"',
+                    #                                                  'format':    bg_red})
+                    
+                    
                     writer.save()
                     showPrompt(label_file_explorer)          
                     print("File Saved!")
