@@ -264,13 +264,20 @@ def formatFile(file1, label_file_explorer):
                     purchSheet.set_column(13, 13, 16)
                     purchSheet.set_column(14, 14, 14)
                     
-                    def set_border(ws, cell_range):
-                        border = Side(border_style = "thin", color="000000")
-                        for row in ws(cell_range):
-                            for cell in row:
-                                cell.border = Border(top=border, left=border, right=border, bottom=border)
+                    #for name in purchList.sheetnames:
+                    #    sheet = purchList['Inventory']
+                    i =1
+                    
+
+
+                    
+                    #def set_border(ws, cell_range):
+                    #    border = Side(border_style = "thin", color="000000")
+                    #    for row in ws(cell_range):
+                    #        for cell in row:
+                    #            cell.border = Border(top=border, left=border, right=border, bottom=border)
                     #last_col_cell
-                    set_border(purchList, 'B1:' + last_col_cell)
+                    #set_border(purchList, 'B1:' + last_col_cell)
                 
                     
                     #print('total rows = ', row_num)
@@ -283,12 +290,12 @@ def formatFile(file1, label_file_explorer):
                     notReady = ("Not Ordered")
                     items_notReady = pickList[pickList['Status'] == notReady].index
                     
-                    for i in items_ready:
-                        purchSheet.conditional_format(i, 8, i, 11, 
-                                                                     {'type':     'cell',
-                                                                      'criteria': 'equal to',
-                                                                      'value':    '"Ready To Order"',
-                                                                      'format':    bg_green})
+                    #for i in items_ready:
+                    #    purchSheet.conditional_format(i, 8, i, 11, 
+                    #                                                 {'type':     'cell',
+                    #                                                  'criteria': 'equal to',
+                    #                                                  'value':    '"Ready To Order"',
+                    #                                                  'format':    bg_green})
                     
                     #purchSheet.conditional_format(rowsNotReady, 8, rowsNotReady, 11, {'type':     'cell',
                     #                                                  'criteria': 'equal to',
