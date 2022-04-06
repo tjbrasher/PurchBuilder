@@ -239,6 +239,7 @@ def formatFile(file1, label_file_explorer):
                     col_num = pickList.shape[1]
                     row_num = pickList.shape[0]
                     last_col_cell = xl_rowcol_to_cell(row_num, col_num)
+                    second_cell = xl_rowcol_to_cell(1,1)
                     
                     for col_num, value in enumerate(pickList.columns.values):
                         purchSheet.write(0, col_num, value, headerFormat)      
@@ -266,8 +267,12 @@ def formatFile(file1, label_file_explorer):
                     
                     #for name in purchList.sheetnames:
                     #    sheet = purchList['Inventory']
-                    i =1
                     
+                    print('second cell = ', second_cell)
+                    print('last cell = ', last_col_cell)
+                    
+                    purchSheet.conditional_format(second_cell+':'+ last_col_cell, {'type': 'no_blanks',
+                                                                          'format': borderFormat})
 
 
                     
