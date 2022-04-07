@@ -1,14 +1,11 @@
-from ast import While
 import tkinter as tk
 import traceback
 import pandas as pd
 from ErrorTest import showError
 from filePrompt import showPrompt
-from openpyxl.styles import Border, Side
 from xlsxwriter.utility import xl_rowcol_to_cell
 import xlsxwriter
 
-#import chardet
 
 class button():
         
@@ -25,12 +22,14 @@ class button():
     
     def getBtnStatus(self):
         return self._state
-    
+   
+#initializing button objects for setting and getting values    
 button1 = button()
 button2 = button()
 button3 = button()
 button4 = button()
 button5 = button()
+
 
 def setInitialStatus():
     button1.setBtnStatus(1)
@@ -39,6 +38,8 @@ def setInitialStatus():
     button4.setBtnStatus(0)
     button5.setBtnStatus(0)
 
+
+#setting initial/default button status
 if button1.getBtnStatus() == None:
     setInitialStatus()
     
@@ -53,7 +54,6 @@ elif button4.getBtnStatus() == None:
 
 elif button5.getBtnStatus() == None:
     setInitialStatus()
-
 
 
 # var = function that retrieve button state from sortingOptions
@@ -78,10 +78,12 @@ def bt5State():
     return bt5Var
 
 
+#getting number of selected buttons
 def getBtnSelection(bt2Var, bt3Var, bt4Var, bt5Var):
     btSelected = bt2Var + bt3Var + bt4Var + bt5Var
-    print("button selection = ", btSelected)
+    #print("button selection = ", btSelected)
     return btSelected
+
 
 def SortList():
 
@@ -118,8 +120,6 @@ def SortList():
     else:
         pass
     
-    print(sortList)
-    
     return sortList
     
     
@@ -129,57 +129,46 @@ class programError(Exception):
             
 
 def getFile(file1):
-        
-    print(file1._file)
-
-    #print("THIS IS YOUR FILE NAME: ", file1.get_file)
-    #print("THIS MAY ALSO BE THE FILE NAME: ", fileSelect.fileObject.get_file(fileSelect.file1))
-    #print("IS THIS THE FILE NAME? ", str(file.get_file))
-
     
-
-    # Import the dataset
-    #pick_list = pd.read_csv(r"C:\Users\travi\Downloads\Worship Center Changes_pick_list.csv")
-    #pick_list = pd.read_csv(r"Files\Worship Center Changes_pick_list.csv")
+    #print file name to console    
+    #print(file1._file)
+    return file1._file
 
 
 def formatFile(file1, label_file_explorer):
     
-    
+    #setting up dataframe and reading file into dataframe
     pd.set_option('display.max_columns', None)
-    
     pickList = pd.read_csv(file1._file)
-    #pickList = pickList.read_csv(pickList,)
-    print("THIS IS THE CLEANED FILE COLUMNS: ", pickList.columns.values)
-    print(pickList)
     
         
     while True:
-        try:
-
-            print("THIS IS YOUR FILE NAME: ", file1.get_file)
-            print("THIS IS YOUR FILE NAME: ", file1._file)
-            
-            
+        try:            
             # Removed unnecessary columns from the dataset
             pickList = pickList.drop(
                 columns=['Project Name', 'Client', 'Order Quantity'],
                 axis=1
                 )
 
+
             # Conditionally remove unncessary rows from the dataset
             word= ("EAVI")
             items= pickList[pickList.Item.str.contains(word)].index
             pickList.drop(items, inplace = True)
 
+
+            #formatting data in 'Cost' column to allow proper sorting
             pickList['Cost'] = pickList['Cost'].map(lambda x: x.lstrip('$'))
             pickList['Cost'] = (pickList['Cost'].str.split()).apply(lambda x: float(x[0].replace(',','')))
             
+            
+            #setting 'Cost' column to type float
             pickList.Cost = pickList.Cost.astype(float)
 
-            types = pickList.dtypes
 
-            print(types)
+            #printing types of dataframe columns
+            #types = pickList.dtypes
+            #print(types)
            
             #if sort by "items":
             pickList = pickList.sort_values(SortList())
@@ -197,29 +186,17 @@ def formatFile(file1, label_file_explorer):
             
 
             # Print the data set and the list of column names
-            #print(pick_list)
-            print(pickList.columns.values)
+            #print(pickList.columns.values)
 
-            # Get input from the user to name the file
-            #title = saveAs(file1)
-
-            #print(title)
 
             # Export the file
             print("Your list: ", pickList)  
-            
-            #str_df = pickList.stack().str.decode('utf-8').unstack()
-            
-            #for col in str_df:
-            #    pickList[col] = str_df[col]
-            #print(pickList)
-        
+
+
             def saveAs(pickList):
                 saveAs = tk.filedialog.asksaveasfilename(initialfile=file1._file, defaultextension=".xlsx", title = "Please select a location to save your file",
                                                     filetypes = (("Microsoft Excel Files (*.xls, *.xlsx)", "*.xlsx*"), ("Comma Separated Values (*.csv)", "*.csv*"),
                                                                  ("Text Files (*.txt)", "*.txt*"), ("All Files", "*.*")))
-
-                #file1._file.set_file(saveAs)
                 
                 if saveAs:
                     #pickList.to_csv(saveAs, index=False, line_terminator="\n")
@@ -236,9 +213,14 @@ def formatFile(file1, label_file_explorer):
                         'border': 1,
                         'text_wrap': True})
                     
+                    
+                    #getting number of total rows and columns
                     col_num = pickList.shape[1]
                     row_num = len(pickList)
-                    row_num1 = row_num+1
+                    row_num1 = row_num+2
+                    
+                    
+                    #getting first and last cell position for setting borders
                     last_col_cell = xl_rowcol_to_cell(row_num, col_num-1)
                     second_cell = xl_rowcol_to_cell(1,1)
                     
@@ -246,13 +228,6 @@ def formatFile(file1, label_file_explorer):
                             purchSheet.write(0, col_num, value, headerFormat) 
                             col_num+1 
   
-                    #headerFormat.set_bg_color('red')
-
-
-                    
-                    
-                    bg_green = purchList.add_format({'bg_color': '#92D050'})
-                    bg_yellow = purchList.add_format({'bg_color': '#FFFF00'})
                     
                     # Setting column widths
                     purchSheet.set_column(0, 0, 9)
@@ -267,63 +242,71 @@ def formatFile(file1, label_file_explorer):
                     purchSheet.set_column(14, 14, 14)
 
                     
-                    #for name in purchList.sheetnames:
-                    #    sheet = purchList['Inventory']
-                    
-                    print('second cell = ', second_cell)
-                    print('last cell = ', last_col_cell)
-                    
+                    #setting borders on cells                  
                     purchSheet.conditional_format(second_cell+':'+ last_col_cell, {'type': 'blanks',
                                                                           'format': borderFormat})
                     purchSheet.conditional_format(second_cell+':'+ last_col_cell, {'type': 'no_blanks',
                                                                           'format': borderFormat})
-
-
-                    #print('total rows = ', row_num)
-                    #print('total columns = ', col_num)
                     
-                    # Setting conditional formatting (green if ready to order, yellow if not ready, (purple if in stock - later implementation))             
+                    
+                    #initializing conditional formatting options
+                    bg_green = purchList.add_format({'bg_color': '#92D050'})
+                    bg_yellow = purchList.add_format({'bg_color': '#FFFF00'})
+
+
+                    # Setting conditional formatting (green if ready to order, yellow if not ready;
+                    # (purple if in stock - later implementation))             
                     def check_status(i):
                         print('rows = ', row_num)
                         for i in range(1, row_num1):
                             status = pickList['Status'].values[i-2]
                             print('i=', i)
                             print(status)
-
+                                                        
+                            if i==0:
+                                pass
+                            
                             if status == "Ready To Order":
                                 print("item is ready to order")
-                                purchSheet.conditional_format(i, 8, i, 11, 
-                                                                            {'type':     'no_blanks',
-                                                                            'format':    bg_green})
-                                purchSheet.conditional_format(i, 8, i, 11, 
-                                                                            {'type':     'blanks',
-                                                                            'format':    bg_green})
+                                i = i-1
+                                if i==0:
+                                    pass
+                                else:
+                                    purchSheet.conditional_format(i, 8, i, 11, 
+                                                                                {'type':     'no_blanks',
+                                                                                'format':    bg_green})
+                                    purchSheet.conditional_format(i, 8, i, 11, 
+                                                                                {'type':     'blanks',
+                                                                                'format':    bg_green})
                                                     
                             elif status == 'Not Ordered':
                                 print('item is not ready to order')
-                                purchSheet.conditional_format(i, 8, i, 11, {'type':     'no_blanks',
-                                                                            'format':    bg_yellow})
-                                purchSheet.conditional_format(i, 8, i, 11, {'type':     'blanks',
-                                                                            'format':    bg_yellow})
-                                
-                                
+                                i= i-1
+                                if i==0:
+                                    pass
+                                else:
+                                    purchSheet.conditional_format(i, 8, i, 11, {'type':     'no_blanks',
+                                                                                'format':    bg_yellow})
+                                    purchSheet.conditional_format(i, 8, i, 11, {'type':     'blanks',
+                                                                                'format':    bg_yellow})
+                                    
                             print('end of loop')
                             i = i+1
                             
-                    
-                    i=1
+                    i=0
                     check_status(i)
-                  
+                    
+
+                    #applying filters to column headers
                     purchSheet.autofilter(0, 0, 0, col_num)
                   
+                    #saving file to user specified location
                     writer.save()
                     showPrompt(label_file_explorer)          
                     print("File Saved!")
                 else:
                     pass
-                    
-
-            #pickList.to_csv(saveAs(pickList), index=False, line_terminator="\n", encoding="utf-8")
+                
             
             saveAs(pickList)  
             break      

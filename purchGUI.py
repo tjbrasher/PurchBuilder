@@ -30,7 +30,7 @@ file1 = fileObject()
 inputfile = fileObject()
 
 
-class mainApp(tk.Tk):
+class mainApp(TkinterDnD.Tk):
 
     def __init__(self):
         super().__init__()
@@ -77,12 +77,50 @@ class mainApp(tk.Tk):
                                       width = 57, height = 1, font = ("Arial", 10))
         label_file_explorer.insert("1.0", "Please select a file")
         label_file_explorer.place(x=57.5, y=179)
-    
+
 
         submit = tk.Button(self, text = "Submit", width = 10, height = 1, bg = "silver")
         submit.place(x=265, y=225)
         
         inputfile.set_file("")
+
+        
+        
+        #drag and drop functionality
+        
+        # drop methods
+        def drop_enter(event):
+            event.widget.focus_force()
+            print('Entering %s' % event.widget)
+            return event.action
+
+        def drop_position(event):
+            return event.action
+
+        def drop_leave(event):
+            print('Leaving %s' % event.widget)
+            return event.action
+
+        def drop(event):
+            #if c.dragging:
+                # the canvas itself is the drag source
+            #    return REFUSE_DROP
+            if event.data:
+                files = label_file_explorer.tk.splitlist(event.data)
+                for f in files:
+                    inputfile.set_file(f)
+                    label_file_explorer.delete("1.0", tk.END)
+                    label_file_explorer.configure(foreground = "black")
+                    label_file_explorer.insert(tk.END, inputfile.get_file())
+            return event.action
+        
+        label_file_explorer.drop_target_register(DND_FILES)
+        label_file_explorer.dnd_bind('<<DropEnter>>', drop_enter)
+        label_file_explorer.dnd_bind('<<DropPosition>>', drop_position)
+        label_file_explorer.dnd_bind('<<DropLeave>>', drop_leave)
+        label_file_explorer.dnd_bind('<<Drop>>', drop)
+
+
 
         # setting and positioning the file selection
         def fileExplore():

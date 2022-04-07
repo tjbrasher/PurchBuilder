@@ -1,18 +1,14 @@
 import tkinter as tk
 from tkinter import *
-from turtle import color, width
 from PIL import Image, ImageTk
-from ErrorTest import resetFileBox
-from tkinter import ttk
 from Data_Cleaning_wPandas_Purch import button1, button2, button3, button4, button5
 from Data_Cleaning_wPandas_Purch import getBtnSelection
-from Data_Cleaning_wPandas_Purch import bt1State, bt2State, bt3State, bt4State, bt5State
 from Data_Cleaning_wPandas_Purch import SortList
+
 
 class sortWindow(tk.Toplevel):
     
-       
-    def __init__(self):#, label_file_explorer):
+    def __init__(self):
         super().__init__()     
         
         self.focus_set()
@@ -24,8 +20,6 @@ class sortWindow(tk.Toplevel):
         title.configure(state="disabled")
         title.place(x=2.5, y=2.5)
         
-
-        #f = tk.Frame(width = 300, height = 150)
         self.c = tk.Canvas(self, bg= "white", width = 200, height =300)
         self.c.pack()      
         
@@ -34,6 +28,7 @@ class sortWindow(tk.Toplevel):
       
         self.overrideredirect(True)
         self.resizable(0,0)
+
 
         # window sizing and positioning
         window_width = 200
@@ -47,97 +42,64 @@ class sortWindow(tk.Toplevel):
         self.geometry(f'{window_width}x{window_height}+{ctr_x}+{ctr_y}')
         self.resizable(False, False)
         
+        
+        #setting outline for sorting buttons
         promptBorder = self.c.create_rectangle(15, 60, 185, 235, outline='silver', width=2, fill="black")
-   
+
+
+        #setting heading for sort window
         Sortprompt = self.c.create_text(100, 30, text="Please Select Options" + "\n" + "for Sorting File",
                                 fill = "white", font=("Arial 12"), width = 180, justify=CENTER)
 
 
+        #setting text for buttons
         rb1_text = self.c.create_text(105, 85, text="None", fill = "white", font=("Arial 11"), justify = LEFT)
         rb2_text = self.c.create_text(111, 115, text="Source", fill = "white", font=("Arial 11"), justify = LEFT)
         rb3_text = self.c.create_text(102.5, 145, text="Item", fill = "white", font=("Arial 11"), justify = LEFT)
         rb4_text = self.c.create_text(102.5, 175, text="Cost", fill = "white", font=("Arial 11"), justify = LEFT)
         rb5_text = self.c.create_text(130, 205, text="Order Status", fill = "white", font=("Arial 11"), justify = LEFT)
 
+
+        #setting image for when button is selected
         self.buttonSelected = Image.open("Files\\radio_Selected.png")
         self.buttonSelected_resized = self.buttonSelected.resize((22,22))
         self.rbSelected = ImageTk.PhotoImage(self.buttonSelected_resized)
 
 
+        #setting image for when button is deselected
         self.buttonDeselected = Image.open("Files\\radioButton_deselect.png")
         self.buttonDeselected_resized = self.buttonDeselected.resize((22,22))
         self.rbDeselected = ImageTk.PhotoImage(self.buttonDeselected_resized)
         
+        
+        #setting and placing "Done" button to close window
         doneButton = tk.Button(self, text = "Done", width = 10, height = 1, bg="silver")                               
         doneButton.place(x=62.5, y=250)
         
+        
+        #setting button state variables
         bt1SelectState = IntVar()
         bt2SelectState = IntVar()
         bt3SelectState = IntVar()
         bt4SelectState = IntVar()
         bt5SelectState = IntVar()
-        
-        #bt1SelectState = button1.getBtnStatus()
-        #bt2SelectState = button2.getBtnStatus()
-        #bt3SelectState = button3.getBtnStatus()
-        #bt4SelectState = button4.getBtnStatus()
-        #bt5SelectState = button5.getBtnStatus()
-        
-        print("BT1 Selected Status: ", button1.getBtnStatus())
-        
-        #button1.setBtnStatus(bt1SelectState)
-        #button2.setBtnStatus(bt2SelectState)
-        #button3.setBtnStatus(bt3SelectState)
-        #button4.setBtnStatus(bt4SelectState)
-        #button5.setBtnStatus(bt5SelectState)
-          
-        
-        bt1Set = button1.getBtnStatus()
-        print("bt1 = ", bt1Set)
-        bt2Set = button2.getBtnStatus()
-        print("bt2 = ", bt2Set)
-        bt3Set = button3.getBtnStatus()
-        print("bt3 = ", bt3Set)
-        bt4Set = button4.getBtnStatus()
-        print("bt4 = ", bt4Set)
-        bt5Set = button5.getBtnStatus()
-        print("bt5 = ", bt5Set)
-                  
-        
-        print("bt1Set = ", bt1Set)
-        print("bt2Set = ", bt2Set)
-        print("bt3Set = ", bt3Set)
-        print("bt4Set = ", bt4Set)
-        print("bt5Set = ", bt5Set)
-        
-        #bt1SelectState.set(setRb1Status(bt1SelectState, bt1Set))
-        #bt2SelectState.set(setRb2Status(bt2SelectState, bt2Set))
-        #bt3SelectState.set(setRb3Status(bt3SelectState, bt3Set))
-        #bt4SelectState.set(setRb4Status(bt4SelectState, bt4Set))
-        #bt5SelectState.set(setRb5Status(bt5SelectState, bt5Set))
-        
-        #print("bt1SelectState = ", button1.get())
-        #print("bt2SelectState = ", button2.get())
 
-        def getButtonState(bt2Set, bt3Set, bt4Set, bt5Set):   
-            btstate1 = bt2Set + bt3Set + bt4Set + bt5Set
-            print("btstate = ", btstate1)
-            return btstate1
+          
+        #getting button status & assigning to variable
+        bt1Set = button1.getBtnStatus()
+        bt2Set = button2.getBtnStatus()
+        bt3Set = button3.getBtnStatus()
+        bt4Set = button4.getBtnStatus()
+        bt5Set = button5.getBtnStatus()
+                
         
         def getButtonStatus():   
             btstate = bt2SelectState.get() + bt3SelectState.get() + bt4SelectState.get() + bt5SelectState.get()
-            print("btstate = ", btstate)
+            #print("btstate = ", btstate)
             return btstate
-        
-        
-        def setBtnSelection(bt2Set, bt3Set, bt4Set, bt5Set):   
-            btstate1 = bt2Set + bt3Set + bt4Set + bt5Set
-            print("btstate = ", btstate1)
-            return btstate1
-                
-        # retrieve button status from DataCleaning and set
 
-        
+
+        # retrieve button status from DataCleaning and set
         bstate1 = getBtnSelection(bt2Set, bt3Set, bt4Set, bt5Set)
         if bstate1 != 0:
             print("bstate1 = ", bstate1)
@@ -154,12 +116,13 @@ class sortWindow(tk.Toplevel):
             bt5SelectState.set(0)
 
 
+        #getting status of first button
         def getRb1State():
             rb1Status = bt1SelectState.get()
-            #print("bt1State = ", rb1Status)
             return rb1Status      
 
-                
+        
+        #setting and placing checkbuttons to be used         
         bt1 = Checkbutton(self, image=self.rbDeselected, background="black", foreground="black", indicatoron=False, 
                      activebackground="black", activeforeground="black",  highlightcolor="black", border=0,
                      highlightbackground="black", borderwidth=0, variable=bt1SelectState, onvalue=1, offvalue=0)
@@ -179,17 +142,14 @@ class sortWindow(tk.Toplevel):
         bt5 = Checkbutton(self, image=self.rbDeselected, background="black", foreground="black", indicatoron=False, 
                      activebackground="black", activeforeground="black",  highlightcolor="black", border=0,
                      highlightbackground="black", borderwidth=0, variable=bt5SelectState, onvalue=1, offvalue=0)
-        
-        
+                
 
-            
-
+        #functions for button selections
         def bt1Selected():
             rb1state = getRb1State()
             if rb1state == 1:
                 bt1.configure(selectimage=self.rbSelected, selectcolor="black")
                 bt1.select()
-                #setBtnStatus(bt1SelectState, bt1SelectState.get())
                 bt2.deselect()
                 bt3.deselect()
                 bt4.deselect()
@@ -200,7 +160,6 @@ class sortWindow(tk.Toplevel):
                 button5.setBtnStatus(0)
             if rb1state == 0:
                 bt1.select()
-                #setBtnStatus(bt1SelectState, bt1SelectState.get())
                 bt1Selected()
                        
         def bt2Selected():
@@ -250,7 +209,7 @@ class sortWindow(tk.Toplevel):
                 bt5.configure(selectimage=self.rbSelected, selectcolor="black")
                 
             
- 
+        #setting functions for button selections
         bt1.configure(command=lambda: bt1Selected())
         bt1.place(x=37, y=72)
         
@@ -267,15 +226,15 @@ class sortWindow(tk.Toplevel):
         bt5.place(x=37, y=192)
         
         
-        totalBtState = getButtonState(bt2Set, bt3Set, bt4Set, bt5Set)
-        print("button selection total: ", totalBtState)
-        
+        #setting the default button selection if no other buttons are selected
         while bstate1 == 0:
             bt1Selected()
             break
         else:
             pass
         
+        
+        #setting and passing button status to Data_Cleaning file for formatting
         def setButtons():
             button1.setBtnStatus(button1.getBtnStatus())
             button2.setBtnStatus(button2.getBtnStatus())
@@ -283,7 +242,8 @@ class sortWindow(tk.Toplevel):
             button4.setBtnStatus(button4.getBtnStatus())
             button5.setBtnStatus(button5.getBtnStatus())
             
-              
+            
+        #function to close window and continue program on clicking "Done" button              
         def doneClick():
             setButtons()
             SortList()
@@ -291,22 +251,12 @@ class sortWindow(tk.Toplevel):
             self.withdraw()
             #exit()
 
-            
-        #def YesClick(label_file_explorer):
-        #        resetFileBox(label_file_explorer)
-        #        self.grab_release()
-        #        self.destroy()
-             
+
+        #assigning function to "Done" button
         doneButton.configure(command = lambda: doneClick())
-        
-        #yesButton.configure(command = lambda: YesClick(label_file_explorer))
 
                 
-#def showPrompt(label_file_explorer):
-#    programPrompt = sortWindow(label_file_explorer)
-#    programPrompt.mainloop()
 
-        #tk.ttk.Separator(self, orient=tk.VERTICAL).place(x=87.5, y=0, height=300)
     
 #programSortWindow = sortWindow()
 
