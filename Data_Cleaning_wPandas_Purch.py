@@ -237,21 +237,22 @@ def formatFile(file1, label_file_explorer):
                         'text_wrap': True})
                     
                     col_num = pickList.shape[1]
-                    row_num = pickList.shape[0]
-                    last_col_cell = xl_rowcol_to_cell(row_num, col_num)
+                    row_num = len(pickList)
+                    row_num1 = row_num+1
+                    last_col_cell = xl_rowcol_to_cell(row_num, col_num-1)
                     second_cell = xl_rowcol_to_cell(1,1)
                     
                     for col_num, value in enumerate(pickList.columns.values):
-                        purchSheet.write(0, col_num, value, headerFormat)      
-                        col_num+1
+                            purchSheet.write(0, col_num, value, headerFormat) 
+                            col_num+1 
   
                     #headerFormat.set_bg_color('red')
 
 
-                    #purchSheet.autofilter(0, 0, 0, col_num)
                     
-                    bg_green = purchList.add_format({'bg_color': 'green'})
-                    bg_red = purchList.add_format({'bg_color': 'red'})
+                    
+                    bg_green = purchList.add_format({'bg_color': '#92D050'})
+                    bg_yellow = purchList.add_format({'bg_color': '#FFFF00'})
                     
                     # Setting column widths
                     purchSheet.set_column(0, 0, 9)
@@ -264,6 +265,7 @@ def formatFile(file1, label_file_explorer):
                     purchSheet.set_column(12, 12, 12)
                     purchSheet.set_column(13, 13, 16)
                     purchSheet.set_column(14, 14, 14)
+
                     
                     #for name in purchList.sheetnames:
                     #    sheet = purchList['Inventory']
@@ -271,43 +273,49 @@ def formatFile(file1, label_file_explorer):
                     print('second cell = ', second_cell)
                     print('last cell = ', last_col_cell)
                     
+                    purchSheet.conditional_format(second_cell+':'+ last_col_cell, {'type': 'blanks',
+                                                                          'format': borderFormat})
                     purchSheet.conditional_format(second_cell+':'+ last_col_cell, {'type': 'no_blanks',
                                                                           'format': borderFormat})
 
 
-                    
-                    #def set_border(ws, cell_range):
-                    #    border = Side(border_style = "thin", color="000000")
-                    #    for row in ws(cell_range):
-                    #        for cell in row:
-                    #            cell.border = Border(top=border, left=border, right=border, bottom=border)
-                    #last_col_cell
-                    #set_border(purchList, 'B1:' + last_col_cell)
-                
-                    
                     #print('total rows = ', row_num)
                     #print('total columns = ', col_num)
                     
-                    # Setting conditional formatting (green if ready to order, yellow if not ready, (purple if in stock - later implementation))
-                    ready = ("Ready To Order")
-                    items_ready = pickList[pickList['Status'] == ready].index
+                    # Setting conditional formatting (green if ready to order, yellow if not ready, (purple if in stock - later implementation))             
+                    def check_status(i):
+                        print('rows = ', row_num)
+                        for i in range(1, row_num1):
+                            status = pickList['Status'].values[i-2]
+                            print('i=', i)
+                            print(status)
+
+                            if status == "Ready To Order":
+                                print("item is ready to order")
+                                purchSheet.conditional_format(i, 8, i, 11, 
+                                                                            {'type':     'no_blanks',
+                                                                            'format':    bg_green})
+                                purchSheet.conditional_format(i, 8, i, 11, 
+                                                                            {'type':     'blanks',
+                                                                            'format':    bg_green})
+                                                    
+                            elif status == 'Not Ordered':
+                                print('item is not ready to order')
+                                purchSheet.conditional_format(i, 8, i, 11, {'type':     'no_blanks',
+                                                                            'format':    bg_yellow})
+                                purchSheet.conditional_format(i, 8, i, 11, {'type':     'blanks',
+                                                                            'format':    bg_yellow})
+                                
+                                
+                            print('end of loop')
+                            i = i+1
+                            
                     
-                    notReady = ("Not Ordered")
-                    items_notReady = pickList[pickList['Status'] == notReady].index
-                    
-                    #for i in items_ready:
-                    #    purchSheet.conditional_format(i, 8, i, 11, 
-                    #                                                 {'type':     'cell',
-                    #                                                  'criteria': 'equal to',
-                    #                                                  'value':    '"Ready To Order"',
-                    #                                                  'format':    bg_green})
-                    
-                    #purchSheet.conditional_format(rowsNotReady, 8, rowsNotReady, 11, {'type':     'cell',
-                    #                                                  'criteria': 'equal to',
-                    #                                                  'value':    '"Not Ordered"',
-                    #                                                  'format':    bg_red})
-                    
-                    
+                    i=1
+                    check_status(i)
+                  
+                    purchSheet.autofilter(0, 0, 0, col_num)
+                  
                     writer.save()
                     showPrompt(label_file_explorer)          
                     print("File Saved!")
