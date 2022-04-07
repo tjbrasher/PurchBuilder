@@ -2,7 +2,7 @@ NOTE:  If you are experiencing issues with converting a csv file into a purchasi
 
      
 
-Program Brief
+Program Brief:
 - The purpose of this program is to read purchasing files generated from JetBuilt and clean, reformat and sort the data into the same format used in the PURCH lists that are used by the EAVI purchasing department.
 
 
@@ -20,33 +20,50 @@ Instructions:
 - Upon a successful save, the file will display a prompt asking if the user would like to continue the program. Select “Yes” to process another file or select “No” to terminate and close the program.
 
 
-Program Components
-Main Window
-- Upon launching the program you will be presented with a window that has a file explorer (comprised of the text box and the “Browse” buttons), a “Submit” button, a “Sort Options” selection, and a “Help” selection. The main window launches in the center of the screen and cannot be resized. However, the window can still be minimized or the program can be closed by pressing the “X” in the top right corner of the window. 
+Program Components:
+
+
+Main Window:
+- Upon launching the program you will be presented with a window that has a file explorer (comprised of the text box and the “Browse” buttons), a “Submit” button, a “Sort Options” selection, and a “Help” selection.
+- The main window launches in the center of the screen and cannot be resized. However, the window can still be minimized or the program can be closed by pressing the “X” in the top right corner of the window. 
+
+
 File Explorer (File Text Box and Browse Files Button): 
-The file explorer is how files are loaded into the program.
-To select a file, press the “Browse” button and a file explorer window will open allowing you to find the appropriate file to load into the program. Once the file has been selected press the “Open” button and you will see the file name has been loaded into the text box, indicating that the file has loaded. Note that this program was designed to work only with txt files, csv files, and appropriately formatted Microsoft Excel files.
+- The file explorer is how files are loaded into the program.
+- To select a file, press the “Browse” button and a file explorer window will open allowing you to find the appropriate file to load into the program.
+- Once the file has been selected press the “Open” button and you will see the file name has been loaded into the text box, indicating that the file has loaded.
+- Note that this program was designed to work primarily with csv files
+
+
 Sorting Options:
-Sorting Options refers to the ways in which the items in the new PURCH list can be organized. 
-Once the file has been loaded, you can select how you would like the information to be sorted when the file is formatted and the PURCH list is created. Sorting options include sorting by “Source”, “Item”, “Cost” and “Order Status”. 
-Multiple sorting options can be selected but the sorting order will always occur in the order in which the options are listed (i.e; sorted by “Source” first, “Item” second, “Cost” third, and “Order Status” last assuming all sort options are selected. If not all options are selected, sorting will only apply to the options that have been chosen by the user).
-By default, No sorting options are applied to the file meaning that the order of the items remains the same as it is in the original file.
+- Sorting Options refers to the ways in which the items in the new PURCH list can be organized. 
+- Once the file has been loaded, you can select how you would like the information to be sorted when the file is formatted and the PURCH list is created.
+- Sorting options include sorting by “Source”, “Item”, “Cost” and “Order Status”. 
+- Multiple sorting options can be selected but the sorting order will always occur in the order in which the options are listed (i.e; sorted by “Source” first, “Item” second, “Cost” third, and “Order Status” last assuming all sort options are selected.
+- If not all options are selected, sorting will only apply to the options that have been chosen by the user).
+- By default, No sorting options are applied to the file meaning that the order of the items remains the same as it is in the original file.
+
+
 Submit:
-The submit button will take the file that the user selected along with the selected sorting options and output a cleaned and reformatted file and save the file based on the location the user has designated.
-Upon pressing the “Submit” button one of two things will happen:
-If the file is valid, the program will display a “Save As” file dialog and the user will be prompted to save the file to a location of their choosing. This dialog is also where the user will have the option to rename their file before they save it if desired.
-Upon a successful save, the program will ask the user if they would like to process another file.
-Selecting “Yes” resets the file explorer and allows the user to continue the process
-Selecting “No” will terminate and close the program
-If the file is not valid, an error message will appear notifying the user that the request could not be processed. The user will not be able to proceed until this message has been cleared by pressing the “Okay” button.
+- The submit button will take the file that the user selected along with the selected sorting options and output a cleaned and reformatted file and save the file based on the location the user has designated.
+- Upon pressing the “Submit” button one of two things will happen:
+- If the file is valid, the program will display a “Save As” file dialog and the user will be prompted to save the file to a location of their choosing.
+- This dialog is also where the user will have the option to rename their file before they save it if desired.
+- Upon a successful save, the program will ask the user if they would like to process another file.
+- Selecting “Yes” resets the file explorer and allows the user to continue the process
+- Selecting “No” will terminate and close the program
+- If the file is not valid, an error message will appear notifying the user that the request could not be processed.
+- The user will not be able to proceed until this message has been cleared by pressing the “Okay” button.
+
+
 Help:
-Selecting the help option will display this Read_Me file in order to provide guidance to the user about the operation of the program as well as notes on known issues and troubleshooting help.
+- Selecting the help option will display this Read_Me file in order to provide guidance to the user about the operation of the program as well as notes on known issues and troubleshooting help.
 
 
 
-
-Source Code Composition
-The program consists of five (5) separate Python modules; four (4) for the different GUI windows utilized within the program and a separate single file that handles the data cleaning, formatting and saving of the new, reformatted file.
+Source Code Composition:
+- The program consists of five (5) separate Python modules;
+- four (4) for the different GUI windows utilized within the program and a separate single file that handles the data cleaning, formatting and saving of the new, reformatted file.
 
 
 
