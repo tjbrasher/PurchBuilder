@@ -1,10 +1,15 @@
 import tkinter as tk
+from tkinter.filedialog import SaveAs
 import traceback
+from openpyxl import Workbook, load_workbook
 import pandas as pd
 from ErrorTest import showError
 from filePrompt import showPrompt
 from xlsxwriter.utility import xl_rowcol_to_cell
 import xlsxwriter
+import os
+import win32com.client as win32
+from win32com.client import Dispatch
 
 
 class button():
@@ -195,7 +200,7 @@ def formatFile(file1, label_file_explorer):
 
             def saveAs(pickList):
                 saveAs = tk.filedialog.asksaveasfilename(initialfile=file1._file, defaultextension=".xlsx", title = "Please select a location to save your file",
-                                                    filetypes = (("Microsoft Excel Files (*.xls, *.xlsx)", "*.xlsx*"), ("Comma Separated Values (*.csv)", "*.csv*"),
+                                                    filetypes = (("Microsoft Excel Files (*.xls, *.xlsx, *.xlsm)", "*.xlsx*"), ("Comma Separated Values (*.csv)", "*.csv*"),
                                                                  ("Text Files (*.txt)", "*.txt*"), ("All Files", "*.*")))
                 
                 if saveAs:
@@ -204,6 +209,9 @@ def formatFile(file1, label_file_explorer):
                     writer = pd.ExcelWriter(saveAs, engine='xlsxwriter')
                     pickList.to_excel(writer, sheet_name="PURCH", index=False)
                     purchList = writer.book
+                    saveAs_xlsm = purchList.filename = saveAs[-1]+"m"
+                    print("new file name: ", saveAs_xlsm)
+                    purchList.add_vba_project('Files/read_only_VBA.xlsm./vbaProject.bin')
                     purchSheet = writer.sheets['PURCH']
                     borderFormat = purchList.add_format({'border': 1})
                     headerFormat = purchList.add_format({
@@ -300,8 +308,38 @@ def formatFile(file1, label_file_explorer):
                     #applying filters to column headers
                     purchSheet.autofilter(0, 0, 0, col_num)
                   
+
+                    #setting file to open read only
+                    def set_password():
+                        
+                        #excel = win32.gencache.EnsureDispatch('Excel.Application')
+                        #wb = excel.Workbooks.Open(saveAs)
+                        
+                        #wb.SaveAs()
+
+                        if os.path.exists(saveAs):
+                            xl = Dispatch("Excel.Application")
+                            wb = xl.Workbooks.Add(saveAs)
+                            
+                            saveAs = saveAs[-1]+"m"
+                            print("new file name = ", saveAs)
+                            
+                            wb.SaveAs(saveAs[-1]+"m", FileFormat = 52)
+                            xl.Quit()
+                            
+                            xl=win32.Dispatch("Excel.Application")
+                            xl.Workbooks.Open(os.path.abspath(saveAs), ReadOnly=1)
+                            xl.Application.Run("C:\\Users\\tbrasher\\Documents\\GitHub\\DataCleaningProjects\\Files\\read_only_VBA.xlsm!Module1")
+                        
+                        del xl
+
+                    
                     #saving file to user specified location
                     writer.save()
+
+                    set_password()
+                   
+                                     
                     showPrompt(label_file_explorer)          
                     print("File Saved!")
                 else:
