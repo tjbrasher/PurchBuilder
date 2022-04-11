@@ -43,7 +43,7 @@ class mainApp(TkinterDnD.Tk):
         self.c = tk.Canvas(self, bg="black", width = 620, height = 300)
         self.c.pack()
         self.background_image = ImageTk.PhotoImage(file = "Files\\Logos\\background.png")
-        self.c.create_image(10, 10, image = self.background_image, anchor = NW)
+        self.c.create_image(0, 0, image = self.background_image, anchor = NW)
 
         # setting and positioning the logo header
         self.logo = Image.open("Files\\Logos\\EAlogoHorizonalNobg.png")
