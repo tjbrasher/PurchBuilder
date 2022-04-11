@@ -210,7 +210,7 @@ def formatFile(file1, label_file_explorer):
                     pickList.to_excel(writer, sheet_name="PURCH", index=False)
                     purchList = writer.book
                     #saveAs_xlsm = purchList.filename = saveAs[-1]+"m"
-                    print("new file name: ", saveAs_xlsm)
+                    #print("new file name: ", saveAs_xlsm)
                     #purchList.add_vba_project('Files/read_only_VBA.xlsm./vbaProject.bin')
                     purchSheet = writer.sheets['PURCH']
                     borderFormat = purchList.add_format({'border': 1})
