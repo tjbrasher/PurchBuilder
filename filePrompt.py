@@ -63,6 +63,7 @@ class promptWindow(tk.Toplevel):
         def NoClick():
             self.grab_release()
             self.destroy()
+            quit()
             exit()
             
         def YesClick(label_file_explorer):
