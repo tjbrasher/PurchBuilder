@@ -102,13 +102,13 @@ class sortWindow(tk.Toplevel):
         # retrieve button status from DataCleaning and set
         bstate1 = getBtnSelection(bt2Set, bt3Set, bt4Set, bt5Set)
         if bstate1 != 0:
-            print("bstate1 = ", bstate1)
+            #print("bstate1 = ", bstate1)
             bt2SelectState.set(bt2Set)
             bt3SelectState.set(bt3Set)
             bt4SelectState.set(bt4Set)
             bt5SelectState.set(bt5Set)
         else:
-            print("bstate1 = 0")
+            #print("bstate1 = 0")
             bt1SelectState.set(1)
             bt2SelectState.set(0)
             bt3SelectState.set(0)

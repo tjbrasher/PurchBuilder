@@ -11,6 +11,7 @@ import os
 import win32com.client as win32
 from win32com.client import Dispatch
 from datetime import date
+from pathlib import Path
 
 
 class button():
@@ -202,11 +203,18 @@ def formatFile(file1, label_file_explorer):
             get_fileName()
             
             project_number = pickList.iloc[2]['Project ID']
-            file_name = os.path.basename(file1._file)
+
             current_date = date.today()
             current_date_string = str(current_date)
+
+            file_path = Path(file1._file)
+            file_name = file_path.with_suffix('')
+            file_name = os.path.basename(str(file_name))
+            
             file_name = file_name.replace("_pick_list", "")
-            file_name = project_number + "_" + file_name[:-4] + '_' + current_date_string + '_PURCH'
+            
+            file_name = project_number + "_" + file_name + '_' + current_date_string + '_PURCH'
+
             #print('filename is: ',project_number + "_" + file_name[:-4] + '_' + current_date_string + '_PURCH')
             
 
