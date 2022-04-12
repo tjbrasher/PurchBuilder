@@ -10,6 +10,7 @@ import xlsxwriter
 import os
 import win32com.client as win32
 from win32com.client import Dispatch
+from datetime import date
 
 
 class button():
@@ -20,10 +21,10 @@ class button():
     def setBtnStatus(self, btState):
         if btState == 0:
             self._state = 0
-            print(self, " selected = False", btState)
+            #print(self, " selected = False", btState)
         else:
             self._state = btState
-            print(self, " selected = True ", btState)
+            #print(self, " selected = True ", btState)
     
     def getBtnStatus(self):
         return self._state
@@ -192,14 +193,40 @@ def formatFile(file1, label_file_explorer):
 
             # Print the data set and the list of column names
             #print(pickList.columns.values)
+            
+            def get_fileName():
+                print('file is: ', file1._file[:-4])
+                #file_name = [re.sub(r'^.*?/', '',str) for c in file1._file]
+                #print(file_name)
+            
+            get_fileName()
+            
+            project_number = pickList.iloc[2]['Project ID']
+            file_name = os.path.basename(file1._file)
+            current_date = date.today()
+            current_date_string = str(current_date)
+            file_name = file_name.replace("_pick_list", "")
+            file_name = project_number + "_" + file_name[:-4] + '_' + current_date_string + '_PURCH'
+            #print('filename is: ',project_number + "_" + file_name[:-4] + '_' + current_date_string + '_PURCH')
+            
 
 
             # Export the file
-            print("Your list: ", pickList)  
+            #print("Your list: ", pickList)  
+            
+            def directory_initial():
+                try:
+                    directory = "X:\Projects ACTIVE"
+                    return directory
+                except:
+                    directory = "/Downloads"
 
 
             def saveAs(pickList):
-                saveAs = tk.filedialog.asksaveasfilename(initialfile=file1._file, defaultextension=".xlsx", title = "Please select a location to save your file",
+                saveAs = tk.filedialog.asksaveasfilename(initialdir = directory_initial(),
+                                                         initialfile = file_name,
+                                                         defaultextension=".xlsx",
+                                                         title = "Please select a location to save your file",
                                                     filetypes = (("Microsoft Excel Files (*.xls, *.xlsx, *.xlsm)", "*.xlsx*"), ("Comma Separated Values (*.csv)", "*.csv*"),
                                                                  ("Text Files (*.txt)", "*.txt*"), ("All Files", "*.*")))
                 
@@ -265,17 +292,17 @@ def formatFile(file1, label_file_explorer):
                     # Setting conditional formatting (green if ready to order, yellow if not ready;
                     # (purple if in stock - later implementation))             
                     def check_status(i):
-                        print('rows = ', row_num)
+                        #print('rows = ', row_num)
                         for i in range(1, row_num1):
                             status = pickList['Status'].values[i-2]
-                            print('i=', i)
-                            print(status)
+                            #print('i=', i)
+                            #print(status)
                                                         
                             if i==0:
                                 pass
                             
                             if status == "Ready To Order":
-                                print("item is ready to order")
+                                #print("item is ready to order")
                                 i = i-1
                                 if i==0:
                                     pass
@@ -288,7 +315,7 @@ def formatFile(file1, label_file_explorer):
                                                                                 'format':    bg_green})
                                                     
                             elif status == 'Not Ordered':
-                                print('item is not ready to order')
+                                #print('item is not ready to order')
                                 i= i-1
                                 if i==0:
                                     pass
@@ -298,7 +325,7 @@ def formatFile(file1, label_file_explorer):
                                     purchSheet.conditional_format(i, 8, i, 11, {'type':     'blanks',
                                                                                 'format':    bg_yellow})
                                     
-                            print('end of loop')
+                            #print('end of loop')
                             i = i+1
                             
                     i=0
@@ -341,7 +368,7 @@ def formatFile(file1, label_file_explorer):
                    
                                      
                     showPrompt(label_file_explorer)          
-                    print("File Saved!")
+                    #print("File Saved!")
                 else:
                     pass
                 
@@ -351,7 +378,7 @@ def formatFile(file1, label_file_explorer):
                 
         
         except Exception as e:
-            print(e)
+            #print(e)
             traceback.print_exc()
             showError(label_file_explorer)
             break

@@ -90,14 +90,14 @@ class mainApp(TkinterDnD.Tk):
         # drop methods
         def drop_enter(event):
             event.widget.focus_force()
-            print('Entering %s' % event.widget)
+            #print('Entering %s' % event.widget)
             return event.action
 
         def drop_position(event):
             return event.action
 
         def drop_leave(event):
-            print('Leaving %s' % event.widget)
+            #print('Leaving %s' % event.widget)
             return event.action
 
         def drop(event):
@@ -123,7 +123,7 @@ class mainApp(TkinterDnD.Tk):
 
         # setting and positioning the file selection
         def fileExplore():
-            inputfile1 = tk.filedialog.askopenfilename(initialdir = "/", title = "Please Select a File to Transform",
+            inputfile1 = tk.filedialog.askopenfilename(initialdir = "/Downloads", title = "Please Select a File to Transform",
                                                 filetypes = (("Comma Separated Values (*.csv)", "*.csv*"), ("Text Files (*.txt)", "*.txt*"),
                                                 ("Microsoft Excel Files (*.xls, *.xlsx)", ".xlsx"), ("All Files", "*.*")))
             inputfile.set_file(inputfile1)
@@ -138,16 +138,16 @@ class mainApp(TkinterDnD.Tk):
 
         def submitClick(inputfile):
             try:
-                print(label_file_explorer.get("1.0", 'end-1c'))
+                #print(label_file_explorer.get("1.0", 'end-1c'))
                 file1.set_file(label_file_explorer.get("1.0", 'end-1c'))
-                print(file1.get_file())
+                #print(file1.get_file())
                 #getFile(file1)
-                print("THIS IS THE SELECTED FILE: ", file1.get_file())
+                #print("THIS IS THE SELECTED FILE: ", file1.get_file())
                 formatFile(file1, label_file_explorer)
                 
             except Exception as e: 
-                print("file not found error")
-                print(e)
+                #print("file not found error")
+                #print(e)
                 traceback.print_exc()
                 showError(label_file_explorer)
                 
@@ -240,4 +240,3 @@ class mainApp(TkinterDnD.Tk):
 if __name__ == "__main__":
     app = mainApp()
     app.mainloop()
-    print('fcheck = ', file1.get_file())
