@@ -3,6 +3,7 @@ from tkinter import *
 from turtle import color
 from PIL import ImageTk
 from ErrorTest import resetFileBox
+import sys
 
 
 class promptWindow(tk.Toplevel):
@@ -63,8 +64,8 @@ class promptWindow(tk.Toplevel):
         def NoClick():
             self.grab_release()
             self.destroy()
-            quit()
-            exit()
+            self.master.master.quit()
+            #sys.exit()            
             
         def YesClick(label_file_explorer):
                 resetFileBox(label_file_explorer)
