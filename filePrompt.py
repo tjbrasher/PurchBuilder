@@ -64,8 +64,8 @@ class promptWindow(tk.Toplevel):
         def NoClick():
             self.grab_release()
             self.destroy()
-            self.master.master.quit()
-            #sys.exit()            
+            self.master.destroy()
+            sys.exit()            
             
         def YesClick(label_file_explorer):
                 resetFileBox(label_file_explorer)
