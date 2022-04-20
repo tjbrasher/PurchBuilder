@@ -1,0 +1,74 @@
+Room,System,Tag,Quantity,Manufacturer,Model,Short Description,Owner Furnished,Prewire Hours,Trim Hours,Finish Hours,Shop Hours,Travel Hours,ICO Shop Hours,ICO Trim Hours,PM Hours,Programming Hours
+Open Office,Sound Masking,,3.0,Cambridge Sound Management,E-A-W-16-4,False,"Standard Emitters, White, 4 pack, with 4 x 16 ft white plenum rated cables",0.0,0.0,0.0,540.0,0.0,0.0,0.0,0.0,0.0
+Meeting 108,Video,,1.0,Crestron,HD-TX-101-C-E,False,DM Lite HDMI over CATx Transmitter Surface Mount,0.0,0.0,44.4,15.0,0.0,0.0,0.0,0.0,0.0
+Conference 112,Video,,1.0,Crestron,HD-TX-101-C-E,False,DM Lite HDMI over CATx Transmitter Surface Mount,0.0,0.0,44.4,15.0,0.0,0.0,0.0,0.0,0.0
+Colab 104,Video,,1.0,Crestron,HD-TX-101-C-E,False,DM Lite HDMI over CATx Transmitter Surface Mount,0.0,0.0,44.4,15.0,0.0,0.0,0.0,0.0,0.0
+IDF,Sound Masking,,1.0,Cambridge Sound Management,Qt X 300,False,"Qt X Controller, 3 Qt Outputs",0.0,0.0,89.4,90.0,0.0,0.0,0.0,0.0,0.0
+Office 110,Video,,1.0,EAVI,OFE,False,"Install owner furnished 80"" display",0.0,0.0,0.0,120.0,0.0,0.0,0.0,0.0,0.0
+General Project Costs,General Project Costs,,117.0,EAVI,System Design Services,False,System Design Services,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Colab 104,Video,,1.0,Crestron,HD-RX-101-C-E,False,DM Lite HDMI over CATx Receiver Surface Mount,0.0,0.0,45.0,15.0,0.0,0.0,0.0,0.0,0.0
+Meeting 108,Video,,1.0,Crestron,HD-RX-101-C-E,False,DM Lite HDMI over CATx Receiver Surface Mount,0.0,0.0,45.0,15.0,0.0,0.0,0.0,0.0,0.0
+Conference 112,Video,,1.0,Crestron,HD-RX-101-C-E,False,DM Lite HDMI over CATx Receiver Surface Mount,0.0,0.0,45.0,15.0,0.0,0.0,0.0,0.0,0.0
+Colab 104,Video,,1.0,Apple,Mac Mini,True,Apple Mac Mini,0.0,0.0,60.0,45.0,0.0,0.0,0.0,0.0,0.0
+IDF,Sound Masking,,1.0,Cambridge Sound Management,Qt X RMT-KT,False,Qt X Controller Rack Mount Kit,0.0,0.0,30.0,0.0,0.0,0.0,0.0,0.0,0.0
+General Project Costs,General Project Costs,,48.0,EAVI,Programming,False,Programming of Control Devices,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,2880.0
+Office 110,Video,,1.0,EAVI,OFE,False,Install owner furnished display mount,0.0,0.0,0.0,60.0,0.0,0.0,0.0,0.0,0.0
+Meeting 108,Video,,1.0,Apple,Mac Mini,True,Apple Mac Mini,0.0,0.0,60.0,45.0,0.0,0.0,0.0,0.0,0.0
+Conference 112,Video,,1.0,Apple,Mac Mini,True,Apple Mac Mini,0.0,0.0,60.0,45.0,0.0,0.0,0.0,0.0,0.0
+IDF,Control,,1.0,Crestron,RMC4,False,4-Series Control System,0.0,0.0,72.0,42.0,0.0,0.0,0.0,0.0,0.0
+Office 110,Audio,,1.0,EAVI,OFE,False,Install owner furnished soundbar,0.0,0.0,0.0,60.0,0.0,0.0,0.0,0.0,0.0
+General Project Costs,General Project Costs,,29.0,EAVI,Project Management,False,EAVI Project Management,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1740.0,0.0
+Meeting 108,Video,,1.0,QSC,NC-110,False,"110° Horizontal Field of View, ePTZ network camera, PoE, includes mounting bracket for monitor and surface mounting",0.0,0.0,30.0,45.0,0.0,0.0,0.0,0.0,0.0
+Colab 104,Video,,1.0,QSC,NC-12x80,False,"12x Optical Zoom 80° Horizontal Field of View, PTZ Network Camera, PoE, with HDMI and SDI output. Includes PTZ-WMB1 wall mount bracket",0.0,0.0,30.0,60.0,0.0,0.0,0.0,0.0,0.0
+Conference 112,Video,,1.0,QSC,NC-12x80,False,"12x Optical Zoom 80° Horizontal Field of View, PTZ Network Camera, PoE, with HDMI and SDI output. Includes PTZ-WMB1 wall mount bracket",0.0,0.0,30.0,60.0,0.0,0.0,0.0,0.0,0.0
+IDF,Video,,1.0,QSC,CORE 110f,False,Unified Core with 24 local audio I O channels 128x128 netwo,0.0,0.0,600.0,195.0,0.0,0.0,0.0,0.0,0.0
+General Project Costs,General Project Costs,,21.0,EAVI,Project Planning,False,Planning of the Project by the Lead Technician,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1260.0,0.0
+Colab 104,Audio,,1.0,Shure,MXA910W-US,False,Ceiling Array Microphone,0.0,0.0,60.0,60.0,0.0,0.0,0.0,0.0,0.0
+Conference 112,Audio,,1.0,Shure,MXA910W-US,False,Ceiling Array Microphone,0.0,0.0,60.0,60.0,0.0,0.0,0.0,0.0,0.0
+Meeting 108,Video,,1.0,Crestron,UC-C100-Z-WM,False,Crestron Flex Video Conference System Integrator Kit with a Wall Mounted Control Interface and ASUS Mini PC for Zoom Rooms Software,0.0,0.0,150.0,300.0,0.0,0.0,0.0,0.0,0.0
+IDF,Control,,1.0,QSC,NS26-1440++,False,"26-port network switch preconfigured for Q-SYS Audio, Video and Control with 24x PoE++ ports and 1440 Watts PoE budget. Features advanced QoS and IGMP configuration to also support AES67 and Dante within the same VLAN.",0.0,0.0,210.0,180.0,0.0,0.0,0.0,0.0,0.0
+General Project Costs,General Project Costs,,3.0,EAVI,Travel,False,Travel time to project from EAVI office,0.0,0.0,0.0,0.0,180.0,0.0,0.0,0.0,0.0
+Colab 104,Video,,1.0,Chief,PAC527F,False,Lg Inwall Box 14.25X 22 w Flange,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Conference 112,Video,,1.0,Crestron,UC-C100-Z-WM,False,Crestron Flex Video Conference System Integrator Kit with a Wall Mounted Control Interface and ASUS Mini PC for Zoom Rooms Software,0.0,0.0,150.0,300.0,0.0,0.0,0.0,0.0,0.0
+IDF,Equipment Rack,,1.0,Middle Atlantic,UD2,False,2SP UTIL.DRAWER BLK,0.0,0.0,18.0,0.0,0.0,0.0,0.0,0.0,0.0
+General Project Costs,General Project Costs,,1080.0,EAVI,Hardware,False,Misc. Hardware,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Colab 104,Audio,,1.0,QSC,I/O USB Bridge,False,Q-SYS PoE bridging endpoint for AV-to-USB Bridging. Delivers,0.0,0.0,45.0,57.0,0.0,0.0,0.0,0.0,0.0
+Colab 104,Video,,1.0,Chief,XSM1U,False,Micro-Adjust Fixed Wall Mount X-Large,0.0,0.0,0.0,60.0,0.0,0.0,0.0,0.0,0.0
+Meeting 108,Video,,1.0,Chief,PAC527F,False,Lg Inwall Box 14.25X 22 w Flange,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Conference 112,Audio,,1.0,QSC,I/O USB Bridge,False,Q-SYS PoE bridging endpoint for AV-to-USB Bridging. Delivers,0.0,0.0,45.0,57.0,0.0,0.0,0.0,0.0,0.0
+General Project Costs,General Project Costs,,20.0,EAVI,Installation Testing,False,Finish (Testing),0.0,0.0,0.0,0.0,0.0,0.0,1200.0,0.0,0.0
+IDF,Equipment Rack,,2.0,Middle Atlantic,BR1,False,1SP PANEL W BRUSH GROMMET,0.0,0.0,36.0,0.0,0.0,0.0,0.0,0.0,0.0
+Colab 104,Video,,1.0,Crestron,UC-C100-Z-WM,False,Crestron Flex Video Conference System Integrator Kit with a Wall Mounted Control Interface and ASUS Mini PC for Zoom Rooms Software,0.0,0.0,150.0,300.0,0.0,0.0,0.0,0.0,0.0
+Conference 112,Video,,1.0,Chief,PAC527F,False,Lg Inwall Box 14.25X 22 w Flange,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+IDF,Equipment Rack,,2.0,Middle Atlantic,PD-915R-SP,False,"9 OUTS,15A SERIES SURGE",0.0,0.0,90.0,30.0,0.0,0.0,0.0,0.0,0.0
+General Project Costs,General Project Costs,,8.0,EAVI,Training,False,On-Site Training on System Operation and Maintenance,0.0,0.0,0.0,0.0,0.0,0.0,480.0,0.0,0.0
+Colab 104,Video,,1.0,Newline Interactive,TT-8619RS,False,860RS+ 4K LED Multi-touch Display,0.0,0.0,60.0,150.0,0.0,0.0,0.0,0.0,0.0
+Meeting 108,Audio,,1.0,QSC,I/O USB Bridge,False,Q-SYS PoE bridging endpoint for AV-to-USB Bridging. Delivers,0.0,0.0,45.0,57.0,0.0,0.0,0.0,0.0,0.0
+IDF,Equipment Rack,,1.0,Middle Atlantic,UPS-1000R,False,1000VA/750W UPS,0.0,0.0,60.0,30.0,0.0,0.0,0.0,0.0,0.0
+General Project Costs,General Project Costs,,4.0,EAVI,First Use,False,Technical Support for First Use,0.0,0.0,0.0,0.0,0.0,0.0,240.0,0.0,0.0
+Meeting 108,Audio,,1.0,Shure,MXA710W-4FT,False,"LINEAR ARRAY MIC, WHITE, 4 FT",0.0,0.0,60.0,60.0,0.0,0.0,0.0,0.0,0.0
+IDF,Control,,1.0,Crestron,CEN-CI3-3,False,3-Series Card Interface 3 Slot,0.0,0.0,58.8,28.5,0.0,0.0,0.0,0.0,0.0
+General Project Costs,General Project Costs,,24.0,EAVI,System Commissioning,False,System Testing Adjustment Verification,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Meeting 108,General Project Costs,,1.0,EAVI,Labor,False,Installation and removal of temporary video conferencing solution,0.0,0.0,0.0,960.0,0.0,0.0,0.0,0.0,0.0
+IDF,Control,,2.0,Crestron,C3COM-3,False,3-Series Control Card 3 COM Ports,0.0,0.0,158.4,48.0,0.0,0.0,0.0,0.0,0.0
+Conference 112,General Project Costs,,1.0,EAVI,Labor,False,Installation and removal of temporary video conferencing solution,0.0,0.0,0.0,960.0,0.0,0.0,0.0,0.0,0.0
+Meeting 108,Video,,1.0,EAVI,OFE,True,"Install owner furnished 65"" display",0.0,0.0,0.0,90.0,0.0,0.0,0.0,0.0,0.0
+Conference 112,Video,,1.0,EAVI,OFE,True,"Install owner furnished 90"" display",0.0,0.0,0.0,150.0,0.0,0.0,0.0,0.0,0.0
+Colab 104,General Project Costs,,1.0,EAVI,Labor,False,Installation and removal of temporary video conferencing solution,0.0,0.0,0.0,960.0,0.0,0.0,0.0,0.0,0.0
+Conference 112,Video,,1.0,EAVI,OFE,True,Install owner furnished display mount,0.0,0.0,0.0,60.0,0.0,0.0,0.0,0.0,0.0
+Meeting 108,Video,,1.0,EAVI,OFE,True,Install owner furnished display mount,0.0,0.0,0.0,60.0,0.0,0.0,0.0,0.0,0.0
+Meeting 108,Audio,,1.0,EAVI,OFE,True,Install owner furnished soundbar,0.0,0.0,0.0,60.0,0.0,0.0,0.0,0.0,0.0
+Conference 112,Audio,,1.0,EAVI,OFE,True,Install owner furnished soundbar,0.0,0.0,0.0,60.0,0.0,0.0,0.0,0.0,0.0
+Colab 104,Audio,,1.0,Innovox,FPV2 8698P,False,2 channel vertical video display loudspeaker powered (Priced and sold as pairs),0.0,0.0,45.0,120.0,0.0,0.0,0.0,0.0,0.0
+Wire,Control,,1.0,Belden,1585A,False,Belden Cat5 UTP non-shielded data cable plenum CMP-00424BEL,0.0,0.0,0.0,0.0,0.0,480.0,0.0,0.0,0.0
+Wire,Control,,1.0,Belden,2413F,False,23-4P F UTP-CMP SOL BC FEP LSPVC BLK Plenum,0.0,0.0,0.0,0.0,0.0,480.0,0.0,0.0,0.0
+Wire,Audio,,1.0,West Penn Wire,25291BGY1000,False,1P 22G STRD SHLD PLEN II,0.0,0.0,0.0,0.0,0.0,480.0,0.0,0.0,0.0
+Meeting 108,Video,,1.0,Vaddio,535-2000-243,False,THIN PROFILE WALL MOUNT SONY PANA CAMS,0.0,0.0,0.0,60.0,0.0,0.0,0.0,0.0,0.0
+Conference 112,Video,,1.0,Vaddio,535-2000-243,False,THIN PROFILE WALL MOUNT SONY PANA CAMS,0.0,0.0,0.0,60.0,0.0,0.0,0.0,0.0,0.0
+Zoom 109,Video,,1.0,Chief,PAC526,False,WALL ENC16X16MTI-DPRE INST,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Zoom 111,Video,,1.0,Chief,PAC526,False,WALL ENC16X16MTI-DPRE INST,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Open Office,Sound Masking,,12.0,Cambridge Sound Management,DRB-1,False,Drywall rough-in bracket,0.0,0.0,0.0,180.0,0.0,0.0,0.0,0.0,0.0
+Office 110,Video,,1.0,Kramer Electronics,CP-HM/DM-35,False,PLENUM HDMI to DVI Male - Male Cable 35,0.0,0.0,0.0,60.0,0.0,0.0,0.0,0.0,0.0
+Office 110,Video,,1.0,Chief,PAC526,False,WALL ENC16X16MTI-DPRE INST,0.0,0.0,0.0,60.0,0.0,0.0,0.0,0.0,0.0
+,,,,,,,Shipping,,,,,,,,,
+,,,,,,,Prepaid Design Fee,,,,,,,,,

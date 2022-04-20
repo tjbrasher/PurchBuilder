@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter.filedialog import SaveAs
 import traceback
-#from openpyxl import Workbook, load_workbook
 import pandas as pd
 from ErrorTest import showError
 from filePrompt import showPrompt
