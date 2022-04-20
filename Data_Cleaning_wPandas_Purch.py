@@ -301,10 +301,14 @@ def formatFile(file1, label_file_explorer):
                     # (purple if in stock - later implementation))             
                     def check_status(i):
                         #print('rows = ', row_num)
+                        cols = [8, 9, 10, 11]
                         for i in range(1, row_num1):
                             status = pickList['Status'].values[i-2]
+
                             #print('i=', i)
                             #print(status)
+
+
                                                         
                             if i==0:
                                 pass
@@ -315,12 +319,22 @@ def formatFile(file1, label_file_explorer):
                                 if i==0:
                                     pass
                                 else:
-                                    purchSheet.conditional_format(i, 8, i, 11, 
-                                                                                {'type':     'no_blanks',
-                                                                                'format':    bg_green})
-                                    purchSheet.conditional_format(i, 8, i, 11, 
-                                                                                {'type':     'blanks',
-                                                                                'format':    bg_green})
+                                    for c in cols:
+                                        try:
+                                            cell_value = pickList.iloc[i-1][c]
+                                            try:
+                                                purchSheet.write(i, c, cell_value, bg_green)
+                                            except:
+                                                purchSheet.write(i, c, '', bg_green)
+                                        except:
+                                            pass
+
+                                    #purchSheet.conditional_format(i, 8, i, 11, 
+                                    #                                            {'type':     'no_blanks',
+                                    #                                            'format':    bg_green})
+                                    #purchSheet.conditional_format(i, 8, i, 11, 
+                                    #                                            {'type':     'blanks',
+                                    #                                            'format':    bg_green})
                                                     
                             elif status == 'Not Ordered':
                                 #print('item is not ready to order')
@@ -328,10 +342,15 @@ def formatFile(file1, label_file_explorer):
                                 if i==0:
                                     pass
                                 else:
-                                    purchSheet.conditional_format(i, 8, i, 11, {'type':     'no_blanks',
-                                                                                'format':    bg_yellow})
-                                    purchSheet.conditional_format(i, 8, i, 11, {'type':     'blanks',
-                                                                                'format':    bg_yellow})
+                                    for c in cols:
+                                        try:
+                                            cell_value = pickList.iloc[i-1][c]
+                                            try:
+                                                purchSheet.write(i, c, cell_value, bg_yellow)
+                                            except:
+                                                purchSheet.write(i, c, '', bg_yellow)
+                                        except:
+                                            pass
                                     
                             #print('end of loop')
                             i = i+1
