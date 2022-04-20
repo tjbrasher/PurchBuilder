@@ -283,6 +283,7 @@ def formatFile(file1, label_file_explorer):
                     purchSheet.set_column(12, 12, 12)
                     purchSheet.set_column(13, 13, 16)
                     purchSheet.set_column(14, 14, 14)
+                    
 
                     
                     #setting borders on cells                  
@@ -295,6 +296,7 @@ def formatFile(file1, label_file_explorer):
                     #initializing conditional formatting options
                     bg_green = purchList.add_format({'bg_color': '#92D050'})
                     bg_yellow = purchList.add_format({'bg_color': '#FFFF00'})
+                    
 
 
                     # Setting conditional formatting (green if ready to order, yellow if not ready;
@@ -304,6 +306,7 @@ def formatFile(file1, label_file_explorer):
                         cols = [8, 9, 10, 11]
                         for i in range(1, row_num1):
                             status = pickList['Status'].values[i-2]
+                            purchSheet.set_row(i, 19.5)
 
                             #print('i=', i)
                             #print(status)
