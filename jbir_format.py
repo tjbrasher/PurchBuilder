@@ -40,6 +40,7 @@ def jbirFormat():
         #removing unnecessary columns from df
         for c in jbir_init.columns:   
             jbir_rev1 = jbir_init.filter(items=jbir_columns, axis=1)
+
         
         
         #new column names    
@@ -63,31 +64,45 @@ def jbirFormat():
 
                 
         # reordering columns
-        def df_column_switch(jbir_rev1, c1, c2):
-            col_list = list(jbir_rev1)
-            col_list[c1], col_list[c2] = col_list[c2], col_list[c1]
-            jbir_rev1.columns = col_list        
+        def df_column_switch(df, c1, c2):
+            col_list = list(df.columns)
+            #x, y = col_list[c1], col_list[c2]
+            col_list[c2], col_list[c1] = col_list[c1], col_list[c2]
+            df = df[col_list]
+            return df 
 
 
-        df_column_switch(jbir_rev1, jbir_rev1.columns.get_loc("Owner Furnished"),
+        jbir_rev1 = df_column_switch(jbir_rev1, jbir_rev1.columns.get_loc("Owner Furnished"),
                          jbir_rev1.columns.get_loc("Short Description"))
-        df_column_switch(jbir_rev1, jbir_rev1.columns.get_loc("Prewire Hours"), 8)
-        df_column_switch(jbir_rev1, jbir_rev1.columns.get_loc("Trim Hours"), 9)
-        df_column_switch(jbir_rev1, jbir_rev1.columns.get_loc("Finish Hours"), 10)
-        df_column_switch(jbir_rev1, jbir_rev1.columns.get_loc("Shop Hours"), 11)
-        df_column_switch(jbir_rev1, jbir_rev1.columns.get_loc("Travel Hours"), 12)
-        df_column_switch(jbir_rev1, jbir_rev1.columns.get_loc("ICO Shop Hours"), 13)
-        df_column_switch(jbir_rev1, jbir_rev1.columns.get_loc("ICO Trim Hours"), 14)
-        df_column_switch(jbir_rev1, jbir_rev1.columns.get_loc("PM Hours"), 15)
-        df_column_switch(jbir_rev1, jbir_rev1.columns.get_loc("Programming Hours"), 16)
+        jbir_rev1 = df_column_switch(jbir_rev1, jbir_rev1.columns.get_loc("Prewire Hours"), 8)
+        jbir_rev1 = df_column_switch(jbir_rev1, jbir_rev1.columns.get_loc("Trim Hours"), 9)
+        jbir_rev1 = df_column_switch(jbir_rev1, jbir_rev1.columns.get_loc("Finish Hours"), 10)
+        jbir_rev1 = df_column_switch(jbir_rev1, jbir_rev1.columns.get_loc("Shop Hours"), 11)
+        jbir_rev1 = df_column_switch(jbir_rev1, jbir_rev1.columns.get_loc("Travel Hours"), 12)
+        jbir_rev1 = df_column_switch(jbir_rev1, jbir_rev1.columns.get_loc("ICO Shop Hours"), 13)
+        jbir_rev1 = df_column_switch(jbir_rev1, jbir_rev1.columns.get_loc("ICO Trim Hours"), 14)
+        jbir_rev1 = df_column_switch(jbir_rev1, jbir_rev1.columns.get_loc("PM Hours"), 15)
+        jbir_rev1 = df_column_switch(jbir_rev1, jbir_rev1.columns.get_loc("Programming Hours"), 16)
         
         
-        # setting column widths
-        jbir_rev1.style.set_properties(subset=['Room', 'System', 'Manufacturer', 'Model'],
-                                       **{'width': '215px'})
+        #dropping unnecessary rows
+        jbir_rev1 = jbir_rev1[jbir_rev1["Short Description"].str.contains("Shipping|Prepaid Design Fee|System Design Services|Misc. Hardware") ==False]
         
+        
+        #dividing cells by 60 to get hours instead of minutes
+        hour_cells = jbir_rev1.iloc[1:, 8:]
+        jbir_rev1.iloc[1:, 8:] = hour_cells/60
+        
+
         #print("jbir1 revised columns= ", jbir_rev1.columns)
+        sortList = ["Room", "System"]
+        jbir_rev1 = jbir_rev1.sort_values(sortList)
         
+        
+        
+        
+        
+        print(jbir_rev1)
         
         
         

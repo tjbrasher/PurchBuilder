@@ -272,8 +272,8 @@ def formatFile(file1, label_file_explorer):
   
                     
                     # Setting column widths
-                    purchSheet.set_column(0, 0, 9)
-                    purchSheet.set_column(0, 5, 9)
+                    purchSheet.set_column(0, 0, 10)
+                    purchSheet.set_column(1, 5, 9)
                     purchSheet.set_column(6, 6, 12)
                     purchSheet.set_column(7, 7, 33)
                     purchSheet.set_column(8, 8, 11)
@@ -363,6 +363,8 @@ def formatFile(file1, label_file_explorer):
 
                     #applying filters to column headers
                     purchSheet.autofilter(0, 0, 0, col_num)
+                    
+                    purchSheet.freeze_panes(1, 0)
                   
 
                     #setting file to open read only
