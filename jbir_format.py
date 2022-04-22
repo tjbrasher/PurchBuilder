@@ -29,8 +29,9 @@ def jbirFormat():
     #jbir_init = pd.read_csv(file1._file)
     jbir_init = pd.read_csv("C:/Users/tbrasher/Downloads/Office AV System.csv")
 
+
     try:
-                        
+        #list of columns to keep for JBIR                
         jbir_columns = ["Room", "System", "Tag", "Quantity", "Manufacturer",
                         "Model", "Owner Furnished", "Short Description",
                         "ICO Shop Minutes Ext", "ICO Trim Minutes Ext",
@@ -38,11 +39,11 @@ def jbirFormat():
                         "Prewire Minutes Ext", "Finish Minutes Ext",
                         "Project Management Minutes Ext", "Programming Minutes Ext"]
         
+        
         #removing unnecessary columns from df
         for c in jbir_init.columns:   
             jbir_rev1 = jbir_init.filter(items=jbir_columns, axis=1)
 
-        
         
         #new column names    
         new_jbir_cols = ["Room", "System", "Tag", "Quantity", "Manufacturer",
@@ -58,20 +59,16 @@ def jbirFormat():
             for value in new_jbir_cols:
                 column_names[key] = value
                 new_jbir_cols.remove(value)
-                break
-        #print(str(column_names))
-        
+                break        
         jbir_rev1 = jbir_rev1.rename(column_names, axis = 1)
 
-
-                
+          
         # reordering columns
         def df_column_switch(df, c1, c2):
             col_list = list(df.columns)
             col_list[c2], col_list[c1] = col_list[c1], col_list[c2]
             df = df[col_list]
             return df 
-
 
         jbir_rev1 = df_column_switch(jbir_rev1, jbir_rev1.columns.get_loc("Owner Furnished"),
                                      jbir_rev1.columns.get_loc("Short Description"))
@@ -111,13 +108,16 @@ def jbirFormat():
                         'text_wrap': True})
                 
         
+        #setting column and row number variables
         col_num = jbir_rev1.shape[1]    
         row_num = len(jbir_rev1)
         
+        #setting first and last cell variables for formatting
         last_col_cell = xl_rowcol_to_cell(row_num, col_num-1)
         first_cell = xl_rowcol_to_cell(0,0) 
 
         
+        #formatting column headers
         for col_num, value in enumerate(jbir_rev1.columns.values):
             jbir_sheet.write(0, col_num, value, headerFormat) 
             
@@ -144,37 +144,29 @@ def jbirFormat():
         jbir_sheet.conditional_format(first_cell+':'+ last_col_cell, {'type': 'no_blanks',
                                                                 'format': borderFormat})
 
-
         
-
+        #setting subtotals below labor columns
         lcn=8
         for lcn in range(8, 17):
             col_letter = xlsxwriter.utility.xl_col_to_name(lcn)
             subtotal_function = f'=SUBTOTAL(9,'+str(col_letter)+'2:'+ str(col_letter)+str(row_num+1)+')'
             jbir_sheet.write(row_num+1, lcn, subtotal_function)
-            print("column letter = ", col_letter)
-            print("cell = ", lcn)
-            print("row num = ", row_num)
-            print('Function = ', subtotal_function)
-            #set_next_column()
             lcn = lcn+1
-        
                         
         jbir_sheet.write(row_num+1, 7, "Total")
         
+        
+        #placing borders around total cells
         first_total_cell = xl_rowcol_to_cell(row_num+1, 7)
         last_total_cell = xl_rowcol_to_cell(row_num+1, 16) 
-        
-
-        
+                
         jbir_sheet.conditional_format(first_total_cell+':'+ last_total_cell,
                                       {'type': 'no_blanks',
                                        'format': borderFormat})
         
         #print(jbir_rev1)
         
-        
-        
+                
         jbir_rev1.to_csv("jbir1.csv", index=False, line_terminator="\n")
         writer.save()
 
