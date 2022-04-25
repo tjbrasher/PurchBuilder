@@ -11,7 +11,6 @@ from SortingOptions import sortWindow
 import traceback
 import codecs
 from tkinterdnd2 import *
-
 #programSortWindow = sortWindow()
 
 class fileObject:
@@ -28,27 +27,43 @@ file1 = fileObject()
 
 inputfile = fileObject()
 
+class gui_window:
+    def __init__(self, gui=None):
+        self._gui = gui
 
-class mainApp(TkinterDnD.Tk):
+    def set_gui(self, gui_window):
+        self._gui = gui_window
+
+    def get_gui(self):
+        return self._gui
+    
+root_window_purch = gui_window()
+
+
+class purchWindow(TkinterDnD.Tk, tk.Toplevel):
 
     def __init__(self):
         super().__init__()
         
-            
+        welcome = root_window_purch.get_gui()
+        print("welcome = ", type(welcome))
+        
+        self.focus_set()
+
         self.programIcon = Image.open("Files\\EA Logo Bug.png")
         self.icon_resize = self.programIcon.resize((30,30))
-        self.programIcon_resized = ImageTk.PhotoImage(self.icon_resize)
+        self.programIcon_resized = ImageTk.PhotoImage(self.icon_resize, master=self)
         self.iconphoto(False, self.programIcon_resized)
 
         self.c = tk.Canvas(self, bg="black", width = 620, height = 300)
         self.c.pack()
-        self.background_image = ImageTk.PhotoImage(file = "Files\\Logos\\background.png")
+        self.background_image = ImageTk.PhotoImage(file = "Files\\Logos\\background.png", master=self)
         self.c.create_image(0, 0, image = self.background_image, anchor = NW)
 
         # setting and positioning the logo header
         self.logo = Image.open("Files\\Logos\\EAlogoHorizonalNobg.png")
         self.logo_resize = self.logo.resize((359,72))
-        self.logo_header = ImageTk.PhotoImage(self.logo_resize)
+        self.logo_header = ImageTk.PhotoImage(self.logo_resize, master=self)
         self.c.create_image(310,35, image = self.logo_header, anchor = N)
 
         # initial window setup
@@ -67,6 +82,7 @@ class mainApp(TkinterDnD.Tk):
 
         self.geometry(f'{window_width}x{window_height}+{ctr_x}+{ctr_y}')
         self.resizable(False, False)
+        
 
 
         # setting and positiong the prompt
@@ -148,6 +164,7 @@ class mainApp(TkinterDnD.Tk):
             except Exception as e: 
                 #print("file not found error")
                 #print(e)
+                self.grab_release()
                 traceback.print_exc()
                 showError(label_file_explorer)
                 
@@ -164,7 +181,7 @@ class mainApp(TkinterDnD.Tk):
         fileBrowse.place(x=485, y=175.5)
         
         
-        # setting up the help button
+        # setting up the sort button
         sorting = self.c.create_text(530, 225, text="Sorting Options", fill="white", font=("Arial 10"), width=200, tags=["sort", "normalSort","highlightSort"]) 
         
         sortPrompt = tk.Text(self, background = "dark gray", foreground = "black",
@@ -234,9 +251,17 @@ class mainApp(TkinterDnD.Tk):
 
         self.c.tag_bind("normal", '<Leave>', normalState)
         
+        def onClose():
+            welcome.deiconify()
+            self.grab_release()
+            self.destroy()
+            
+
+                    
+        self.protocol("WM_DELETE_WINDOW", lambda: onClose())
 
 #tk.ttk.Separator(window, orient=tk.VERTICAL).place(x=305, y=0, height=300)
 
-if __name__ == "__main__":
-    app = mainApp()
-    app.mainloop()
+def launchPURCH():
+    purch_gui = purchWindow()
+    purch_gui.mainloop()

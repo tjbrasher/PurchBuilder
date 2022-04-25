@@ -12,6 +12,7 @@ import traceback
 import codecs
 from tkinterdnd2 import *
 
+
 #programSortWindow = sortWindow()
 
 class fileObject:
@@ -29,32 +30,52 @@ file1 = fileObject()
 inputfile = fileObject()
 
 
-class mainApp(TkinterDnD.Tk):
+class gui_window:
+    def __init__(self, gui=None):
+        self._gui = gui
+
+    def set_gui(self, gui_window):
+        self._gui = gui_window
+
+    def get_gui(self):
+        return self._gui
+    
+root_window_jbir = gui_window()
+
+
+
+
+class jbirWindow(TkinterDnD.Tk, tk.Toplevel):
 
     def __init__(self):
         super().__init__()
+
+        welcome = root_window_jbir.get_gui()
+        print("welcome = ", type(welcome))
+        #tk3 = tk.Toplevel(welcome)
         
-            
+        self.focus_set()
+        
         self.programIcon = Image.open("Files\\EA Logo Bug.png")
         self.icon_resize = self.programIcon.resize((30,30))
-        self.programIcon_resized = ImageTk.PhotoImage(self.icon_resize)
+        self.programIcon_resized = ImageTk.PhotoImage(self.icon_resize, master=self)
         self.iconphoto(False, self.programIcon_resized)
 
         self.c = tk.Canvas(self, bg="black", width = 620, height = 300)
         self.c.pack()
-        self.background_image = ImageTk.PhotoImage(file = "Files\\Logos\\background.png")
+        self.background_image = ImageTk.PhotoImage(file = "Files\\Logos\\background.png", master=self)
         self.c.create_image(0, 0, image = self.background_image, anchor = NW)
 
         # setting and positioning the logo header
         self.logo = Image.open("Files\\Logos\\EAlogoHorizonalNobg.png")
         self.logo_resize = self.logo.resize((359,72))
-        self.logo_header = ImageTk.PhotoImage(self.logo_resize)
+        self.logo_header = ImageTk.PhotoImage(self.logo_resize, master=self)
         self.c.create_image(310,35, image = self.logo_header, anchor = N)
 
         # initial window setup
         self.rowconfigure(3, {'minsize': 40})
         self.columnconfigure(3, {'minsize': 40})
-        self.title("PURCH List Creator")
+        self.title("JBIR Creator")
 
         # window sizing and positioning
         window_width = 620
@@ -68,13 +89,13 @@ class mainApp(TkinterDnD.Tk):
         self.geometry(f'{window_width}x{window_height}+{ctr_x}+{ctr_y}')
         self.resizable(False, False)
         
-        self.home_icon = Image.open("Files\\home-icon-transparent-18.jpg")
-        self.home_icon_resize = self.home_icon.resize((40,40))
-        self.home_button_image = ImageTk.PhotoImage(self.home_icon_resize)
-        home = tk.Button(self, width = 40, height = 40, border=None, background="black")
-        home.config(image=self.home_button_image)
-        home.image = self.home_button_image
-        home.place(x=20, y=25)
+        #self.home_icon = Image.open("Files\\home-icon-transparent-18.jpg")
+        #self.home_icon_resize = self.home_icon.resize((40,40))
+        #self.home_button_image = ImageTk.PhotoImage(self.home_icon_resize, master=self)
+        #home = tk.Button(width = 40, height = 40, border=None, background="black")
+        #home.config(image=self.home_button_image)
+        #home.image = self.home_button_image
+        #home.place(x=20, y=25)
 
 
         # setting and positiong the prompt
@@ -156,6 +177,7 @@ class mainApp(TkinterDnD.Tk):
             except Exception as e: 
                 #print("file not found error")
                 #print(e)
+                self.grab_release()
                 traceback.print_exc()
                 showError(label_file_explorer)
                 
@@ -188,7 +210,6 @@ class mainApp(TkinterDnD.Tk):
             webbrowser.open(url, new=new)
             
             
-            
         def normalState(event):
             self.c.itemconfigure(help, fill="gray")
             helpPrompt.place_forget()
@@ -204,8 +225,18 @@ class mainApp(TkinterDnD.Tk):
         self.c.tag_bind("normal", '<Leave>', normalState)
         
 
+        def onClose():
+            welcome.deiconify()
+            self.grab_release()
+            self.destroy()
+            
+
+                    
+        self.protocol("WM_DELETE_WINDOW", lambda: onClose())
+
+
 #tk.ttk.Separator(window, orient=tk.VERTICAL).place(x=305, y=0, height=300)
 
-if __name__ == "__main__":
-    app = mainApp()
-    app.mainloop()
+def launchJBIR():
+    jbir_gui = jbirWindow()
+    jbir_gui.mainloop()

@@ -6,13 +6,13 @@ from Data_Cleaning_wPandas_Purch import getBtnSelection
 from Data_Cleaning_wPandas_Purch import SortList
 
 
+
 class sortWindow(tk.Toplevel):
     
     def __init__(self):
         super().__init__()     
         
         self.focus_set()
-        self.grab_set_global()
         
         title = tk.Text(self, font= ("Arial 10 bold"), background="light gray",
                         padx=120.5, pady=2.5, width = 8, height = 1)
