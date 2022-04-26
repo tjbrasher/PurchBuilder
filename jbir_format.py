@@ -96,7 +96,7 @@ def jbirFormat(file1, label_file_explorer):
             
 
             #print("jbir1 revised columns= ", jbir_rev1.columns)
-            sortList = ["Room", "System"]
+            sortList = ["Room", "System", "Manufacturer"]
             jbir_rev1 = jbir_rev1.sort_values(sortList)
             
             
@@ -139,7 +139,7 @@ def jbirFormat(file1, label_file_explorer):
                                                                     ("Text Files (*.txt)", "*.txt*"), ("All Files", "*.*")))
                 
                 if saveAs:
-                    writer = pd.ExcelWriter("jbir_test.xlsx", engine='xlsxwriter')
+                    writer = pd.ExcelWriter(saveAs, engine='xlsxwriter')
                     jbir_rev1.to_excel(writer, sheet_name="JBIR", float_format = "%0.1f", index=False)
                     JBIR = writer.book
                     jbir_sheet = writer.sheets['JBIR']
@@ -213,9 +213,10 @@ def jbirFormat(file1, label_file_explorer):
                     writer.save()
                     
                     showPrompt(label_file_explorer)          
-                    #print("File Saved!")
+                    print("File Saved!")
                 
                 else:
+                    print('cannot save file')
                     pass
                 
             
