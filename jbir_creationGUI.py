@@ -89,14 +89,16 @@ class jbirWindow(TkinterDnD.Tk, tk.Toplevel):
         self.geometry(f'{window_width}x{window_height}+{ctr_x}+{ctr_y}')
         self.resizable(False, False)
         
-        #self.home_icon = Image.open("Files\\home-icon-transparent-18.jpg")
-        #self.home_icon_resize = self.home_icon.resize((40,40))
-        #self.home_button_image = ImageTk.PhotoImage(self.home_icon_resize, master=self)
-        #home = tk.Button(width = 40, height = 40, border=None, background="black")
-        #home.config(image=self.home_button_image)
-        #home.image = self.home_button_image
-        #home.place(x=20, y=25)
+        home_icon_normal = Image.open("Files\\home-icon-normal_state.png")
+        home_icon_normal_resize = home_icon_normal.resize((40,40))
+        home_button_image_normal = ImageTk.PhotoImage(home_icon_normal_resize, master=self)
 
+        home_icon_hover = Image.open("Files\\home-icon-hover.png")
+        home_icon_hover_resize = home_icon_hover.resize((40,40))
+        home_button_image_hover = ImageTk.PhotoImage(home_icon_hover_resize, master=self)
+
+        home_normal = self.c.create_image(40, 35, image=home_button_image_normal, tags=["normal_state", "highlight_state","click_state"])
+                    
 
         # setting and positiong the prompt
         self.c.create_text(307.5, 142.5, text="Please Select an Equipment List to Use for Creating JBIR", fill = "white", font=("Arial 12 bold"))
@@ -192,6 +194,11 @@ class jbirWindow(TkinterDnD.Tk, tk.Toplevel):
                                  command = lambda: (fileExplore()))
         
         fileBrowse.place(x=485, y=175.5)
+
+ 
+
+
+
                
         
         # setting up the help button
@@ -225,14 +232,29 @@ class jbirWindow(TkinterDnD.Tk, tk.Toplevel):
         self.c.tag_bind("normal", '<Leave>', normalState)
         
 
-        def onClose():
+        def onClose(event):
             welcome.deiconify()
             self.grab_release()
-            self.destroy()
-            
+            self.withdraw()
 
-                    
-        self.protocol("WM_DELETE_WINDOW", lambda: onClose())
+        def normalState(event):
+            self.c.itemconfigure(home_normal, image=home_button_image_normal)
+            print('entered normal state')
+       
+        def hoverEvent(event):            
+            self.c.itemconfigure(home_normal, image=home_button_image_hover)
+            
+            print('entered hover state')
+            
+        self.c.tag_bind("click_state", '<Button-1>', onClose)        
+        
+        self.c.tag_bind("highlight_state", '<Enter>', hoverEvent)
+
+        self.c.tag_bind("normal_state", '<Leave>', normalState)
+
+
+
+        self.protocol("WM_DELETE_WINDOW", lambda: onClose(None))
 
 
 #tk.ttk.Separator(window, orient=tk.VERTICAL).place(x=305, y=0, height=300)
@@ -240,3 +262,4 @@ class jbirWindow(TkinterDnD.Tk, tk.Toplevel):
 def launchJBIR():
     jbir_gui = jbirWindow()
     jbir_gui.mainloop()
+

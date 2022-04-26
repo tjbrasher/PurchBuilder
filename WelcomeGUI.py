@@ -98,18 +98,14 @@ class mainApp(Tk):
         #        purch_gui.grab_set_global()
         #        purch_gui.deiconify()
 
-        #PURCH = launchPURCH()
         purch_btn = tk.Button(self, text = "PURCH List", width = 10, height = 1, bg = "silver")
         purch_btn.place(x=(window_ctr_x - 105), y=(window_ctr_y +40))
         purch_btn.configure(command = lambda: showPurch())
         
-        
-        #jbir_window = tk.Toplevel(self)
-        #jbir_gui.grab_release()
-        #jbir_gui.withdraw()
+
+
         def showJBIR(): 
             jbir_gui = jbirWindow()
-            
             self.grab_release()
             self.withdraw()
             jbir_gui.deiconify()
@@ -160,6 +156,13 @@ class mainApp(Tk):
         self.c.tag_bind("highlight", '<Enter>', highlightHelp)
 
         self.c.tag_bind("normal", '<Leave>', normalState)
+
+
+        
+        def onClose():
+            exit()
+
+        self.protocol("WM_DELETE_WINDOW", lambda: onClose())
         
 
 #tk.ttk.Separator(window, orient=tk.VERTICAL).place(x=305, y=0, height=300)
