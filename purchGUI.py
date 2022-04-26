@@ -99,7 +99,7 @@ class purchWindow(TkinterDnD.Tk, tk.Toplevel):
 
 
         # setting and positiong the prompt
-        self.c.create_text(307.5, 142.5, text="Please Select an Equipment List to Use for Creating PURCH List", fill = "white", font=("Arial 12 bold"))
+        self.c.create_text(307.5, 142.5, text="Please Select a File to Use for Creating the PURCH List", fill = "white", font=("Arial 12 bold"))
 
         label_file_explorer = tk.Text(self, background = "light gray", foreground = "gray",
                                       width = 57, height = 1, font = ("Arial", 10))

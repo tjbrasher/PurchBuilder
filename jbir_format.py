@@ -96,7 +96,7 @@ def jbirFormat(file1, label_file_explorer):
             
 
             #print("jbir1 revised columns= ", jbir_rev1.columns)
-            sortList = ["Room", "System", "Manufacturer"]
+            sortList = ["Room", "System", "Manufacturer", "Model"]
             jbir_rev1 = jbir_rev1.sort_values(sortList)
             
             

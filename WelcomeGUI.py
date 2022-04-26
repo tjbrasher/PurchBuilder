@@ -79,7 +79,7 @@ class mainApp(Tk):
 
 
         # setting and positiong the prompt
-        self.c.create_text((window_ctr_x), (window_ctr_y+5), text="Please Select a List to Create", fill = "white", font=("Arial 12 bold"))
+        self.c.create_text((window_ctr_x), (window_ctr_y+5), text="Please Select an Option Below", fill = "white", font=("Arial 12 bold"))
         
         
 
