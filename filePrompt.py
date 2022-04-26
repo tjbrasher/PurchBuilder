@@ -49,7 +49,7 @@ class promptWindow(tk.Toplevel):
         
         #promptBorder = self.c.create_rectangle(10, 10, 290, 115, outline='silver', width=2)
    
-        message = self.c.create_text(150, 25, text="PURCH List Successfully Created!",
+        message = self.c.create_text(150, 25, text="Operation Successful!",
                                 fill = "white", font=("Arial 11"), width = 280, justify=CENTER)
    
         prompt = self.c.create_text(150, 50, text="Would You Like to Process Another File?",

@@ -1,70 +1,83 @@
 Room,System,Tag,Quantity,Manufacturer,Model,Short Description,Owner Furnished,Prewire Hours,Trim Hours,Finish Hours,Shop Hours,Travel Hours,ICO Shop Hours,ICO Trim Hours,PM Hours,Programming Hours
-Colab 104,Audio,,1.0,Shure,MXA910W-US,Ceiling Array Microphone,False,0.0,1.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0
-Colab 104,Audio,,1.0,QSC,I/O USB Bridge,Q-SYS PoE bridging endpoint for AV-to-USB Bridging. Delivers,False,0.0,0.95,0.0,0.75,0.0,0.0,0.0,0.0,0.0
-Colab 104,Audio,,1.0,Innovox,FPV2 8698P,2 channel vertical video display loudspeaker powered (Priced and sold as pairs),False,0.0,2.0,0.0,0.75,0.0,0.0,0.0,0.0,0.0
-Colab 104,General Project Costs,,1.0,EAVI,Labor,Installation and removal of temporary video conferencing solution,False,0.0,16.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-Colab 104,Video,,1.0,Crestron,HD-TX-101-C-E,DM Lite HDMI over CATx Transmitter Surface Mount,False,0.0,0.25,0.0,0.74,0.0,0.0,0.0,0.0,0.0
-Colab 104,Video,,1.0,Crestron,HD-RX-101-C-E,DM Lite HDMI over CATx Receiver Surface Mount,False,0.0,0.25,0.0,0.75,0.0,0.0,0.0,0.0,0.0
-Colab 104,Video,,1.0,Apple,Mac Mini,Apple Mac Mini,True,0.0,0.75,0.0,1.0,0.0,0.0,0.0,0.0,0.0
-Colab 104,Video,,1.0,QSC,NC-12x80,"12x Optical Zoom 80° Horizontal Field of View, PTZ Network Camera, PoE, with HDMI and SDI output. Includes PTZ-WMB1 wall mount bracket",False,0.0,1.0,0.0,0.5,0.0,0.0,0.0,0.0,0.0
-Colab 104,Video,,1.0,Chief,PAC527F,Lg Inwall Box 14.25X 22 w Flange,False,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-Colab 104,Video,,1.0,Chief,XSM1U,Micro-Adjust Fixed Wall Mount X-Large,False,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-Colab 104,Video,,1.0,Crestron,UC-C100-Z-WM,Crestron Flex Video Conference System Integrator Kit with a Wall Mounted Control Interface and ASUS Mini PC for Zoom Rooms Software,False,0.0,5.0,0.0,2.5,0.0,0.0,0.0,0.0,0.0
-Colab 104,Video,,1.0,Newline Interactive,TT-8619RS,860RS+ 4K LED Multi-touch Display,False,0.0,2.5,0.0,1.0,0.0,0.0,0.0,0.0,0.0
-Conference 112,Audio,,1.0,Shure,MXA910W-US,Ceiling Array Microphone,False,0.0,1.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0
-Conference 112,Audio,,1.0,QSC,I/O USB Bridge,Q-SYS PoE bridging endpoint for AV-to-USB Bridging. Delivers,False,0.0,0.95,0.0,0.75,0.0,0.0,0.0,0.0,0.0
-Conference 112,Audio,,1.0,EAVI,OFE,Install owner furnished soundbar,True,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-Conference 112,General Project Costs,,1.0,EAVI,Labor,Installation and removal of temporary video conferencing solution,False,0.0,16.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-Conference 112,Video,,1.0,Crestron,HD-TX-101-C-E,DM Lite HDMI over CATx Transmitter Surface Mount,False,0.0,0.25,0.0,0.74,0.0,0.0,0.0,0.0,0.0
-Conference 112,Video,,1.0,Crestron,HD-RX-101-C-E,DM Lite HDMI over CATx Receiver Surface Mount,False,0.0,0.25,0.0,0.75,0.0,0.0,0.0,0.0,0.0
-Conference 112,Video,,1.0,Apple,Mac Mini,Apple Mac Mini,True,0.0,0.75,0.0,1.0,0.0,0.0,0.0,0.0,0.0
-Conference 112,Video,,1.0,QSC,NC-12x80,"12x Optical Zoom 80° Horizontal Field of View, PTZ Network Camera, PoE, with HDMI and SDI output. Includes PTZ-WMB1 wall mount bracket",False,0.0,1.0,0.0,0.5,0.0,0.0,0.0,0.0,0.0
-Conference 112,Video,,1.0,Crestron,UC-C100-Z-WM,Crestron Flex Video Conference System Integrator Kit with a Wall Mounted Control Interface and ASUS Mini PC for Zoom Rooms Software,False,0.0,5.0,0.0,2.5,0.0,0.0,0.0,0.0,0.0
-Conference 112,Video,,1.0,Chief,PAC527F,Lg Inwall Box 14.25X 22 w Flange,False,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-Conference 112,Video,,1.0,EAVI,OFE,"Install owner furnished 90"" display",True,0.0,2.5,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-Conference 112,Video,,1.0,EAVI,OFE,Install owner furnished display mount,True,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-Conference 112,Video,,1.0,Vaddio,535-2000-243,THIN PROFILE WALL MOUNT SONY PANA CAMS,False,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-General Project Costs,General Project Costs,,48.0,EAVI,Programming,Programming of Control Devices,False,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,48.0
-General Project Costs,General Project Costs,,29.0,EAVI,Project Management,EAVI Project Management,False,0.0,0.0,0.0,0.0,0.0,0.0,0.0,29.0,0.0
-General Project Costs,General Project Costs,,21.0,EAVI,Project Planning,Planning of the Project by the Lead Technician,False,0.0,0.0,0.0,0.0,0.0,0.0,0.0,21.0,0.0
-General Project Costs,General Project Costs,,3.0,EAVI,Travel,Travel time to project from EAVI office,False,0.0,0.0,0.0,0.0,3.0,0.0,0.0,0.0,0.0
-General Project Costs,General Project Costs,,20.0,EAVI,Installation Testing,Finish (Testing),False,0.0,0.0,20.0,0.0,0.0,0.0,0.0,0.0,0.0
-General Project Costs,General Project Costs,,8.0,EAVI,Training,On-Site Training on System Operation and Maintenance,False,0.0,0.0,8.0,0.0,0.0,0.0,0.0,0.0,0.0
+Assistive Listening System,Audio,,1.0,Listen Technologies,LS-31-072,Listen IDSP Essentials Level 2 Stationary RF System (72 MHz),False,0.0,1.5,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Camera & Video Streaming System,Video,,1.0,Panasonic,AV‐HLC100P,"HD Live Switcher with up to 8 Inputs with NDI (Network Digital Interface), 2 SDI outputs with Aux, HDMI output for Multiviewer and UI, audio mixing, streaming, recording, and character generation.",False,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Camera & Video Streaming System,Video,,3.0,Panasonic,FEC-40WMK,Heavy duty wall mount (black) for use with AW-HE/HN38/40 and AW-UE/UN70 cameras PTZ cameras,False,0.0,2.25,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Camera & Video Streaming System,Video,,3.0,Panasonic,AW-HE42KPJ,"AW-HE42, 3G SDI, Optical Image Stabilizer, HDMI, Genlock",False,0.0,3.0,0.0,1.5,0.0,0.0,0.0,0.0,0.0
+Camera & Video Streaming System,Video,,4.0,TRENDnet,TPE-117GI,Gigabit Ultra PoE+ Injector,False,0.0,2.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Camera & Video Streaming System,Video,,2.0,EAVI,OFE,Install owner furnished monitors,False,0.0,2.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Camera & Video Streaming System,Video,,1.0,EAVI,OFE,Install owner furnished network switch,False,0.0,2.5,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Camera & Video Streaming System,Video,,1.0,Netgear,WAX214-100NAS,WiFi6 AX1800 PoE Access Point,False,0.0,1.75,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Controls,Lighting,,1.0,Strand Lighting,76702,"Strand Lighting C21/EC21 Advanced Control Electronics retro-fit processor assembly with single electronics, complete with processor, for use with CD80SV dimmer racks",False,0.0,6.0,0.0,0.75,0.0,0.0,0.0,0.0,0.0
+Controls,Lighting,,1.0,Strand Lighting,72397,CD80SV Dual 20A 120V 2.4Kw. Constant Module (C21 style module/housing),False,0.0,0.1,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Controls,Lighting,,15.0,Strand Lighting,72399,CD80SV Dual 20A 120V 2.4Kw. Non-Dim Module (C21 style module/housing),False,0.0,1.5,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Controls,Lighting,,6.0,Strand Lighting,76588,C21 Module Filler Blank,False,0.0,0.6,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Controls,Lighting,,2.0,Strand Lighting,63309,"Vision.net 9 Channel Master Station - White Faceplate, 4-Gang Wall Mount",False,0.0,1.0,0.0,0.5,0.0,0.0,0.0,0.0,0.0
+Controls,Lighting,,1.0,Strand Lighting,63324,"Vision.net 4 Pushbutton Station -White Faceplate, 1-Gang Wall Mount",False,0.0,1.15,0.0,0.75,0.0,0.0,0.0,0.0,0.0
+Controls,Lighting,,1.0,Strand Lighting,63035USB,"Vision.net RS232 receptacle station, with USB connector",False,0.0,1.15,0.0,0.75,0.0,0.0,0.0,0.0,0.0
+Controls,Lighting,,1.0,Strand Lighting,63054-2,Vision.net DMX512 Interface & Vision.net Power Supply Mounted In Back Box,False,0.0,1.75,0.0,0.5,0.0,0.0,0.0,0.0,0.0
+Controls,Lighting,,1.0,Strand Lighting,54109-020,"Strand FLX S48 (US), 2-Universe",False,0.0,0.95,0.0,1.75,0.0,0.0,0.0,0.0,0.0
+Controls,Lighting,,1.0,Strand Lighting,54109-001,Strand FLX S48 Dustcover,False,0.0,0.1,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Controls,Lighting,,1.0,Strand Lighting,Strand Quote,System Quote #2104045-R2,False,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Controls,Lighting,,1.0,Dell,P2418HT,"23.8"" Touch Monitor",False,0.0,0.25,0.0,0.5,0.0,0.0,0.0,0.0,0.0
+Controls,Lighting,,1.0,Pathway Connectivity,PWSA,Custom eDIN assembly,False,0.0,2.95,0.0,0.75,0.0,0.0,0.0,0.0,0.0
+Controls,Lighting,,2.0,COVID,Custom 1-Gang,Custom 1-Gang Plate,False,0.0,1.5,0.0,0.3,0.0,0.0,0.0,0.0,0.0
+Controls,Lighting,,8.0,COVID,Custom 2-Gang,Custom 2-Gang Plate,False,0.0,8.0,0.0,4.0,0.0,0.0,0.0,0.0,0.0
+Controls,Lighting,,6.0,COVID,"Custom 10""x10""","Custom 10""x10"" Wall Plate",False,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Controls,Lighting,,4.0,COVID,"Custom 10""x10""","Custom 10""x10"" Wall Plate",False,0.0,10.0,0.0,2.0,0.0,0.0,0.0,0.0,0.0
+Controls,Lighting,,3.0,West Penn Wire,254245EZWH1000,4P 24G SLD CAT 5E PLEN,False,24.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Controls,Lighting,,1.0,Pathway Connectivity,PWREP WM P8 TERM RDM MED,"DMX Repeater, Wall-mount, 8-Ports, Compression Fit Terminal, E1.20 RDM Compliant, Medium 10"" x 23"" x 4.5""",False,0.0,2.75,0.0,0.75,0.0,0.0,0.0,0.0,0.0
+Fixtures,Lighting,,40.0,Rosco,Item 01,RoscoLED Tape 3000K/90+CRI - 5m Reel,False,0.0,20.0,0.0,10.0,0.0,0.0,0.0,0.0,0.0
+Fixtures,Lighting,,10.0,Rosco,Item 02,RoscoLED Static White Control Box 300W,False,0.0,22.5,0.0,5.0,0.0,0.0,0.0,0.0,0.0
+Fixtures,Lighting,,200.0,Rosco,Item 03,"RoscoLED Tape Slim Rectangular Profile, 1m",False,0.0,34.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Fixtures,Lighting,,7.0,Altman Lighting,CDR70-*-**-***-****-*****,"Chalice 70 Watt 6"" Recessed Ceiling Mount Downlight",False,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Fixtures,Lighting,,1.0,West Penn Wire,224WH0500,1P 18G STRD USHLD PVC JKT,False,4.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Fixtures,Lighting,,2.0,Altman Lighting,PHX1-RGBW-30Z-***,150 Watt PHX LED Zoom Spot - RGBW LED Array - 30-55 Zoom,False,0.0,0.8,0.0,0.5,0.0,0.0,0.0,0.0,0.0
+Fixtures,Lighting,,4.0,Altman Lighting,AP-150 RGBW-B-PCED,"AP-150 135 Watt RGBW LED Par, Black. With motorized zoom, and universal 100- 240 VAC power supply,I NCLUDES POWERCON to EDISON Cable (PN-PCL-PBG- 12-5) C-Clamp and Safety cable must be ordered separately",False,0.0,1.6,0.0,1.0,0.0,0.0,0.0,0.0,0.0
+Fixtures,Lighting,,18.0,Altman Lighting,PEG6-*-**,"6"" LED Fresnel - 130W, 3K-B",False,0.0,7.2,0.0,4.5,0.0,0.0,0.0,0.0,0.0
+General Project Costs,General Project Costs,,164.0,EAVI,System Design Services,Engineering Services,False,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+General Project Costs,General Project Costs,,41.0,EAVI,Project Management,EAVI Project Management,False,0.0,0.0,0.0,0.0,0.0,0.0,0.0,41.0,0.0
+General Project Costs,General Project Costs,,29.0,EAVI,Project Planning,Planning of the Project by the Lead Technician,False,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+General Project Costs,General Project Costs,,33.0,EAVI,Installation Testing,Finish (Testing),False,0.0,0.0,33.0,0.0,0.0,0.0,0.0,0.0,0.0
+General Project Costs,General Project Costs,,24.0,EAVI,System Commissioning,"System Testing, Adjustment, Verification",False,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+General Project Costs,General Project Costs,,4.0,EAVI,Training,On-Site Training on System Operation and Maintenan,False,0.0,0.0,4.0,0.0,0.0,0.0,0.0,0.0,0.0
 General Project Costs,General Project Costs,,4.0,EAVI,First Use,Technical Support for First Use,False,0.0,0.0,4.0,0.0,0.0,0.0,0.0,0.0,0.0
-General Project Costs,General Project Costs,,24.0,EAVI,System Commissioning,System Testing Adjustment Verification,False,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-IDF,Control,,1.0,Crestron,RMC4,4-Series Control System,False,0.0,0.7,0.0,1.2,0.0,0.0,0.0,0.0,0.0
-IDF,Control,,1.0,QSC,NS26-1440++,"26-port network switch preconfigured for Q-SYS Audio, Video and Control with 24x PoE++ ports and 1440 Watts PoE budget. Features advanced QoS and IGMP configuration to also support AES67 and Dante within the same VLAN.",False,0.0,3.0,0.0,3.5,0.0,0.0,0.0,0.0,0.0
-IDF,Control,,1.0,Crestron,CEN-CI3-3,3-Series Card Interface 3 Slot,False,0.0,0.475,0.0,0.98,0.0,0.0,0.0,0.0,0.0
-IDF,Control,,2.0,Crestron,C3COM-3,3-Series Control Card 3 COM Ports,False,0.0,0.8,0.0,2.64,0.0,0.0,0.0,0.0,0.0
-IDF,Equipment Rack,,1.0,Middle Atlantic,UD2,2SP UTIL.DRAWER BLK,False,0.0,0.0,0.0,0.3,0.0,0.0,0.0,0.0,0.0
-IDF,Equipment Rack,,2.0,Middle Atlantic,BR1,1SP PANEL W BRUSH GROMMET,False,0.0,0.0,0.0,0.6,0.0,0.0,0.0,0.0,0.0
-IDF,Equipment Rack,,2.0,Middle Atlantic,PD-915R-SP,"9 OUTS,15A SERIES SURGE",False,0.0,0.5,0.0,1.5,0.0,0.0,0.0,0.0,0.0
-IDF,Equipment Rack,,1.0,Middle Atlantic,UPS-1000R,1000VA/750W UPS,False,0.0,0.5,0.0,1.0,0.0,0.0,0.0,0.0,0.0
-IDF,Sound Masking,,1.0,Cambridge Sound Management,Qt X 300,"Qt X Controller, 3 Qt Outputs",False,0.0,1.5,0.0,1.49,0.0,0.0,0.0,0.0,0.0
-IDF,Sound Masking,,1.0,Cambridge Sound Management,Qt X RMT-KT,Qt X Controller Rack Mount Kit,False,0.0,0.0,0.0,0.5,0.0,0.0,0.0,0.0,0.0
-IDF,Video,,1.0,QSC,CORE 110f,Unified Core with 24 local audio I O channels 128x128 netwo,False,0.0,3.25,0.0,10.0,0.0,0.0,0.0,0.0,0.0
-Meeting 108,Audio,,1.0,QSC,I/O USB Bridge,Q-SYS PoE bridging endpoint for AV-to-USB Bridging. Delivers,False,0.0,0.95,0.0,0.75,0.0,0.0,0.0,0.0,0.0
-Meeting 108,Audio,,1.0,Shure,MXA710W-4FT,"LINEAR ARRAY MIC, WHITE, 4 FT",False,0.0,1.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0
-Meeting 108,Audio,,1.0,EAVI,OFE,Install owner furnished soundbar,True,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-Meeting 108,General Project Costs,,1.0,EAVI,Labor,Installation and removal of temporary video conferencing solution,False,0.0,16.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-Meeting 108,Video,,1.0,Crestron,HD-TX-101-C-E,DM Lite HDMI over CATx Transmitter Surface Mount,False,0.0,0.25,0.0,0.74,0.0,0.0,0.0,0.0,0.0
-Meeting 108,Video,,1.0,Crestron,HD-RX-101-C-E,DM Lite HDMI over CATx Receiver Surface Mount,False,0.0,0.25,0.0,0.75,0.0,0.0,0.0,0.0,0.0
-Meeting 108,Video,,1.0,Apple,Mac Mini,Apple Mac Mini,True,0.0,0.75,0.0,1.0,0.0,0.0,0.0,0.0,0.0
-Meeting 108,Video,,1.0,QSC,NC-110,"110° Horizontal Field of View, ePTZ network camera, PoE, includes mounting bracket for monitor and surface mounting",False,0.0,0.75,0.0,0.5,0.0,0.0,0.0,0.0,0.0
-Meeting 108,Video,,1.0,Crestron,UC-C100-Z-WM,Crestron Flex Video Conference System Integrator Kit with a Wall Mounted Control Interface and ASUS Mini PC for Zoom Rooms Software,False,0.0,5.0,0.0,2.5,0.0,0.0,0.0,0.0,0.0
-Meeting 108,Video,,1.0,Chief,PAC527F,Lg Inwall Box 14.25X 22 w Flange,False,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-Meeting 108,Video,,1.0,EAVI,OFE,"Install owner furnished 65"" display",True,0.0,1.5,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-Meeting 108,Video,,1.0,EAVI,OFE,Install owner furnished display mount,True,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-Meeting 108,Video,,1.0,Vaddio,535-2000-243,THIN PROFILE WALL MOUNT SONY PANA CAMS,False,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-Office 110,Audio,,1.0,EAVI,OFE,Install owner furnished soundbar,False,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-Office 110,Video,,1.0,EAVI,OFE,"Install owner furnished 80"" display",False,0.0,2.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-Office 110,Video,,1.0,EAVI,OFE,Install owner furnished display mount,False,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-Office 110,Video,,1.0,Kramer Electronics,CP-HM/DM-35,PLENUM HDMI to DVI Male - Male Cable 35,False,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-Office 110,Video,,1.0,Chief,PAC526,WALL ENC16X16MTI-DPRE INST,False,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-Open Office,Sound Masking,,3.0,Cambridge Sound Management,E-A-W-16-4,"Standard Emitters, White, 4 pack, with 4 x 16 ft white plenum rated cables",False,0.0,9.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-Open Office,Sound Masking,,12.0,Cambridge Sound Management,DRB-1,Drywall rough-in bracket,False,0.0,3.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-Wire,Audio,,1.0,West Penn Wire,25291BGY1000,1P 22G STRD SHLD PLEN II,False,8.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-Wire,Control,,1.0,Belden,1585A,Belden Cat5 UTP non-shielded data cable plenum CMP-00424BEL,False,8.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-Wire,Control,,1.0,Belden,2413F,23-4P F UTP-CMP SOL BC FEP LSPVC BLK Plenum,False,8.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-Zoom 109,Video,,1.0,Chief,PAC526,WALL ENC16X16MTI-DPRE INST,False,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
-Zoom 111,Video,,1.0,Chief,PAC526,WALL ENC16X16MTI-DPRE INST,False,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+General Project Costs,General Project Costs,,2.0,EAVI,Travel,Travel time to project from EAVI office,False,0.0,0.0,0.0,0.0,2.0,0.0,0.0,0.0,0.0
+Lighting Positions,Lighting,,20.0,EAVI,Installation Field,Relocate Tormentor Pipes & Install DMX Boxes,False,0.0,20.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Lighting Positions,Lighting,,8.0,EAVI,Demolition,Removal of Balcony Trees,False,0.0,8.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Lighting Positions,Lighting,,12.0,EAVI,Installation Field,Install New Wall Mount Pipes & DMX Boxes,False,0.0,12.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Loose Inventory,Audio,,4.0,Whirlwind,MK425NP,Cable - Microphone MK4 XLRF to XLRM 25 Accusonic 2 no,False,0.0,0.4,0.0,0.4,0.0,0.0,0.0,0.0,0.0
+Loose Inventory,Audio,,4.0,Whirlwind,MK450NP,Cable - Microphone MK4 XLRF to XLRM 50 Accusonic 2 no,False,0.0,0.4,0.0,0.4,0.0,0.0,0.0,0.0,0.0
+Loose Inventory,Audio,,4.0,Whirlwind,MK4100NP,Cable - Microphone MK4 XLRF to XLRM 100 Accusonic 2 no,False,0.0,0.8,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Loose Inventory,Audio,,2.0,L-Acoustics,108P 115V,Self-powered coaxial loudspeaker 8 LF 1.5 HF diaphrag,False,0.0,0.2,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+"Plates, Panels & Equipment Racks",Audio,,8.0,EAVI,OFE,Install owner furnished equipment racks,False,0.0,8.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Projector & Projection Screen,Video,,1.0,Da-Lite,99291L,COSMO TNSD 220D HDC1.1 HDTV,False,0.0,10.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Projector & Projection Screen,Video,,1.0,Chief,CMA110,CMA-110 FLAT CEILING PLATE,False,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Projector & Projection Screen,Video,,1.0,Chief,VCMUW,HEAVY DUTY PROJECTOR MOUNT,False,0.0,1.5,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Projector & Projection Screen,Video,,1.0,Panasonic,ET-EMT800,4.14 – 7.40:1 Zoom lens for PT-MZ16K/MZ13K/MZ10K LCD laser projectors,False,0.0,0.5,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Projector & Projection Screen,Video,,1.0,Panasonic,PT-MZ10KLBU,"10,000 Lumens, LCD, WUXGA Resolution (1,920 x 1,200), Laser, 4K Signal Input, Information Monitor, No Lens, Black",False,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0
+"Sources, Switching, Processing & Routing",Audio,,1.0,Allen & Heath,AH-SQ-5,96kHz XCVI FPGA processing 48 Input Channels DEEP Processi,False,0.0,3.25,0.0,1.0,0.0,0.0,0.0,0.0,0.0
+"Sources, Switching, Processing & Routing",Audio,,1.0,Allen & Heath,AH-DX168,16 x 8 Stage Box with dLive 96kHz mic preamps 96kHz,False,0.0,2.25,0.0,1.0,0.0,0.0,0.0,0.0,0.0
+"Sources, Switching, Processing & Routing",Audio,,1.0,Allen & Heath,AH-AP11332,Dust cover for SQ-5,False,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+"Sources, Switching, Processing & Routing",Video,,1.0,Extron Electronics,60-1238-81,IN1608 xi Standard Model,False,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+"Sources, Switching, Processing & Routing",Video,,1.0,Extron Electronics,60-1421-12,"DTP T HWP 4K 231 D - DTP Transmitter for HDMI - Decorator-Style Wallplate, Black - 230 feet (70 m)",False,0.0,1.5,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+"Sources, Switching, Processing & Routing",Video,,1.0,Denon Professional,DN-500BDMKII,"Blu-Ray, DVD & CD/SD/USB Player",False,0.0,1.0,0.004166666666666667,0.0,0.0,0.0,0.0,0.0,0.0
+Speaker System,Audio,,4.0,L-Acoustics,5XT,2-way passive coaxial enclosure 5 LF 1 HF diaphragm,False,0.0,4.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Speaker System,Audio,,4.0,L-Acoustics,ETR5,Adjustable U-bracket 5XT,False,0.0,6.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Speaker System,Audio,,2.0,L-Acoustics,X8,2-way passive coaxial enclosure 8 LF 1.5 HF diaphragm,False,0.0,2.5,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Speaker System,Audio,,2.0,L-Acoustics,X-US8,Short U-bracket for X8,False,0.0,2.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Speaker System,Audio,,2.0,L-Acoustics,A10i WIDE,"2-way passive constant curvature WST® 30° enclosure: 10"" LF+ 2.5"" HF diaphragm (installation version)",False,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Speaker System,Audio,,2.0,L-Acoustics,A10i FOCUS,"2-way passive constant curvature WST® 10° enclosure: 10"" LF+ 2.5"" HF diaphragm (installation version)",False,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Speaker System,Audio,,1.0,L-Acoustics,A15i-BUMP,Flying frame for vertical deployment of A15i and KS21i,False,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Speaker System,Audio,,1.0,L-Acoustics,KS21i,"High power compact subwoofer: 1 x 21"" (installation version)",False,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Speaker System,Audio,,1.0,L-Acoustics,A10i-TILT,Rigging elements with angles for A10i onto or under KS21i,False,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Speaker System,Audio,,1.0,L-Acoustics,KS21i-SLINK,Rear rigging plates for A15i and A10i onto or under KS21i,False,0.0,0.75,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Speaker System,Audio,,1.0,L-Acoustics,A10i FOCUS-ENDLINK,End rigging plates for A10i Focus,False,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Speaker System,Audio,,1.0,L-Acoustics,A10i FOCUS-LINK,Rigging plates for A10i Focus,False,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Speaker System,Audio,,2.0,L-Acoustics,A10i WIDE-LINK,Rigging plates for A10i Wide,False,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Speaker System,Audio,,2.0,L-Acoustics,LA4X US,Amplified controller with PFC 4 x 1000 W 8 Ohms. Ethernet n,False,0.0,1.7,0.0,4.7,0.0,0.0,0.0,0.0,0.0
+Wire & Cable,Audio,,2.0,West Penn Wire,25227BBK1000,1P 12G STRD UNSHLD PLENII,False,16.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Wire & Cable,Audio,,1.0,West Penn Wire,25226BBK1000,1P 14G STRD UNSHLD PLENII,False,8.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Wireless Microphone Systems,Audio,,2.0,Shure,SLXD24/SM58-J52,Wireless Vocal System with SM58,False,0.0,2.5,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Wireless Microphone Systems,Audio,,2.0,Shure,SLXD14-J52,Combo System with SLXD1 Bodypack and SLXD4 Receiver,False,0.0,2.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Wireless Microphone Systems,Audio,,2.0,Shure,WL183,Microflex Omnidirectional Lavalier Microphone,False,0.0,0.4,0.0,0.2,0.0,0.0,0.0,0.0,0.0
+Wireless Microphone Systems,Audio,,1.0,Shure,UA844+SWB,Five-way active antenna splitter and power distribution syst,False,0.0,1.9,0.0,0.0,0.0,0.0,0.0,0.0,0.0

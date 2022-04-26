@@ -39,22 +39,32 @@ class mainApp(Tk):
     def __init__(self):
         super().__init__()
         
-
+        self.wm_iconbitmap(bitmap=None, default=None)
         
+        # window sizing and positioning       
         window_width = 470
         window_height = 220
         window_ctr_x = (window_width/2)
         window_ctr_y = (window_height/2)
-            
-        self.programIcon = Image.open("Files\\EA Logo Bug.png")
-        self.icon_resize = self.programIcon.resize((30,30))
-        self.programIcon_resized = ImageTk.PhotoImage(self.icon_resize)
-        self.iconphoto(False, self.programIcon_resized)
+        
+        scr_width = self.winfo_screenwidth()
+        scr_height = self.winfo_screenheight()
+        ctr_x = int(scr_width/2 - window_width/2)
+        ctr_y = int(scr_height/2 - window_height/2)
+        
+        self.geometry(f'{window_width}x{window_height}+{ctr_x}+{ctr_y}')
+        self.resizable(False, False)
 
+            
         self.c = tk.Canvas(self, bg="black", width = window_width, height = window_height)
         self.c.pack()
         self.background_image = ImageTk.PhotoImage(file = "Files\\Logos\\background.png")
         self.c.create_image(0, 0, image = self.background_image, anchor = NW)
+        
+        self.programIcon = Image.open("Files\\EA Logo Bug.png")
+        self.icon_resize = self.programIcon.resize((30,30))
+        self.programIcon_resized = ImageTk.PhotoImage(self.icon_resize)
+        self.iconphoto(False, self.programIcon_resized)
 
         # setting and positioning the logo header
         self.logo = Image.open("Files\\Logos\\EAlogoHorizonalNobg.png")
@@ -66,15 +76,6 @@ class mainApp(Tk):
         self.rowconfigure(3, {'minsize': 40})
         self.columnconfigure(3, {'minsize': 40})
         self.title("PURCH List Creator")
-
-        # window sizing and positioning
-        scr_width = self.winfo_screenwidth()
-        scr_height = self.winfo_screenheight()
-        ctr_x = int(scr_width/2 - window_width/2)
-        ctr_y = int(scr_height/2 - window_height/2)
-
-        self.geometry(f'{window_width}x{window_height}+{ctr_x}+{ctr_y}')
-        self.resizable(False, False)
 
 
         # setting and positiong the prompt
@@ -105,9 +106,9 @@ class mainApp(Tk):
 
 
         def showJBIR(): 
-            jbir_gui = jbirWindow()
             self.grab_release()
             self.withdraw()
+            jbir_gui = jbirWindow()
             jbir_gui.deiconify()
             #if 'withdrawn' == jbir_gui.state():
             #    jbir_gui.focus_set()

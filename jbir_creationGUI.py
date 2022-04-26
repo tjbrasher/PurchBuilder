@@ -5,7 +5,8 @@ from tkinter import *
 from tkinter import Tk
 import webbrowser
 from PIL import Image, ImageTk
-from Data_Cleaning_wPandas_Purch import formatFile
+#from Data_Cleaning_wPandas_Purch import formatFile
+from jbir_format import jbirFormat
 from ErrorTest import showError
 from SortingOptions import sortWindow
 import traceback
@@ -54,6 +55,18 @@ class jbirWindow(TkinterDnD.Tk, tk.Toplevel):
         print("welcome = ", type(welcome))
         #tk3 = tk.Toplevel(welcome)
         
+        # window sizing and positioning
+        window_width = 620
+        window_height = 300
+        scr_width = self.winfo_screenwidth()
+        scr_height = self.winfo_screenheight()
+
+        ctr_x = int(scr_width/2 - window_width/2)
+        ctr_y = int(scr_height/2 - window_height/2)
+
+        self.geometry(f'{window_width}x{window_height}+{ctr_x}+{ctr_y}')
+        self.resizable(False, False)
+        
         self.focus_set()
         
         self.programIcon = Image.open("Files\\EA Logo Bug.png")
@@ -77,17 +90,7 @@ class jbirWindow(TkinterDnD.Tk, tk.Toplevel):
         self.columnconfigure(3, {'minsize': 40})
         self.title("JBIR Creator")
 
-        # window sizing and positioning
-        window_width = 620
-        window_height = 300
-        scr_width = self.winfo_screenwidth()
-        scr_height = self.winfo_screenheight()
 
-        ctr_x = int(scr_width/2 - window_width/2)
-        ctr_y = int(scr_height/2 - window_height/2)
-
-        self.geometry(f'{window_width}x{window_height}+{ctr_x}+{ctr_y}')
-        self.resizable(False, False)
         
         home_icon_normal = Image.open("Files\\home-icon-normal_state.png")
         home_icon_normal_resize = home_icon_normal.resize((40,40))
@@ -174,7 +177,7 @@ class jbirWindow(TkinterDnD.Tk, tk.Toplevel):
                 #print(file1.get_file())
                 #getFile(file1)
                 #print("THIS IS THE SELECTED FILE: ", file1.get_file())
-                formatFile(file1, label_file_explorer)
+                jbirFormat(file1, label_file_explorer)
                 
             except Exception as e: 
                 #print("file not found error")
@@ -262,4 +265,5 @@ class jbirWindow(TkinterDnD.Tk, tk.Toplevel):
 def launchJBIR():
     jbir_gui = jbirWindow()
     jbir_gui.mainloop()
+    
 
