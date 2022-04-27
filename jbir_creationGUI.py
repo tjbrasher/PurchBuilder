@@ -90,8 +90,16 @@ class jbirWindow(TkinterDnD.Tk, tk.Toplevel):
         self.columnconfigure(3, {'minsize': 40})
         self.title("JBIR Creator")
 
+        browse_icon_normal = Image.open("Files\\file_explore_normal_state.png")
+        browse_icon_normal_resize = browse_icon_normal.resize((45,45))
+        browse_button_image_normal = ImageTk.PhotoImage(browse_icon_normal_resize, master=self)
 
+        browse_icon_hover = Image.open("Files\\file_explore_highlight_state.png")
+        browse_icon_hover_resize = browse_icon_hover.resize((45,45))
+        browse_button_image_hover = ImageTk.PhotoImage(browse_icon_hover_resize, master=self)
         
+
+
         home_icon_normal = Image.open("Files\\home-icon-normal_state.png")
         home_icon_normal_resize = home_icon_normal.resize((40,40))
         home_button_image_normal = ImageTk.PhotoImage(home_icon_normal_resize, master=self)
@@ -100,7 +108,7 @@ class jbirWindow(TkinterDnD.Tk, tk.Toplevel):
         home_icon_hover_resize = home_icon_hover.resize((40,40))
         home_button_image_hover = ImageTk.PhotoImage(home_icon_hover_resize, master=self)
 
-        home_normal = self.c.create_image(40, 35, image=home_button_image_normal, tags=["normal_state", "highlight_state","click_state"])
+        home_normal = self.c.create_image(40, 35, image=home_button_image_normal, tags=["home_normal_state", "home_highlight_state","home_click_state"])
                     
 
         # setting and positiong the prompt
@@ -108,8 +116,8 @@ class jbirWindow(TkinterDnD.Tk, tk.Toplevel):
 
         label_file_explorer = tk.Text(self, background = "light gray", foreground = "gray",
                                       width = 57, height = 1, font = ("Arial", 10))
-        label_file_explorer.insert("1.0", "Please select a file")
-        label_file_explorer.place(x=57.5, y=179)
+        label_file_explorer.insert("1.0", " Please select a file")
+        label_file_explorer.place(x=72.5, y=179)
 
 
         submit = tk.Button(self, text = "Submit", width = 10, height = 1, bg = "silver")
@@ -191,12 +199,33 @@ class jbirWindow(TkinterDnD.Tk, tk.Toplevel):
            
         submit.configure(command = lambda: submitClick(inputfile.get_file()))
 
+
+        browse_normal = self.c.create_image(515, 188.5, image=browse_button_image_normal, tags=["browse_normal_state", "browse_highlight_state","browse_click_state"])
+
+        def onBrowseClick(event):
+            fileExplore()
+
+        def browse_normalState(event):
+            self.c.itemconfigure(browse_normal, image=browse_button_image_normal)
+            print('entered normal state')
+       
+        def browse_hoverEvent(event):            
+            self.c.itemconfigure(browse_normal, image=browse_button_image_hover)
+            
+            print('entered hover state')
+            
+        self.c.tag_bind("browse_click_state", '<Button-1>', onBrowseClick)        
+        
+        self.c.tag_bind("browse_highlight_state", '<Enter>', browse_hoverEvent)
+
+        self.c.tag_bind("browse_normal_state", '<Leave>', browse_normalState)
+
             
         
-        fileBrowse = tk.Button(self, text = "Browse Files", bg = "silver",
-                                 command = lambda: (fileExplore()))
+        #fileBrowse = tk.Button(self, text = "Browse Files", bg = "silver",
+        #                         command = lambda: (fileExplore()))
         
-        fileBrowse.place(x=485, y=175.5)
+        #fileBrowse.place(x=485, y=175.5)
 
  
 
@@ -240,20 +269,20 @@ class jbirWindow(TkinterDnD.Tk, tk.Toplevel):
             self.grab_release()
             self.withdraw()
 
-        def normalState(event):
+        def home_normalState(event):
             self.c.itemconfigure(home_normal, image=home_button_image_normal)
             print('entered normal state')
        
-        def hoverEvent(event):            
+        def home_hoverEvent(event):            
             self.c.itemconfigure(home_normal, image=home_button_image_hover)
             
             print('entered hover state')
             
-        self.c.tag_bind("click_state", '<Button-1>', onClose)        
+        self.c.tag_bind("home_click_state", '<Button-1>', onClose)        
         
-        self.c.tag_bind("highlight_state", '<Enter>', hoverEvent)
+        self.c.tag_bind("home_highlight_state", '<Enter>', home_hoverEvent)
 
-        self.c.tag_bind("normal_state", '<Leave>', normalState)
+        self.c.tag_bind("home_normal_state", '<Leave>', home_normalState)
 
 
 
