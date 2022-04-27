@@ -49,13 +49,16 @@ class purchWindow(TkinterDnD.Tk, tk.Toplevel):
         print("welcome = ", type(welcome))
         
         # window sizing and positioning
-        window_width = 620
-        window_height = 300
+        window_width = 600
+        window_height = 275
         scr_width = self.winfo_screenwidth()
         scr_height = self.winfo_screenheight()
 
         ctr_x = int(scr_width/2 - window_width/2)
         ctr_y = int(scr_height/2 - window_height/2)
+        
+        win_ctr_x = window_width/2
+        win_ctr_y = window_height/2
 
         self.geometry(f'{window_width}x{window_height}+{ctr_x}+{ctr_y}')
         self.resizable(False, False)
@@ -67,7 +70,7 @@ class purchWindow(TkinterDnD.Tk, tk.Toplevel):
         self.programIcon_resized = ImageTk.PhotoImage(self.icon_resize, master=self)
         self.iconphoto(False, self.programIcon_resized)
 
-        self.c = tk.Canvas(self, bg="black", width = 620, height = 300)
+        self.c = tk.Canvas(self, bg="black", width = window_width, height = window_height)
         self.c.pack()
         self.background_image = ImageTk.PhotoImage(file = "Files\\Logos\\background.png", master=self)
         self.c.create_image(0, 0, image = self.background_image, anchor = NW)
@@ -76,39 +79,52 @@ class purchWindow(TkinterDnD.Tk, tk.Toplevel):
         self.logo = Image.open("Files\\Logos\\EAlogoHorizonalNobg.png")
         self.logo_resize = self.logo.resize((359,72))
         self.logo_header = ImageTk.PhotoImage(self.logo_resize, master=self)
-        self.c.create_image(310,35, image = self.logo_header, anchor = N)
+        self.c.create_image(win_ctr_x,win_ctr_y-120, image = self.logo_header, anchor = N)
 
         # initial window setup
         self.rowconfigure(3, {'minsize': 40})
         self.columnconfigure(3, {'minsize': 40})
         self.title("PURCH List Creator")
 
+        browse_icon_normal = Image.open("Files\\search_icon_normal_state.png")
+        browse_icon_normal_resize = browse_icon_normal.resize((30,30))
+        browse_button_image_normal = ImageTk.PhotoImage(browse_icon_normal_resize, master=self)
 
+        browse_icon_hover = Image.open("Files\\search_icon_highlight.png")
+        browse_icon_hover_resize = browse_icon_hover.resize((30,30))
+        browse_button_image_hover = ImageTk.PhotoImage(browse_icon_hover_resize, master=self)
+        
 
         home_icon_normal = Image.open("Files\\home-icon-normal_state.png")
-        home_icon_normal_resize = home_icon_normal.resize((40,40))
+        home_icon_normal_resize = home_icon_normal.resize((35,35))
         home_button_image_normal = ImageTk.PhotoImage(home_icon_normal_resize, master=self)
 
         home_icon_hover = Image.open("Files\\home-icon-hover.png")
-        home_icon_hover_resize = home_icon_hover.resize((40,40))
+        home_icon_hover_resize = home_icon_hover.resize((35,35))
         home_button_image_hover = ImageTk.PhotoImage(home_icon_hover_resize, master=self)
 
-        home_normal = self.c.create_image(40, 35, image=home_button_image_normal, tags=["normal_state", "highlight_state","click_state"])
-                    
+        home_normal = self.c.create_image(35, 35, image=home_button_image_normal, tags=["normal_state", "highlight_state","click_state"])
+        
+        
+        sort_icon_normal = Image.open("Files\\345-3458587_filter-sort-icon-normal_statexcf.png")
+        sort_icon_normal_resize = sort_icon_normal.resize((55,25))
+        sort_button_image_normal = ImageTk.PhotoImage(sort_icon_normal_resize, master=self)
 
-
+        sort_icon_hover = Image.open("Files\\345-3458587_filter-sort-icon-highlight_state.png")
+        sort_icon_hover_resize = sort_icon_hover.resize((55,25))
+        sort_button_image_hover = ImageTk.PhotoImage(sort_icon_hover_resize, master=self)
+        
 
         # setting and positiong the prompt
-        self.c.create_text(307.5, 142.5, text="Please Select a File to Use for Creating the PURCH List", fill = "white", font=("Arial 12 bold"))
+        self.c.create_text(win_ctr_x, win_ctr_y-25, text="Please Select a File to Use for Creating the PURCH List", fill = "white", font=("Segoe UI Variable Text Semibold", 14, "bold"))
 
         label_file_explorer = tk.Text(self, background = "light gray", foreground = "gray",
                                       width = 57, height = 1, font = ("Arial", 10))
-        label_file_explorer.insert("1.0", "Please select a file")
-        label_file_explorer.place(x=57.5, y=179)
+        label_file_explorer.insert("1.0", " Please select a file")
+        label_file_explorer.place(x=win_ctr_x-222.5, y=win_ctr_y+7)
 
-
-        submit = tk.Button(self, text = "Submit", width = 10, height = 1, bg = "silver")
-        submit.place(x=265, y=225)
+        submit = tk.Button(self, text = "Submit", font=("Segoe UI Variable Text Semibold", 8), width = 10, height = 1, bg = "silver", cursor="hand2")
+        submit.place(x=win_ctr_x-50, y=win_ctr_y+50)
         
         inputfile.set_file("")
 
@@ -186,20 +202,41 @@ class purchWindow(TkinterDnD.Tk, tk.Toplevel):
            
         submit.configure(command = lambda: submitClick(inputfile.get_file()))
 
+        browse_normal = self.c.create_image(win_ctr_x+211, win_ctr_y+17.5, image=browse_button_image_normal, tags=["browse_normal_state", "browse_highlight_state","browse_click_state"])
+
+        def onBrowseClick(event):
+            fileExplore()
+
+        def browse_normalState(event):
+            self.c.config(cursor="arrow")
+            self.c.itemconfigure(browse_normal, image=browse_button_image_normal)
+            print('entered normal state')
+       
+        def browse_hoverEvent(event):    
+            self.c.config(cursor="hand2")          
+            self.c.itemconfigure(browse_normal, image=browse_button_image_hover)
             
+            print('entered hover state')
+            
+        self.c.tag_bind("browse_click_state", '<Button-1>', onBrowseClick)        
         
-        fileBrowse = tk.Button(self, text = "Browse Files", bg = "silver",
-                                 command = lambda: (fileExplore()))
+        self.c.tag_bind("browse_highlight_state", '<Enter>', browse_hoverEvent)
+
+        self.c.tag_bind("browse_normal_state", '<Leave>', browse_normalState)
         
-        fileBrowse.place(x=485, y=175.5)
+
+        #fileBrowse = tk.Button(self, text = "Browse Files", bg = "silver",
+        #                         command = lambda: (fileExplore()))
+        
+        #fileBrowse.place(x=485, y=175.5)
         
         
         # setting up the sort button
-        sorting = self.c.create_text(530, 225, text="Sorting Options", fill="white", font=("Arial 10"), width=200, tags=["sort", "normalSort","highlightSort"]) 
+        #sorting = self.c.create_text(530, 225, text="Sorting Options", fill="white", font=("Arial 10"), width=200, tags=["sort", "normalSort","highlightSort"]) 
         
         sortPrompt = tk.Text(self, background = "dark gray", foreground = "black",
-                                      width = 15, height = 2, font = ("Arial", 7))
-        sortPrompt.insert("1.0", "Click Here for" + "\n" + "Sorting Options", "center")
+                                      width = 8, height = 2, font = ("Segoe UI Variable Text Semibold", 8))
+        sortPrompt.insert("1.0", "Sorting" + "\n" + "Options", "center")
         sortPrompt.tag_configure("center", justify='center')
         sortPrompt.tag_add("center", 1.0, "end")
         
@@ -215,29 +252,41 @@ class purchWindow(TkinterDnD.Tk, tk.Toplevel):
                 programSortWindow.focus_set()
                 programSortWindow.grab_set_global()
                 programSortWindow.deiconify()
+                
+                
+                
+        sort_normal = self.c.create_image(win_ctr_x+212.5, win_ctr_y+60, image=sort_button_image_normal, tags=["sort_normal_state", "sort_highlight_state","sort_click_state"])
 
-            
-        def normalSortState(event):
-            self.c.itemconfigure(sorting, fill="white")
+        def onSortClick(event):
+            showSortPrompt(event)
+
+        def sort_normalState(event):
+            self.c.config(cursor="arrow")
             sortPrompt.place_forget()
-        
-        def highlightSort(event):            
-            #sortPrompt.place(x=490, y=185)
-            self.c.itemconfigure(sorting, fill="red")
+            self.c.itemconfigure(sort_normal, image=sort_button_image_normal)
+            print('entered normal state')
+       
+        def sort_hoverEvent(event): 
+            self.c.config(cursor="hand2")  
+            sortPrompt.place(x=win_ctr_x+235, y=win_ctr_y+30)         
+            self.c.itemconfigure(sort_normal, image=sort_button_image_hover)
             
-        self.c.tag_bind("sort", '<Button-1>', showSortPrompt)        
+            print('entered hover state')
+            
+        self.c.tag_bind("sort_click_state", '<Button-1>', onSortClick)        
         
-        self.c.tag_bind("highlightSort", '<Enter>', highlightSort)
+        self.c.tag_bind("sort_highlight_state", '<Enter>', sort_hoverEvent)
 
-        self.c.tag_bind("normalSort", '<Leave>', normalSortState)
+        self.c.tag_bind("sort_normal_state", '<Leave>', sort_normalState)
+        
 
         
         
         # setting up the help button
-        help = self.c.create_text(577.5, 275, text="Help", fill="gray", font=("Arial 10"), width=30, tags=["help", "normal","highlight"]) 
+        help = self.c.create_text(win_ctr_x+265, win_ctr_y+110, text="Help", fill="gray", font=("Segoe UI Variable Text Semibold", 10), width=30, tags=["help", "normal","highlight"]) 
         
         helpPrompt = tk.Text(self, background = "dark gray", foreground = "black",
-                                      width = 10, height = 2, font = ("Arial", 7))
+                                      width = 10, height = 2, font = ("Segoe UI Variable Text Semibold", 7))
         helpPrompt.insert("1.0", "Click Here" + "\n" + "for Help", "center")
         helpPrompt.tag_configure("center", justify='center')
         helpPrompt.tag_add("center", 1.0, "end")
@@ -251,11 +300,13 @@ class purchWindow(TkinterDnD.Tk, tk.Toplevel):
             
             
         def normalState(event):
+            self.c.config(cursor="arrow")
             self.c.itemconfigure(help, fill="gray")
             helpPrompt.place_forget()
         
         def highlightHelp(event):            
-            helpPrompt.place(x=550, y=230)
+            helpPrompt.place(x=win_ctr_x+235, y=win_ctr_y+70)
+            self.c.config(cursor="hand2")
             self.c.itemconfigure(help, fill="red")
             
         self.c.tag_bind("help", '<Button-1>', showHelp)        
@@ -271,10 +322,12 @@ class purchWindow(TkinterDnD.Tk, tk.Toplevel):
             self.withdraw()
 
         def normalState(event):
+            self.c.config(cursor="arrow")
             self.c.itemconfigure(home_normal, image=home_button_image_normal)
             print('entered normal state')
        
-        def hoverEvent(event):            
+        def hoverEvent(event):   
+            self.c.config(cursor="hand2")         
             self.c.itemconfigure(home_normal, image=home_button_image_hover)
             
             print('entered hover state')

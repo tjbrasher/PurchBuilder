@@ -49,15 +49,15 @@ class sortWindow(tk.Toplevel):
 
         #setting heading for sort window
         Sortprompt = self.c.create_text(100, 30, text="Please Select Options" + "\n" + "for Sorting File",
-                                fill = "white", font=("Arial 12"), width = 180, justify=CENTER)
+                                fill = "white", font=("Segoe UI Variable Text Semibold", 12, "bold"), width = 180, justify=CENTER)
 
 
         #setting text for buttons
-        rb1_text = self.c.create_text(105, 85, text="None", fill = "white", font=("Arial 11"), justify = LEFT)
-        rb2_text = self.c.create_text(111, 115, text="Source", fill = "white", font=("Arial 11"), justify = LEFT)
-        rb3_text = self.c.create_text(102.5, 145, text="Item", fill = "white", font=("Arial 11"), justify = LEFT)
-        rb4_text = self.c.create_text(102.5, 175, text="Cost", fill = "white", font=("Arial 11"), justify = LEFT)
-        rb5_text = self.c.create_text(130, 205, text="Order Status", fill = "white", font=("Arial 11"), justify = LEFT)
+        rb1_text = self.c.create_text(105, 85, text="None", fill = "white", font=("Segoe UI Variable Text Semibold", 11), justify = LEFT)
+        rb2_text = self.c.create_text(110, 115, text="Source", fill = "white", font=("Segoe UI Variable Text Semibold", 11), justify = LEFT)
+        rb3_text = self.c.create_text(102.5, 145, text="Item", fill = "white", font=("Segoe UI Variable Text Semibold", 11), justify = LEFT)
+        rb4_text = self.c.create_text(101.5, 175, text="Cost", fill = "white", font=("Segoe UI Variable Text Semibold", 11), justify = LEFT)
+        rb5_text = self.c.create_text(130, 205, text="Order Status", fill = "white", font=("Segoe UI Variable Text Semibold", 11), justify = LEFT)
 
 
         #setting image for when button is selected
@@ -73,7 +73,7 @@ class sortWindow(tk.Toplevel):
         
         
         #setting and placing "Done" button to close window
-        doneButton = tk.Button(self, text = "Done", width = 10, height = 1, bg="silver")                               
+        doneButton = tk.Button(self, text = "Done", font=("Segoe UI Variable Text Semibold", 8), width = 10, height = 1, bg="silver", cursor="hand2")                               
         doneButton.place(x=62.5, y=250)
         
         
@@ -125,23 +125,23 @@ class sortWindow(tk.Toplevel):
         #setting and placing checkbuttons to be used         
         bt1 = Checkbutton(self, image=self.rbDeselected, background="black", foreground="black", indicatoron=False, 
                      activebackground="black", activeforeground="black",  highlightcolor="black", border=0,
-                     highlightbackground="black", borderwidth=0, variable=bt1SelectState, onvalue=1, offvalue=0)
+                     highlightbackground="black", borderwidth=0, variable=bt1SelectState, onvalue=1, offvalue=0, cursor="hand2")
         
         bt2 = Checkbutton(self, image=self.rbDeselected, background="black", foreground="black", indicatoron=False, 
                      activebackground="black", activeforeground="black",  highlightcolor="black", border=0,
-                     highlightbackground="black", borderwidth=0, variable=bt2SelectState, onvalue=1, offvalue=0)
+                     highlightbackground="black", borderwidth=0, variable=bt2SelectState, onvalue=1, offvalue=0, cursor="hand2")
         
         bt3 = Checkbutton(self, image=self.rbDeselected, background="black", foreground="black", indicatoron=False, 
                      activebackground="black", activeforeground="black",  highlightcolor="black", border=0,
-                     highlightbackground="black", borderwidth=0, variable=bt3SelectState, onvalue=1, offvalue=0)
+                     highlightbackground="black", borderwidth=0, variable=bt3SelectState, onvalue=1, offvalue=0, cursor="hand2")
         
         bt4 = Checkbutton(self, image=self.rbDeselected, background= "black", foreground="black", indicatoron=False, 
                      activebackground="black", activeforeground="black",  highlightcolor="black", border=0,
-                     highlightbackground="black", borderwidth=0, variable=bt4SelectState, onvalue=1, offvalue=0)
+                     highlightbackground="black", borderwidth=0, variable=bt4SelectState, onvalue=1, offvalue=0, cursor="hand2")
         
         bt5 = Checkbutton(self, image=self.rbDeselected, background="black", foreground="black", indicatoron=False, 
                      activebackground="black", activeforeground="black",  highlightcolor="black", border=0,
-                     highlightbackground="black", borderwidth=0, variable=bt5SelectState, onvalue=1, offvalue=0)
+                     highlightbackground="black", borderwidth=0, variable=bt5SelectState, onvalue=1, offvalue=0, cursor="hand2")
                 
 
         #functions for button selections

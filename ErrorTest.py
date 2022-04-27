@@ -47,15 +47,15 @@ class ErrorWindow(tk.Toplevel):
 
         # setting and positiong the prompt
         promptTitle = self.c.create_text(150, 17, text="ERROR!",
-                            fill = "RED", font=("Arial 12 bold"), justify=CENTER)
+                            fill = "RED", font=("Segoe UI Variable Text Semibold", 14), justify=CENTER)
         
         windowBackground = self.c.create_rectangle(10, 35, 290, 120, outline='dark gray', width=2)
    
         message = self.c.create_text(150, 58, text="--- Request Could Not Be Processed! ---"
                                      + "\n" + "Please Try Again",
-                        fill = "white", font=("Arial 11"), width = 280, justify=CENTER)
+                        fill = "white", font=("Segoe UI Variable Text Semibold", 11), width = 280, justify=CENTER)
 
-        okButton = tk.Button(self, text = "OK", width = 10, height = 1, bg = "silver")
+        okButton = tk.Button(self, text = "OK", font=("Segoe UI Variable Text Semibold", 8), width = 10, height = 1, bg = "silver", cursor="hand2")
         okButton.place(x=112.5, y=86)
               
         def OKClick(label_file_explorer):
@@ -73,4 +73,4 @@ def showError(label_file_explorer):
     
     
     
-#showError()
+#showError(None)

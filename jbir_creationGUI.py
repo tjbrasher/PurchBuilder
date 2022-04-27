@@ -56,13 +56,16 @@ class jbirWindow(TkinterDnD.Tk, tk.Toplevel):
         #tk3 = tk.Toplevel(welcome)
         
         # window sizing and positioning
-        window_width = 620
-        window_height = 300
+        window_width = 600
+        window_height = 275
         scr_width = self.winfo_screenwidth()
         scr_height = self.winfo_screenheight()
 
         ctr_x = int(scr_width/2 - window_width/2)
         ctr_y = int(scr_height/2 - window_height/2)
+        
+        win_ctr_x = window_width/2
+        win_ctr_y = window_height/2
 
         self.geometry(f'{window_width}x{window_height}+{ctr_x}+{ctr_y}')
         self.resizable(False, False)
@@ -73,8 +76,8 @@ class jbirWindow(TkinterDnD.Tk, tk.Toplevel):
         self.icon_resize = self.programIcon.resize((30,30))
         self.programIcon_resized = ImageTk.PhotoImage(self.icon_resize, master=self)
         self.iconphoto(False, self.programIcon_resized)
-
-        self.c = tk.Canvas(self, bg="black", width = 620, height = 300)
+        
+        self.c = tk.Canvas(self, bg="black", width = window_width, height = window_height)
         self.c.pack()
         self.background_image = ImageTk.PhotoImage(file = "Files\\Logos\\background.png", master=self)
         self.c.create_image(0, 0, image = self.background_image, anchor = NW)
@@ -83,45 +86,44 @@ class jbirWindow(TkinterDnD.Tk, tk.Toplevel):
         self.logo = Image.open("Files\\Logos\\EAlogoHorizonalNobg.png")
         self.logo_resize = self.logo.resize((359,72))
         self.logo_header = ImageTk.PhotoImage(self.logo_resize, master=self)
-        self.c.create_image(310,35, image = self.logo_header, anchor = N)
+        self.c.create_image(win_ctr_x,win_ctr_y-120, image = self.logo_header, anchor = N)
 
         # initial window setup
         self.rowconfigure(3, {'minsize': 40})
         self.columnconfigure(3, {'minsize': 40})
         self.title("JBIR Creator")
 
-        browse_icon_normal = Image.open("Files\\file_explore_normal_state.png")
-        browse_icon_normal_resize = browse_icon_normal.resize((45,45))
+        browse_icon_normal = Image.open("Files\\search_icon_normal_state.png")
+        browse_icon_normal_resize = browse_icon_normal.resize((30,30))
         browse_button_image_normal = ImageTk.PhotoImage(browse_icon_normal_resize, master=self)
 
-        browse_icon_hover = Image.open("Files\\file_explore_highlight_state.png")
-        browse_icon_hover_resize = browse_icon_hover.resize((45,45))
+        browse_icon_hover = Image.open("Files\\search_icon_highlight.png")
+        browse_icon_hover_resize = browse_icon_hover.resize((30,30))
         browse_button_image_hover = ImageTk.PhotoImage(browse_icon_hover_resize, master=self)
         
 
 
         home_icon_normal = Image.open("Files\\home-icon-normal_state.png")
-        home_icon_normal_resize = home_icon_normal.resize((40,40))
+        home_icon_normal_resize = home_icon_normal.resize((35,35))
         home_button_image_normal = ImageTk.PhotoImage(home_icon_normal_resize, master=self)
 
         home_icon_hover = Image.open("Files\\home-icon-hover.png")
-        home_icon_hover_resize = home_icon_hover.resize((40,40))
+        home_icon_hover_resize = home_icon_hover.resize((35,35))
         home_button_image_hover = ImageTk.PhotoImage(home_icon_hover_resize, master=self)
 
-        home_normal = self.c.create_image(40, 35, image=home_button_image_normal, tags=["home_normal_state", "home_highlight_state","home_click_state"])
+        home_normal = self.c.create_image(35, 35, image=home_button_image_normal, tags=["home_normal_state", "home_highlight_state","home_click_state"])
                     
 
         # setting and positiong the prompt
-        self.c.create_text(307.5, 142.5, text="Please Select a File to Use for Creating the JBIR", fill = "white", font=("Arial 12 bold"))
+        self.c.create_text(win_ctr_x, win_ctr_y-25, text="Please Select a File to Use for Creating the JBIR", fill = "white", font = ("Segoe UI Variable Text Semibold", 14))
 
         label_file_explorer = tk.Text(self, background = "light gray", foreground = "gray",
-                                      width = 57, height = 1, font = ("Arial", 10))
+                                      width = 57, height = 1, font = ("Segoe UI Variable Text Semibold", 10))
         label_file_explorer.insert("1.0", " Please select a file")
-        label_file_explorer.place(x=72.5, y=179)
+        label_file_explorer.place(x=win_ctr_x-222.5, y=win_ctr_y+7)
 
-
-        submit = tk.Button(self, text = "Submit", width = 10, height = 1, bg = "silver")
-        submit.place(x=265, y=225)
+        submit = tk.Button(self, text = "Submit", font = ("Segoe UI Variable Text Semibold", 8), width = 10, height = 1, bg = "silver", cursor="hand2")
+        submit.place(x=win_ctr_x-50, y=win_ctr_y+50)
         
         inputfile.set_file("")
 
@@ -200,16 +202,18 @@ class jbirWindow(TkinterDnD.Tk, tk.Toplevel):
         submit.configure(command = lambda: submitClick(inputfile.get_file()))
 
 
-        browse_normal = self.c.create_image(515, 188.5, image=browse_button_image_normal, tags=["browse_normal_state", "browse_highlight_state","browse_click_state"])
+        browse_normal = self.c.create_image(win_ctr_x+211, win_ctr_y+17.5, image=browse_button_image_normal, tags=["browse_normal_state", "browse_highlight_state","browse_click_state"])
 
         def onBrowseClick(event):
             fileExplore()
 
         def browse_normalState(event):
+            self.c.config(cursor="arrow")
             self.c.itemconfigure(browse_normal, image=browse_button_image_normal)
             print('entered normal state')
        
-        def browse_hoverEvent(event):            
+        def browse_hoverEvent(event):
+            self.c.config(cursor="hand2")            
             self.c.itemconfigure(browse_normal, image=browse_button_image_hover)
             
             print('entered hover state')
@@ -234,10 +238,10 @@ class jbirWindow(TkinterDnD.Tk, tk.Toplevel):
                
         
         # setting up the help button
-        help = self.c.create_text(577.5, 275, text="Help", fill="gray", font=("Arial 10"), width=30, tags=["help", "normal","highlight"]) 
+        help = self.c.create_text(win_ctr_x+265, win_ctr_y+110, text="Help", fill="gray", font=("Arial 10"), width=30, tags=["help", "normal","highlight"]) 
         
         helpPrompt = tk.Text(self, background = "dark gray", foreground = "black",
-                                      width = 10, height = 2, font = ("Arial", 7))
+                                      width = 10, height = 2, font = ("Segoe UI Variable Text Semibold", 7))
         helpPrompt.insert("1.0", "Click Here" + "\n" + "for Help", "center")
         helpPrompt.tag_configure("center", justify='center')
         helpPrompt.tag_add("center", 1.0, "end")
@@ -250,11 +254,13 @@ class jbirWindow(TkinterDnD.Tk, tk.Toplevel):
             
             
         def normalState(event):
+            self.c.config(cursor="arrow")
             self.c.itemconfigure(help, fill="gray")
             helpPrompt.place_forget()
         
         def highlightHelp(event):            
-            helpPrompt.place(x=550, y=230)
+            helpPrompt.place(x=win_ctr_x+235, y=win_ctr_y+70)
+            self.c.config(cursor="hand2")
             self.c.itemconfigure(help, fill="red")
             
         self.c.tag_bind("help", '<Button-1>', showHelp)        
@@ -270,10 +276,12 @@ class jbirWindow(TkinterDnD.Tk, tk.Toplevel):
             self.withdraw()
 
         def home_normalState(event):
+            self.c.config(cursor="arrow")
             self.c.itemconfigure(home_normal, image=home_button_image_normal)
             print('entered normal state')
        
-        def home_hoverEvent(event):            
+        def home_hoverEvent(event):    
+            self.c.config(cursor="hand2")        
             self.c.itemconfigure(home_normal, image=home_button_image_hover)
             
             print('entered hover state')

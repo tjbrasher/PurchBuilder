@@ -79,8 +79,8 @@ class mainApp(Tk):
 
 
         # setting and positiong the prompt
-        self.c.create_text((window_ctr_x), (window_ctr_y+5), text="Please Select an Option Below", fill = "white", font=("Arial 12 bold"))
-        
+        self.c.create_text((window_ctr_x), (window_ctr_y+5), text="Please Select an Option Below", fill = "white", font=("Segoe UI Variable Text Semibold", 14, "bold"))
+
         
 
         #purch_gui.grab_release()
@@ -99,8 +99,8 @@ class mainApp(Tk):
         #        purch_gui.grab_set_global()
         #        purch_gui.deiconify()
 
-        purch_btn = tk.Button(self, text = "PURCH List", width = 10, height = 1, bg = "silver")
-        purch_btn.place(x=(window_ctr_x - 105), y=(window_ctr_y +40))
+        purch_btn = tk.Button(self, text = "PURCH List", font=("Segoe UI Variable Text Semibold", 8), width = 10, height = 1, bg = "silver", cursor="hand2")
+        purch_btn.place(x=(window_ctr_x - 100), y=(window_ctr_y +40))
         purch_btn.configure(command = lambda: showPurch())
         
 
@@ -120,18 +120,18 @@ class mainApp(Tk):
             #    jbir_gui.deiconify()    
             
 
-        jbir_btn = tk.Button(self, text = "JBIR", width = 10, height = 1, bg = "silver")
-        jbir_btn.place(x=(window_ctr_x + 26), y=(window_ctr_y +40))
+        jbir_btn = tk.Button(self, text = "JBIR", font=("Segoe UI Variable Text Semibold", 8), width = 10, height = 1, bg = "silver", cursor="hand2")
+        jbir_btn.place(x=(window_ctr_x + 32.5), y=(window_ctr_y +40))
         jbir_btn.configure(command = lambda: showJBIR())
         
         inputfile.set_file("")
 
         
         # setting up the help button
-        help = self.c.create_text(435, (window_ctr_y +85), text="Help", fill="gray", font=("Arial 10"), width=30, tags=["help", "normal","highlight"]) 
+        help = self.c.create_text(435, (window_ctr_y +85), text="Help", fill="gray", font=("Segoe UI Variable Text Semibold", 10), width=30, tags=["help", "normal","highlight"]) 
         
         helpPrompt = tk.Text(self, background = "dark gray", foreground = "black",
-                                      width = 10, height = 2, font = ("Arial", 7))
+                                      width = 10, height = 2, font = ("Segoe UI Variable Text Semibold", 8))
         helpPrompt.insert("1.0", "Click Here" + "\n" + "for Help", "center")
         helpPrompt.tag_configure("center", justify='center')
         helpPrompt.tag_add("center", 1.0, "end")
@@ -145,11 +145,13 @@ class mainApp(Tk):
             
                         
         def normalState(event):
+            self.c.config(cursor="arrow")
             self.c.itemconfigure(help, fill="gray")
             helpPrompt.place_forget()
         
         def highlightHelp(event):            
-            helpPrompt.place(x=550, y=230)
+            helpPrompt.place(x=window_ctr_x+165, y=window_ctr_y+40)
+            self.c.config(cursor="hand2")
             self.c.itemconfigure(help, fill="red")
             
         self.c.tag_bind("help", '<Button-1>', showHelp)        
@@ -164,6 +166,7 @@ class mainApp(Tk):
             exit()
 
         self.protocol("WM_DELETE_WINDOW", lambda: onClose())
+        
         
 
 #tk.ttk.Separator(window, orient=tk.VERTICAL).place(x=305, y=0, height=300)
