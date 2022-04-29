@@ -121,7 +121,7 @@ class mainApp(Tk):
             
 
         jbir_btn = tk.Button(self, text = "JBIR", font=("Segoe UI Variable Text Semibold", 8), width = 10, height = 1, bg = "silver", cursor="hand2")
-        jbir_btn.place(x=(window_ctr_x + 32.5), y=(window_ctr_y +40))
+        jbir_btn.place(x=(window_ctr_x + 37.5), y=(window_ctr_y +40))
         jbir_btn.configure(command = lambda: showJBIR())
         
         inputfile.set_file("")

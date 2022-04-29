@@ -168,9 +168,9 @@ class purchWindow(TkinterDnD.Tk, tk.Toplevel):
 
         # setting and positioning the file selection
         def fileExplore():
-            inputfile1 = tk.filedialog.askopenfilename(initialdir = "/Downloads", title = "Please Select a File to Transform",
+            inputfile1 = tk.filedialog.askopenfilename(initialdir = "Downloads", title = "Please Select a File to Transform",
                                                 filetypes = (("Comma Separated Values (*.csv)", "*.csv*"), ("Text Files (*.txt)", "*.txt*"),
-                                                ("Microsoft Excel Files (*.xls, *.xlsx)", ".xlsx"), ("All Files", "*.*")))
+                                                ("Microsoft Excel Files (*.xls, *.xlsx)", ".xlsx"), ("All Files", "*.*"))) 
             inputfile.set_file(inputfile1)
             if inputfile.get_file() == "":
                 label_file_explorer.delete("1.0", tk.END)

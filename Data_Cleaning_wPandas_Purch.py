@@ -190,6 +190,27 @@ def formatFile(file1, label_file_explorer):
 
             pickList = pickList.reindex(columns, axis = 1)
             
+            
+            #reads the csv, takes only the first column and creates a set out of it.
+            current_inventory = pd.read_excel("X:\\Inventory\\Current Inventory.xlsm",
+                                            sheet_name = "Inventory ", header=5)
+
+            current_inventory = current_inventory.dropna(axis=0, subset='Tag #')
+
+            #clean and reorganize inventory data
+            current_inventory = current_inventory.drop(
+                columns=['Serial Number', 'Origin', 'Year ent.', 'Old Inventory', 'BMModel'])
+
+
+
+            columns = ['Tag #', 'Mfg.', 'Mfg. Part #', 'Description', 'Qty', 'Location', 'Shelf Category', 'Category']
+            current_inventory = current_inventory.reindex(columns, copy=True, axis=1)
+
+            current_inventory['Mfg. Part #'] = current_inventory['Mfg. Part #'].astype(str)
+            current_inventory["Item"] = current_inventory["Mfg."] + " " + current_inventory["Mfg. Part #"]
+            current_inventory["Item"] = current_inventory["Item"].astype(str)
+            
+            
 
             # Print the data set and the list of column names
             #print(pickList.columns.values)
@@ -262,6 +283,12 @@ def formatFile(file1, label_file_explorer):
                     row_num1 = row_num+2
                     
                     
+                    matching_items = pd.merge(pickList, current_inventory, on=["Item"], how='inner')
+                    print("matching items = ", matching_items)
+                    
+                    item_index = matching_items.columns.get_loc('Item')
+                    
+                    
                     #getting first and last cell position for setting borders
                     last_col_cell = xl_rowcol_to_cell(row_num, col_num-1)
                     second_cell = xl_rowcol_to_cell(1,1)
@@ -295,6 +322,7 @@ def formatFile(file1, label_file_explorer):
                     #initializing conditional formatting options
                     bg_green = purchList.add_format({'bg_color': '#92D050'})
                     bg_yellow = purchList.add_format({'bg_color': '#FFFF00'})
+                    bg_purple = purchList.add_format({'bg_color': '#f0b3f5'})
                     
 
 
@@ -305,17 +333,35 @@ def formatFile(file1, label_file_explorer):
                         cols = [8, 9, 10, 11]
                         for i in range(1, row_num1):
                             status = pickList['Status'].values[i-2]
+                            item = str(pickList.iat[i-2, item_index])
                             purchSheet.set_row(i, 19.5)
 
                             #print('i=', i)
                             #print(status)
 
-
-                                                        
+                
                             if i==0:
                                 pass
                             
-                            if status == "Ready To Order":
+                            
+                            if item in matching_items["Item"].values.astype(str):
+                                print("item matches")
+                                i = i-1
+                                if i==0:
+                                    pass
+                                else:
+                                    for c in cols:
+                                        try:
+                                            cell_value = pickList.iloc[i-1][c]
+                                            try:
+                                                purchSheet.write(i, c, cell_value, bg_purple)
+                                            except:
+                                                purchSheet.write(i, c, '', bg_purple)
+                                        except:
+                                            pass
+                            
+                            
+                            elif status == "Ready To Order":
                                 #print("item is ready to order")
                                 i = i-1
                                 if i==0:
@@ -354,6 +400,10 @@ def formatFile(file1, label_file_explorer):
                                         except:
                                             pass
                                     
+                            
+
+                                        
+                                        
                             #print('end of loop')
                             i = i+1
                             
