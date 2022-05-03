@@ -11,6 +11,7 @@ import win32com.client as win32
 from win32com.client import Dispatch
 from datetime import date
 from pathlib import Path
+from openpyxl.styles.alignment import Alignment
 
 
 class button():
@@ -277,16 +278,12 @@ def formatFile(file1, label_file_explorer):
                         'text_wrap': True})
                     
                     
+                    
                     #getting number of total rows and columns
                     col_num = pickList.shape[1]
                     row_num = len(pickList)
                     row_num1 = row_num+2
                     
-                    
-                    matching_items = pd.merge(pickList, current_inventory, on=["Item"], how='inner')
-                    print("matching items = ", matching_items)
-                    
-                    item_index = matching_items.columns.get_loc('Item')
                     
                     
                     #getting first and last cell position for setting borders
@@ -319,6 +316,39 @@ def formatFile(file1, label_file_explorer):
                                                                           'format': borderFormat})
                     
                     
+                    current_inventory = pd.read_excel("X:\\Inventory\\Current Inventory.xlsm",
+                                sheet_name = "Inventory ", header=5)
+                    
+                    current_inventory = current_inventory.drop(
+                    columns=['Serial Number', 'Origin', 'Year ent.', 'Old Inventory', 'BMModel'])
+
+                    columns = ['Tag #', 'Mfg.', 'Mfg. Part #', 'Description', 'Qty', 'Location', 'Shelf Category', 'Category']
+                    current_inventory.drop(index=current_inventory[current_inventory['Location'] == 'DEMO'].index, inplace=True)
+                    current_inventory.drop(index=current_inventory[current_inventory['Shelf Category'] == 'DEMO'].index, inplace=True)
+                    current_inventory = current_inventory.reindex(columns, copy=True, axis=1)
+                
+                    current_inventory['Mfg.'] = current_inventory['Mfg.'].str.strip()
+                    current_inventory['Mfg.'] = current_inventory['Mfg.'].str.lower()
+                    current_inventory['Mfg. Part #'] = current_inventory['Mfg. Part #'].str.strip()
+                    current_inventory['Mfg. Part #'] = current_inventory['Mfg. Part #'].astype(str)
+                    current_inventory['Mfg. Part #'] = current_inventory['Mfg. Part #'].str.lower()
+                    current_inventory["Item"] = current_inventory["Mfg."] + " " + current_inventory["Mfg. Part #"]
+                    
+                    pickList["Item"] = pickList["Item"].str.strip()
+                    pickList["Item"] = pickList["Item"].astype(str)
+                    current_inventory["Item"] = current_inventory["Item"].astype(str)
+                    
+
+                    
+                    matching_items = pd.merge(current_inventory, pickList, left_on=current_inventory['Item'], right_on=pickList['Item'].str.lower(), how='inner')
+                    print("Matching items = ", matching_items)
+                    
+                    row_num = len(pickList)
+                    row_num1 = row_num+2
+                    inv_item_index = current_inventory.columns.get_loc('Item')
+                    purch_item_index = pickList.columns.get_loc('Item')
+
+                    
                     #initializing conditional formatting options
                     bg_green = purchList.add_format({'bg_color': '#92D050'})
                     bg_yellow = purchList.add_format({'bg_color': '#FFFF00'})
@@ -333,8 +363,11 @@ def formatFile(file1, label_file_explorer):
                         cols = [8, 9, 10, 11]
                         for i in range(1, row_num1):
                             status = pickList['Status'].values[i-2]
-                            item = str(pickList.iat[i-2, item_index])
                             purchSheet.set_row(i, 19.5)
+                            item = pickList.iat[i-2, purch_item_index]
+                            item = item.lower()
+                            print('item = ', item)
+
 
                             #print('i=', i)
                             #print(status)
@@ -342,24 +375,7 @@ def formatFile(file1, label_file_explorer):
                 
                             if i==0:
                                 pass
-                            
-                            
-                            if item in matching_items["Item"].values.astype(str):
-                                print("item matches")
-                                i = i-1
-                                if i==0:
-                                    pass
-                                else:
-                                    for c in cols:
-                                        try:
-                                            cell_value = pickList.iloc[i-1][c]
-                                            try:
-                                                purchSheet.write(i, c, cell_value, bg_purple)
-                                            except:
-                                                purchSheet.write(i, c, '', bg_purple)
-                                        except:
-                                            pass
-                            
+                                                                                                                                       
                             
                             elif status == "Ready To Order":
                                 #print("item is ready to order")
@@ -399,6 +415,40 @@ def formatFile(file1, label_file_explorer):
                                                 purchSheet.write(i, c, '', bg_yellow)
                                         except:
                                             pass
+                                        
+                            if item in current_inventory["Item"].values:
+                                i=i
+                                print("item matches")
+                                if i==0:
+                                    pass
+                                else:
+                                    for c in cols:
+                                        try:
+                                            cell_value = pickList.iloc[i-1][c]
+                                            try:
+                                                purchSheet.write(i, c, cell_value, bg_purple)
+                                            except:
+                                                purchSheet.write(i, c, '', bg_purple)
+                                        except:
+                                            pass
+
+                                purchSheet.write(i, pickList.columns.get_loc('Notes'), 'Check Stock', bg_purple)
+                                location = current_inventory.loc[current_inventory['Item'] == item, 'Location' ]
+                                location = location.iloc[0]
+
+                                location = str(location)
+                                print('locatin type = ', type(location))
+                                if location == 'nan':
+                                    purchSheet.write(i, pickList.columns.get_loc('Warehouse Location'), 'Not Specified', bg_purple)
+
+                                else:
+                                    purchSheet.write(i, pickList.columns.get_loc('Warehouse Location'), str(location), bg_purple)
+
+                                
+                                print('location = ', location)
+                                
+                                
+
                                     
                             
 
@@ -415,7 +465,7 @@ def formatFile(file1, label_file_explorer):
                     purchSheet.autofilter(0, 0, 0, col_num)
                     
                     purchSheet.freeze_panes(1, 0)
-                  
+
 
                     #setting file to open read only
                     #def set_password():
