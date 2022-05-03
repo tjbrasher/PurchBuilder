@@ -466,43 +466,18 @@ def formatFile(file1, label_file_explorer):
                     
                     purchSheet.freeze_panes(1, 0)
 
-
-                    #setting file to open read only
-                    #def set_password():
-                        
-                        #excel = win32.gencache.EnsureDispatch('Excel.Application')
-                        #wb = excel.Workbooks.Open(saveAs)
-                        
-                        #wb.SaveAs()
-
-                    #    if os.path.exists(saveAs):
-                    #        xl = Dispatch("Excel.Application")
-                    #        wb = xl.Workbooks.Add(saveAs)
-                            
-                    #        saveAs = saveAs[-1]+"m"
-                    #        print("new file name = ", saveAs)
-                            
-                    #        wb.SaveAs(saveAs[-1]+"m", FileFormat = 52)
-                    #        xl.Quit()
-                            
-                    #        xl=win32.Dispatch("Excel.Application")
-                    #        xl.Workbooks.Open(os.path.abspath(saveAs), ReadOnly=1)
-                    #        xl.Application.Run("C:\\Users\\tbrasher\\Documents\\GitHub\\DataCleaningProjects\\Files\\read_only_VBA.xlsm!Module1")
-                        
-                    #    del xl
-
-                    
+                
                     #saving file to user specified location
                     writer.save()
 
-                    #set_password()
-                   
-                                     
+
                     showPrompt(label_file_explorer)          
                     #print("File Saved!")
                 else:
                     pass
                 
+            
+            
             
             saveAs(pickList)  
             break      
