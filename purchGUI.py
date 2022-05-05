@@ -123,8 +123,36 @@ class purchWindow(TkinterDnD.Tk, tk.Toplevel):
         label_file_explorer.insert("1.0", " Please select a file")
         label_file_explorer.place(x=win_ctr_x-222.5, y=win_ctr_y+7)
 
-        submit = tk.Button(self, text = "Submit", font=("Segoe UI Variable Text Semibold", 8), width = 10, height = 1, bg = "silver", cursor="hand2")
-        submit.place(x=win_ctr_x-50, y=win_ctr_y+50)
+        #submit = tk.Button(self, text = "Submit", font=("Segoe UI Variable Text Semibold", 8), width = 10, height = 1, bg = "silver", cursor="hand2")
+        #submit.place(x=win_ctr_x-50, y=win_ctr_y+50)
+        
+        
+        submit_btn_normal = Image.open("Files\\submit_btn_normal.png")
+        submit_btn_normal_resize = submit_btn_normal.resize((85,60))
+        submit_btn_image_normal = ImageTk.PhotoImage(submit_btn_normal_resize, master=self)
+
+        submit_btn_pressed = Image.open("Files\\submit_btn_pressed.png")
+        submit_pressed_resize = submit_btn_pressed.resize((85,60))
+        submit_pressed_image = ImageTk.PhotoImage(submit_pressed_resize, master=self)
+
+        submit = self.c.create_image(win_ctr_x-5, win_ctr_y+62.5, image=submit_btn_image_normal, tags=["submit_normal_state", "submit_hover_state","submit_click_state"])
+        
+        
+        def submit_hoverEvent(event):    
+            self.c.config(cursor="hand2")        
+            self.c.itemconfigure(submit, image=submit_btn_image_normal)
+            
+            print('entered hover state')
+            
+        def submit_normalState(event):    
+            self.c.config(cursor="arrow")        
+            self.c.itemconfigure(submit, image=submit_btn_image_normal)
+
+        
+        self.c.tag_bind("submit_hover_state", '<Enter>', submit_hoverEvent)
+
+        self.c.tag_bind("submit_normal_state", '<Leave>', submit_normalState)
+        
         
         inputfile.set_file("")
 
@@ -183,6 +211,7 @@ class purchWindow(TkinterDnD.Tk, tk.Toplevel):
 
         def submitClick(inputfile):
             try:
+                self.c.itemconfigure(submit, image=submit_pressed_image)
                 #print(label_file_explorer.get("1.0", 'end-1c'))
                 file1.set_file(label_file_explorer.get("1.0", 'end-1c'))
                 #print(file1.get_file())
@@ -200,7 +229,7 @@ class purchWindow(TkinterDnD.Tk, tk.Toplevel):
                     
                 #open file and print to console to test functionality
            
-        submit.configure(command = lambda: submitClick(inputfile.get_file()))
+        self.c.tag_bind("submit_click_state", '<Button-1>', lambda x: submitClick(inputfile.get_file()))   
 
         browse_normal = self.c.create_image(win_ctr_x+211, win_ctr_y+17.5, image=browse_button_image_normal, tags=["browse_normal_state", "browse_highlight_state","browse_click_state"])
 
