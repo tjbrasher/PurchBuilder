@@ -12,7 +12,8 @@ from win32com.client import Dispatch
 from datetime import date
 from pathlib import Path
 from openpyxl.styles.alignment import Alignment
-
+from fuzzywuzzy import fuzz
+from fuzzywuzzy import process
 
 class button():
         
@@ -343,6 +344,11 @@ def formatFile(file1, label_file_explorer):
                     matching_items = pd.merge(current_inventory, pickList, left_on=current_inventory['Item'], right_on=pickList['Item'].str.lower(), how='inner')
                     print("Matching items = ", matching_items)
                     
+                    current_inventory['key'] = current_inventory.Item.apply(lambda x: [process.extract(x, pickList.Item, limit=1)])
+                    
+                    
+                    similar_items = pd.merge()
+                    
                     row_num = len(pickList)
                     row_num1 = row_num+2
                     inv_item_index = current_inventory.columns.get_loc('Item')
@@ -465,6 +471,9 @@ def formatFile(file1, label_file_explorer):
                     purchSheet.autofilter(0, 0, 0, col_num)
                     
                     purchSheet.freeze_panes(1, 0)
+                    
+                    matching_items.to_excel(writer, sheet_name="Inventory Report", index=False)
+                    InvReport = writer.sheets['Inventory Report']
 
                 
                     #saving file to user specified location
