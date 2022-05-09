@@ -128,11 +128,11 @@ class purchWindow(TkinterDnD.Tk, tk.Toplevel):
         
         
         submit_btn_normal = Image.open("Files\\submit_btn_normal.png")
-        submit_btn_normal_resize = submit_btn_normal.resize((85,60))
+        submit_btn_normal_resize = submit_btn_normal.resize((85,55))
         submit_btn_image_normal = ImageTk.PhotoImage(submit_btn_normal_resize, master=self)
 
         submit_btn_pressed = Image.open("Files\\submit_btn_pressed.png")
-        submit_pressed_resize = submit_btn_pressed.resize((85,60))
+        submit_pressed_resize = submit_btn_pressed.resize((85,55))
         submit_pressed_image = ImageTk.PhotoImage(submit_pressed_resize, master=self)
 
         submit = self.c.create_image(win_ctr_x-5, win_ctr_y+62.5, image=submit_btn_image_normal, tags=["submit_normal_state", "submit_hover_state","submit_click_state"])
