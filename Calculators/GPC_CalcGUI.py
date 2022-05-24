@@ -133,10 +133,11 @@ class GPC_CalcWindow(TkinterDnD.Tk, tk.Toplevel):
         #miles = tk.Text(self, background = "black", foreground = "white",
         #                              width = 5, height = 1, font = ("Segoe UI Variable Text Semibold", 10, ))
         
-        miles = tk.Entry(self, background = "black", foreground = "white",
-                         font = ("Segoe UI Variable Text Semibold", 10, ))
-        
-        #miles.insert("1.0", "000")
+        miles = tk.Entry(self, width = 4, background = "black", foreground = "white", insertbackground="white",
+                         highlightcolor="white", highlightbackground="black",
+                         font = ("Segoe UI Variable Text Semibold", 10, ), justify='right')
+        miles.insert("1","000")
+        miles.select_range(0, tk.END)
         miles.place(x=290, y=175, anchor=NW)
         
         

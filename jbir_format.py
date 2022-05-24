@@ -180,9 +180,9 @@ def jbirFormat(file1, label_file_explorer):
                     
                     
                     #setting borders on cells                  
-                    jbir_sheet.conditional_format(first_cell+':'+ last_col_cell, {'type': 'blanks',
+                    jbir_sheet.conditional_format(first_cell + ':' + last_col_cell, {'type': 'blanks',
                                                                             'format': borderFormat})
-                    jbir_sheet.conditional_format(first_cell+':'+ last_col_cell, {'type': 'no_blanks',
+                    jbir_sheet.conditional_format(first_cell + ':' + last_col_cell, {'type': 'no_blanks',
                                                                             'format': borderFormat})
 
                     

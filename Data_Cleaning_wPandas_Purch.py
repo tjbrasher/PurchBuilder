@@ -1,6 +1,8 @@
+from fileinput import close
 import tkinter as tk
 from tkinter.filedialog import SaveAs
 import traceback
+from openpyxl import load_workbook
 import pandas as pd
 from ErrorTest import showError
 from filePrompt import showPrompt
@@ -12,6 +14,7 @@ from win32com.client import Dispatch
 from datetime import date
 from pathlib import Path
 from openpyxl.styles.alignment import Alignment
+import xlrd
 from fuzzywuzzy import fuzz
 from fuzzywuzzy import process
 
@@ -270,6 +273,7 @@ def formatFile(file1, label_file_explorer):
                     #print("new file name: ", saveAs_xlsm)
                     #purchList.add_vba_project('Files/read_only_VBA.xlsm./vbaProject.bin')
                     purchSheet = writer.sheets['PURCH']
+                    
                     borderFormat = purchList.add_format({'border': 1})
                     headerFormat = purchList.add_format({
                         'font_color': 'white',
@@ -278,7 +282,42 @@ def formatFile(file1, label_file_explorer):
                         'border': 1,
                         'text_wrap': True})
                     
+                    merge_format = purchList.add_format({
+                        'bold': 1,
+                        'border': 1,
+                        'align': 'center',
+                        'valign': 'vcenter'})
                     
+                    cell_format = purchList.add_format({
+                        'bold': 1,
+                        'border': 1,
+                        'align': 'center',
+                        'valign': 'vcenter',
+                        'text_wrap': True})
+                    
+                    outer_border_format = purchList.add_format({
+                        'left': 1,
+                        'right': 1})
+                    
+                    outer_first_border_format = purchList.add_format({
+                        'top' : 1,
+                        'left': 1,
+                        'right': 1,})
+                    
+                    outer_last_border_format = purchList.add_format({
+                        'left': 1,
+                        'right': 1,
+                        'bottom': 1})
+                    
+                    outer_border_all_format = purchList.add_format({
+                        'top' : 1,
+                        'left': 1,
+                        'right': 1,
+                        'bottom': 1})
+                    
+                    merge_format.set_center_across()
+ 
+ 
                     
                     #getting number of total rows and columns
                     col_num = pickList.shape[1]
@@ -342,12 +381,11 @@ def formatFile(file1, label_file_explorer):
 
                     
                     matching_items = pd.merge(current_inventory, pickList, left_on=current_inventory['Item'], right_on=pickList['Item'].str.lower(), how='inner')
-                    print("Matching items = ", matching_items)
-                    
-                    current_inventory['key'] = current_inventory.Item.apply(lambda x: [process.extract(x, pickList.Item, limit=1)])
+                    #print("Matching items = ", matching_items)
                     
                     
-                    similar_items = pd.merge()
+                    
+                    #similar_items = pd.merge()
                     
                     row_num = len(pickList)
                     row_num1 = row_num+2
@@ -359,6 +397,7 @@ def formatFile(file1, label_file_explorer):
                     bg_green = purchList.add_format({'bg_color': '#92D050'})
                     bg_yellow = purchList.add_format({'bg_color': '#FFFF00'})
                     bg_purple = purchList.add_format({'bg_color': '#f0b3f5'})
+                    bg_red = purchList.add_format({'bg_color': 'red'})
                     
 
 
@@ -372,7 +411,8 @@ def formatFile(file1, label_file_explorer):
                             purchSheet.set_row(i, 19.5)
                             item = pickList.iat[i-2, purch_item_index]
                             item = item.lower()
-                            print('item = ', item)
+                            #print('item = ', item)
+                            qty = pickList['Project Quantity'].values[i-2]
 
 
                             #print('i=', i)
@@ -398,13 +438,7 @@ def formatFile(file1, label_file_explorer):
                                                 purchSheet.write(i, c, '', bg_green)
                                         except:
                                             pass
-
-                                    #purchSheet.conditional_format(i, 8, i, 11, 
-                                    #                                            {'type':     'no_blanks',
-                                    #                                            'format':    bg_green})
-                                    #purchSheet.conditional_format(i, 8, i, 11, 
-                                    #                                            {'type':     'blanks',
-                                    #                                            'format':    bg_green})
+                                        
                                                     
                             elif status == 'Not Ordered':
                                 #print('item is not ready to order')
@@ -422,12 +456,24 @@ def formatFile(file1, label_file_explorer):
                                         except:
                                             pass
                                         
+                            if qty == -1:
+                                for c in cols:
+                                        try:
+                                            cell_value = pickList.iloc[i-1][c]
+                                            try:
+                                                purchSheet.write(i, c, cell_value, bg_red)
+                                            except:
+                                                purchSheet.write(i, c, '', bg_red)
+                                        except:
+                                            pass
+                                        
                             if item in current_inventory["Item"].values:
                                 i=i
-                                print("item matches")
+                                #print("item matches")
                                 if i==0:
                                     pass
-                                else:
+
+                                elif qty != -1:
                                     for c in cols:
                                         try:
                                             cell_value = pickList.iloc[i-1][c]
@@ -437,32 +483,31 @@ def formatFile(file1, label_file_explorer):
                                                 purchSheet.write(i, c, '', bg_purple)
                                         except:
                                             pass
-
-                                purchSheet.write(i, pickList.columns.get_loc('Notes'), 'Check Stock', bg_purple)
-                                location = current_inventory.loc[current_inventory['Item'] == item, 'Location' ]
-                                location = location.iloc[0]
+                                if qty != -1:        
+                                    purchSheet.write(i, pickList.columns.get_loc('Notes'), 'Check Stock', bg_purple)
+                                    location = current_inventory.loc[current_inventory['Item'] == item, 'Location' ]
+                                    location = location.iloc[0]
+                                
+                                
 
                                 location = str(location)
-                                print('locatin type = ', type(location))
-                                if location == 'nan':
-                                    purchSheet.write(i, pickList.columns.get_loc('Warehouse Location'), 'Not Specified', bg_purple)
+                                #print('locatin type = ', type(location))
+                                if qty != -1:
+                                    if location == 'nan':
+                                        purchSheet.write(i, pickList.columns.get_loc('Warehouse Location'), 'Not Specified', bg_purple)
 
-                                else:
-                                    purchSheet.write(i, pickList.columns.get_loc('Warehouse Location'), str(location), bg_purple)
+                                    else:
+                                        purchSheet.write(i, pickList.columns.get_loc('Warehouse Location'), str(location), bg_purple)
 
                                 
-                                print('location = ', location)
-                                
-                                
+                                #print('location = ', location)
 
-                                    
-                            
-
-                                        
-                                        
+       
                             #print('end of loop')
                             i = i+1
-                            
+                    
+                    
+                        
                     i=0
                     check_status(i)
                     
@@ -472,8 +517,170 @@ def formatFile(file1, label_file_explorer):
                     
                     purchSheet.freeze_panes(1, 0)
                     
-                    matching_items.to_excel(writer, sheet_name="Inventory Report", index=False)
+                    print(matching_items)
+                    matched_items = pd.DataFrame(columns=['Item', 'Description', 'Qty'])
+                    matched_items.to_excel(writer, sheet_name = 'Inventory Report', index=False)
+                    
                     InvReport = writer.sheets['Inventory Report']
+                    
+                    #saveAs(pickList) 
+                    
+                    #writer.close()
+
+                    
+                    #matching_items.to_excel(writer, sheet_name="Inventory Report", index=False)
+
+                    #purchList = op.load_workbook(purchList)
+                    #InvReport = purchList.active
+
+                    print('matched items = ', matched_items)
+
+                    InvReport.merge_range('A1:J1', 'Matching Items', merge_format)
+                    InvReport.merge_range('A2:C2', 'PURCH List Items', merge_format)
+                    InvReport.merge_range('E2:J2', 'Inventory Items', merge_format)
+                    InvReport.write('A3', 'Item', cell_format)
+                    InvReport.write('B3', 'Description', cell_format)
+                    InvReport.write('C3', 'Project Qty', cell_format)
+                    InvReport.write('E3', 'Mfg.', cell_format)
+                    InvReport.write('F3', 'Model', cell_format)
+                    InvReport.write('G3', 'Description', cell_format)
+                    InvReport.write('H3', 'Qty', cell_format)
+                    InvReport.write('I3', 'Warehouse Location', cell_format)
+                    InvReport.write('J3', 'Tag #', cell_format)
+                    
+                    
+                    InvReport.set_column(0, 1, 40)
+                    InvReport.set_column(2,3, 12)
+                    InvReport.set_column(4,4, 25)
+                    InvReport.set_column(5,6, 40)
+                    InvReport.set_column(7,9, 12)
+                    
+                    purch_match = matching_items.drop_duplicates(subset=['Item_y'], keep='last', inplace=False)
+                    print(purch_match)
+                    row_num_match = len(matching_items)
+                    
+                    for i in range(0, len(matching_items)):
+                        purch_item_match = matching_items['Item_x'].values[i]
+                        #purch_item_check = InvReport.read(i+3, 0)
+                        purch_item = matching_items['Item_y'].values[i]
+                        purch_desc = matching_items['Description_y'].values[i]
+                        purch_qty = matching_items['Project Quantity'].values[i]
+                        inv_mfg = matching_items['Mfg.'].values[i]
+                        inv_model = matching_items['Mfg. Part #'].values[i]
+                        inv_desc = matching_items['Description_x'].values[i]
+                        inv_qty = matching_items['Qty'].values[i]
+                        inv_location = matching_items['Location'].values[i]
+                        inv_tag = matching_items['Tag #'].values[i]
+                        
+               
+                        if matched_items['Item'].str.contains(purch_item).any():
+                            if i == (row_num_match-1):
+                                InvReport.write(i+3, 0, '', outer_last_border_format)
+                                InvReport.write(i+3, 1, '', outer_last_border_format)
+                                InvReport.write(i+3, 2, '', outer_last_border_format)
+                                
+                                InvReport.write(i+3, 4, inv_mfg, outer_last_border_format)
+                                InvReport.write(i+3, 5, inv_model, outer_last_border_format)
+                                InvReport.write(i+3, 6, inv_desc, outer_last_border_format)
+                                InvReport.write(i+3, 7, inv_qty, outer_last_border_format)
+                                InvReport.write(i+3, 8, inv_location, outer_last_border_format)
+                                InvReport.write(i+3, 9, inv_tag, outer_last_border_format)
+                                
+                            else:
+                                InvReport.write(i+3, 0, '', outer_border_format)
+                                InvReport.write(i+3, 1, '', outer_border_format)
+                                InvReport.write(i+3, 2, '', outer_border_format)
+                                
+                                InvReport.write(i+3, 4, inv_mfg, outer_border_format)
+                                InvReport.write(i+3, 5, inv_model, outer_border_format)
+                                InvReport.write(i+3, 6, inv_desc, outer_border_format)
+                                InvReport.write(i+3, 7, inv_qty, outer_border_format)
+                                InvReport.write(i+3, 8, inv_location, outer_border_format)
+                                InvReport.write(i+3, 9, inv_tag, outer_border_format)
+                            
+                            
+                        if matched_items['Item'].str.contains(purch_item).any() == False:
+                            print('item matches: ', purch_item)
+                            matched_items.loc[i+3, 'Item'] = purch_item
+                            matched_items.loc[i+3, 'Description'] = purch_desc
+                            matched_items.loc[i+3, 'Qty'] = purch_qty
+                            
+                            if i == (row_num_match-1):
+                                InvReport.write(i+3, 0, purch_item, outer_border_all_format)
+                                InvReport.write(i+3, 1, purch_desc, outer_border_all_format)
+                                InvReport.write(i+3, 2, purch_qty, outer_border_all_format)
+                                
+                                InvReport.write(i+3, 4, inv_mfg, outer_border_all_format)
+                                InvReport.write(i+3, 5, inv_model,outer_border_all_format)
+                                InvReport.write(i+3, 6, inv_desc, outer_border_all_format)
+                                InvReport.write(i+3, 7, inv_qty, outer_border_all_format)
+                                InvReport.write(i+3, 8, inv_location, outer_border_all_format)
+                                InvReport.write(i+3, 9, inv_tag, outer_border_all_format)
+                                
+
+                            else:
+                                InvReport.write(i+3, 0, purch_item, outer_first_border_format)
+                                InvReport.write(i+3, 1, purch_desc, outer_first_border_format)
+                                InvReport.write(i+3, 2, purch_qty, outer_first_border_format)
+                                
+                                InvReport.write(i+3, 4, inv_mfg, outer_first_border_format)
+                                InvReport.write(i+3, 5, inv_model, outer_first_border_format)
+                                InvReport.write(i+3, 6, inv_desc, outer_first_border_format)
+                                InvReport.write(i+3, 7, inv_qty, outer_first_border_format)
+                                InvReport.write(i+3, 8, inv_location, outer_first_border_format)
+                                InvReport.write(i+3, 9, inv_tag, outer_first_border_format)
+                                                                              
+                                            
+                        print('i = ', i)
+                        print('row_num_match = ', row_num_match)
+                        
+                        
+                        
+                        
+                    close_match_header = len(matching_items)+3
+                    
+                    print('close_match_header row: ', close_match_header)
+                    
+                    header_start = xl_rowcol_to_cell((close_match_header+2), 0)
+                    header_end = xl_rowcol_to_cell((close_match_header+2), 9)
+                    
+                    purch_heading_start = xl_rowcol_to_cell((close_match_header+3), 0)
+                    purch_heading_end = xl_rowcol_to_cell((close_match_header+3), 2)
+                    
+                    inv_heading_start = xl_rowcol_to_cell((close_match_header+3), 4)
+                    inv_heading_end = xl_rowcol_to_cell((close_match_header+3), 9)
+                    
+                    item_cell = xl_rowcol_to_cell((close_match_header+4), 0)
+                    purch_desc_cell = xl_rowcol_to_cell((close_match_header+4), 1)
+                    purch_qty_cell = xl_rowcol_to_cell((close_match_header+4), 2)
+                    
+                    mfg_cell = xl_rowcol_to_cell((close_match_header+4), 4)
+                    model_cell = xl_rowcol_to_cell((close_match_header+4), 5)
+                    inv_desc_cell = xl_rowcol_to_cell((close_match_header+4), 6)
+                    inv_qty_cell = xl_rowcol_to_cell((close_match_header+4), 7)
+                    location_cell = xl_rowcol_to_cell((close_match_header+4), 8)
+                    tag_cell = xl_rowcol_to_cell((close_match_header+4), 9)
+                    
+                    close_match_start_row = close_match_header+5
+                    
+
+                    InvReport.merge_range(header_start + ':' + header_end, 'Close Matches', merge_format)
+                    
+                    InvReport.merge_range(purch_heading_start + ':' + purch_heading_end, 'PURCH List Items', merge_format)
+                    InvReport.merge_range(inv_heading_start + ':' + inv_heading_end, 'Inventory Items', merge_format)
+                    
+                    InvReport.write(item_cell, 'Item', cell_format)
+                    InvReport.write(purch_desc_cell, 'Description', cell_format)
+                    InvReport.write(purch_qty_cell, 'Project Qty', cell_format)
+                    
+                    InvReport.write(mfg_cell, 'Mfg.', cell_format)
+                    InvReport.write(model_cell, 'Model', cell_format)
+                    InvReport.write(inv_desc_cell, 'Description', cell_format)
+                    InvReport.write(inv_qty_cell, 'Qty', cell_format)
+                    InvReport.write(location_cell, 'Warehouse Location', cell_format)
+                    InvReport.write(tag_cell, 'Tag #', cell_format)
+
+
 
                 
                     #saving file to user specified location
