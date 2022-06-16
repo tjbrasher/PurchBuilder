@@ -152,6 +152,7 @@ def formatFile(file1, label_file_explorer):
     pd.set_option('display.max_columns', None)
     pickList = pd.read_csv(file1._file)
     client = pickList.iloc[1]['Client']
+    project_name = pickList.iloc[1]['Project Name']
     
         
     while True:
@@ -276,7 +277,7 @@ def formatFile(file1, label_file_explorer):
                     #pickList.to_csv(saveAs, index=False, line_terminator="\n")
                     #print(file1._file)
                     writer = pd.ExcelWriter(saveAs, engine='xlsxwriter')
-                    pickList.to_excel(writer, sheet_name="PURCH", index=False)
+                    pickList.to_excel(writer, sheet_name= client + " " + project_name, index=False)
                     purchList = writer.book
                     #saveAs_xlsm = purchList.filename = saveAs[-1]+"m"
                     #print("new file name: ", saveAs_xlsm)
