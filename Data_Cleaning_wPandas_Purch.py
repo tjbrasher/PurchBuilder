@@ -16,7 +16,6 @@ from pathlib import Path
 from openpyxl.styles.alignment import Alignment
 import xlrd
 from fuzzywuzzy import fuzz
-from fuzzywuzzy import process
 
 class button():
         
@@ -211,6 +210,13 @@ def formatFile(file1, label_file_explorer):
             columns = ['Tag #', 'Mfg.', 'Mfg. Part #', 'Description', 'Qty', 'Location', 'Shelf Category', 'Category']
             current_inventory = current_inventory.reindex(columns, copy=True, axis=1)
 
+            for i in range(0, len(current_inventory)):
+                current_inventory.replace(to_replace={'Mfg.':['Anixter', 'Belden Cable']}, value= "Belden", inplace=True)
+                current_inventory.replace(to_replace={'Mfg.':['West Penn', 'WPW']}, value='West Penn Wire', inplace=True)
+                current_inventory.replace(to_replace={'Mfg.':['EV', 'ElectroVoice', 'Electro Voice']}, value='Electro-Voice', inplace=True)
+                current_inventory.replace(to_replace={'Mfg.':['MAP', 'Middle Atlantic Products']}, value='Middle Atlantic', inplace=True)
+
+
             current_inventory['Mfg. Part #'] = current_inventory['Mfg. Part #'].astype(str)
             current_inventory["Item"] = current_inventory["Mfg."] + " " + current_inventory["Mfg. Part #"]
             current_inventory["Item"] = current_inventory["Item"].astype(str)
@@ -222,7 +228,6 @@ def formatFile(file1, label_file_explorer):
             
             def get_fileName():
                 print('file is: ', file1._file[:-4])
-                #file_name = [re.sub(r'^.*?/', '',str) for c in file1._file]
                 #print(file_name)
             
             get_fileName()
@@ -242,7 +247,6 @@ def formatFile(file1, label_file_explorer):
 
             #print('filename is: ',project_number + "_" + file_name[:-4] + '_' + current_date_string + '_PURCH')
             
-
 
             # Export the file
             #print("Your list: ", pickList)  
@@ -389,8 +393,25 @@ def formatFile(file1, label_file_explorer):
                     
                     row_num = len(pickList)
                     row_num1 = row_num+2
-                    inv_item_index = current_inventory.columns.get_loc('Item')
                     purch_item_index = pickList.columns.get_loc('Item')
+                    inv_item_index = current_inventory.columns.get_loc('Item')
+                    inv_loc_index = current_inventory.columns.get_loc('Location')
+                    inv_shelf_index = current_inventory.columns.get_loc('Shelf Category')
+                    inventory_length = len(current_inventory)
+                    purch_length = len(pickList)
+                    pickList = pickList.reset_index(drop=True)
+
+                    #create dictionaries for storing items from inventory
+                    close_match = {}
+                    item_match = {}
+
+                    #create list for each corresponding key in dictionary
+                    for i in range(0, purch_length):
+                        purch_item = pickList.iat[i, purch_item_index]
+                        lc = []
+                        lm = []
+                        close_match[purch_item] = lc
+                        item_match[purch_item] = lm
 
                     
                     #initializing conditional formatting options
@@ -399,8 +420,44 @@ def formatFile(file1, label_file_explorer):
                     bg_purple = purchList.add_format({'bg_color': '#f0b3f5'})
                     bg_red = purchList.add_format({'bg_color': 'red'})
                     
+                    def match_items(product, items, min_score, inv_idx):
+                        max_score = -1
+                        max_name = ''
+                        for x in items:
+                            location = current_inventory.iat[i, inv_loc_index]
+                            shelf = current_inventory.iat[i, inv_shelf_index]
+                            purch_idx = pickList[pickList['Item'] == x].index[0]
+                            #print('x = ', x)
+                            #print('product = ', product)
+                            score = fuzz.token_set_ratio(product, x)
+                            #print('x = ', x, ' product = ', product, ' score = ', score)
+                            if location == "DEMO" or shelf == "DEMO":
+                                break
+                            
+                            else:
+                                #print(pickList['Item'])
+                                #print('index = ', purch_idx)
+                                if score >= 98:
+                                    
+                                    for key in item_match:
+                                        if key == x:
+                                            lm = item_match.get(key)
+                                            lm.append(inv_idx+7)
+                                
+                                if (98 > score > min_score):
+                                    
+                                    for key in close_match:
+                                        if key == x:
+                                            lc = close_match.get(key)
+                                            lc.append(inv_idx+7)
 
+                    def inv_report():
+                        #takes entries from dictionary and populates them into dataframe
+                        
+                        
+                        pass
 
+                    
                     # Setting conditional formatting (green if ready to order, yellow if not ready;
                     # (purple if in stock - later implementation))             
                     def check_status(i):
@@ -466,7 +523,8 @@ def formatFile(file1, label_file_explorer):
                                                 purchSheet.write(i, c, '', bg_red)
                                         except:
                                             pass
-                                        
+
+
                             if item in current_inventory["Item"].values:
                                 i=i
                                 #print("item matches")
@@ -487,8 +545,7 @@ def formatFile(file1, label_file_explorer):
                                     purchSheet.write(i, pickList.columns.get_loc('Notes'), 'Check Stock', bg_purple)
                                     location = current_inventory.loc[current_inventory['Item'] == item, 'Location' ]
                                     location = location.iloc[0]
-                                
-                                
+
 
                                 location = str(location)
                                 #print('locatin type = ', type(location))
@@ -505,11 +562,15 @@ def formatFile(file1, label_file_explorer):
        
                             #print('end of loop')
                             i = i+1
-                    
-                    
-                        
+
                     i=0
                     check_status(i)
+
+                    
+
+                    for i in range(0, inventory_length):
+                        inv_item = current_inventory.iat[i, inv_item_index]
+                        match_items(inv_item, pickList['Item'], 85, i)
                     
 
                     #applying filters to column headers
@@ -517,21 +578,13 @@ def formatFile(file1, label_file_explorer):
                     
                     purchSheet.freeze_panes(1, 0)
                     
-                    print(matching_items)
+                    #print(matching_items)
                     matched_items = pd.DataFrame(columns=['Item', 'Description', 'Qty'])
                     matched_items.to_excel(writer, sheet_name = 'Inventory Report', index=False)
                     
                     InvReport = writer.sheets['Inventory Report']
                     
-                    #saveAs(pickList) 
-                    
-                    #writer.close()
 
-                    
-                    #matching_items.to_excel(writer, sheet_name="Inventory Report", index=False)
-
-                    #purchList = op.load_workbook(purchList)
-                    #InvReport = purchList.active
 
                     print('matched items = ', matched_items)
 
@@ -680,7 +733,7 @@ def formatFile(file1, label_file_explorer):
                     InvReport.write(location_cell, 'Warehouse Location', cell_format)
                     InvReport.write(tag_cell, 'Tag #', cell_format)
 
-
+                    print(pickList)
 
                 
                     #saving file to user specified location
