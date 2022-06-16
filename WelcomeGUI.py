@@ -99,13 +99,85 @@ class mainApp(Tk):
         #        purch_gui.grab_set_global()
         #        purch_gui.deiconify()
 
-        purch_btn = tk.Button(self, text = "PURCH List", font=("Segoe UI Variable Text Semibold", 8), width = 10, height = 1, bg = "silver", cursor="hand2")
-        purch_btn.place(x=(window_ctr_x - 100), y=(window_ctr_y +40))
-        purch_btn.configure(command = lambda: showPurch())
+        #purch_btn = tk.Button(self, text = "PURCH List", font=("Segoe UI Variable Text Semibold", 8), width = 10, height = 1, bg = "silver", cursor="hand2")
+        #purch_btn.place(x=(window_ctr_x - 100), y=(window_ctr_y +40))
+        #purch_btn.configure(command = lambda: showPurch())
+
+        purch_btn_normal = Image.open("Buttons\\purch_btn_normal.png")
+        purch_btn_normal_resize = purch_btn_normal.resize((85,55))
+        purch_btn_image_normal = ImageTk.PhotoImage(purch_btn_normal_resize, master=self)
+
+        purch_btn_pressed = Image.open("Buttons\\purch_btn_pressed.png")
+        purch_pressed_resize = purch_btn_pressed.resize((85,55))
+        purch_pressed_image = ImageTk.PhotoImage(purch_pressed_resize, master=self)
+
+        purch = self.c.create_image(window_ctr_x-65, window_ctr_y+52, image=purch_btn_image_normal, tags=["purch_normal_state", "purch_hover_state","purch_click_state"])
+        
+        
+        def purch_hoverEvent(event):    
+            self.c.config(cursor="hand2")        
+            self.c.itemconfigure(purch, image=purch_pressed_image)
+            
+            #print('entered hover state')
+            
+        def purch_normalState(event):    
+            self.c.config(cursor="arrow")        
+            self.c.itemconfigure(purch, image=purch_btn_image_normal)
+            
+
+        
+        self.c.tag_bind("purch_hover_state", '<Enter>', purch_hoverEvent)
+
+        self.c.tag_bind("purch_normal_state", '<Leave>', purch_normalState)
         
 
 
-        def showJBIR(): 
+        def purchClick():
+            try:
+                self.c.itemconfigure(purch, image=purch_pressed_image)
+                showPurch()
+                
+            except Exception as e: 
+                #print("file not found error")
+                #print(e)
+                self.grab_release()
+                traceback.print_exc()               
+                
+                    
+                #open file and print to console to test functionality
+           
+        self.c.tag_bind("purch_click_state", '<Button-1>', lambda x: purchClick())   
+
+
+        jbir_btn_normal = Image.open("Buttons\\jbir_btn_normal.png")
+        jbir_btn_normal_resize = jbir_btn_normal.resize((85,55))
+        jbir_btn_image_normal = ImageTk.PhotoImage(jbir_btn_normal_resize, master=self)
+
+        jbir_btn_pressed = Image.open("Buttons\\jbir_btn_pressed.png")
+        jbir_pressed_resize = jbir_btn_pressed.resize((85,55))
+        jbir_pressed_image = ImageTk.PhotoImage(jbir_pressed_resize, master=self)
+
+        jbir = self.c.create_image(window_ctr_x+72.5, window_ctr_y+52, image=jbir_btn_image_normal, tags=["jbir_normal_state", "jbir_hover_state","jbir_click_state"])
+        
+        
+        def jbir_hoverEvent(event):    
+            self.c.config(cursor="hand2")        
+            self.c.itemconfigure(jbir, image=jbir_pressed_image)
+            
+            #print('entered hover state')
+            
+        def jbir_normalState(event):    
+            self.c.config(cursor="arrow")        
+            self.c.itemconfigure(jbir, image=jbir_btn_image_normal)
+
+        
+        self.c.tag_bind("jbir_hover_state", '<Enter>', jbir_hoverEvent)
+
+        self.c.tag_bind("jbir_normal_state", '<Leave>', jbir_normalState)
+                
+
+
+        def showJBIR():
             self.grab_release()
             self.withdraw()
             jbir_gui = jbirWindow()
@@ -118,15 +190,30 @@ class mainApp(Tk):
             #    jbir_gui.focus_set()
             #    jbir_gui.grab_set_global()
             #    jbir_gui.deiconify()    
+
+
+
+        def jbirClick():
+            try:
+                self.c.itemconfigure(jbir, image=jbir_pressed_image)
+                showJBIR()
+                
+            except Exception as e: 
+                #print("file not found error")
+                #print(e)
+                self.grab_release()
+                traceback.print_exc()      
             
 
-        jbir_btn = tk.Button(self, text = "JBIR", font=("Segoe UI Variable Text Semibold", 8), width = 10, height = 1, bg = "silver", cursor="hand2")
-        jbir_btn.place(x=(window_ctr_x + 37.5), y=(window_ctr_y +40))
-        jbir_btn.configure(command = lambda: showJBIR())
+        #jbir_btn = tk.Button(self, text = "JBIR", font=("Segoe UI Variable Text Semibold", 8), width = 10, height = 1, bg = "silver", cursor="hand2")
+        #jbir_btn.place(x=(window_ctr_x + 37.5), y=(window_ctr_y +40))
+        #jbir_btn.configure(command = lambda: showJBIR())
         
         inputfile.set_file("")
 
-        
+        self.c.tag_bind("jbir_click_state", '<Button-1>', lambda x: jbirClick())   
+
+
         # setting up the help button
         help = self.c.create_text(435, (window_ctr_y +85), text="Help", fill="gray", font=("Segoe UI Variable Text Semibold", 10), width=30, tags=["help", "normal","highlight"]) 
         

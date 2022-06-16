@@ -126,11 +126,11 @@ class jbirWindow(TkinterDnD.Tk, tk.Toplevel):
         #submit.place(x=win_ctr_x-50, y=win_ctr_y+50)
         
         
-        submit_btn_normal = Image.open("Files\\submit_btn_normal.png")
+        submit_btn_normal = Image.open("Buttons\\submit_btn_normal.png")
         submit_btn_normal_resize = submit_btn_normal.resize((85,55))
         submit_btn_image_normal = ImageTk.PhotoImage(submit_btn_normal_resize, master=self)
 
-        submit_btn_pressed = Image.open("Files\\submit_btn_pressed.png")
+        submit_btn_pressed = Image.open("Buttons\\submit_btn_pressed.png")
         submit_pressed_resize = submit_btn_pressed.resize((85,55))
         submit_pressed_image = ImageTk.PhotoImage(submit_pressed_resize, master=self)
 
@@ -145,7 +145,7 @@ class jbirWindow(TkinterDnD.Tk, tk.Toplevel):
         
         def submit_hoverEvent(event):    
             self.c.config(cursor="hand2")        
-            self.c.itemconfigure(submit, image=submit_btn_image_normal)
+            self.c.itemconfigure(submit, image=submit_pressed_image)
             
             print('entered hover state')
             
@@ -336,4 +336,4 @@ def launchJBIR():
     jbir_gui = jbirWindow()
     jbir_gui.mainloop()
     
-
+#launchJBIR()

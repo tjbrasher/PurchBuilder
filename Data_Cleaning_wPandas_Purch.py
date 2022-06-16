@@ -2,6 +2,7 @@ from fileinput import close
 import tkinter as tk
 from tkinter.filedialog import SaveAs
 import traceback
+from numpy import empty
 from openpyxl import load_workbook
 import pandas as pd
 from ErrorTest import showError
@@ -360,24 +361,9 @@ def formatFile(file1, label_file_explorer):
                                                                           'format': borderFormat})
                     
                     
-                    current_inventory = pd.read_excel("X:\\Inventory\\Current Inventory.xlsm",
-                                sheet_name = "Inventory ", header=5)
                     
-                    current_inventory = current_inventory.drop(
-                    columns=['Serial Number', 'Origin', 'Year ent.', 'Old Inventory', 'BMModel'])
-
-                    columns = ['Tag #', 'Mfg.', 'Mfg. Part #', 'Description', 'Qty', 'Location', 'Shelf Category', 'Category']
-                    current_inventory.drop(index=current_inventory[current_inventory['Location'] == 'DEMO'].index, inplace=True)
-                    current_inventory.drop(index=current_inventory[current_inventory['Shelf Category'] == 'DEMO'].index, inplace=True)
-                    current_inventory = current_inventory.reindex(columns, copy=True, axis=1)
                 
-                    current_inventory['Mfg.'] = current_inventory['Mfg.'].str.strip()
-                    current_inventory['Mfg.'] = current_inventory['Mfg.'].str.lower()
-                    current_inventory['Mfg. Part #'] = current_inventory['Mfg. Part #'].str.strip()
-                    current_inventory['Mfg. Part #'] = current_inventory['Mfg. Part #'].astype(str)
-                    current_inventory['Mfg. Part #'] = current_inventory['Mfg. Part #'].str.lower()
-                    current_inventory["Item"] = current_inventory["Mfg."] + " " + current_inventory["Mfg. Part #"]
-                    
+                   
                     pickList["Item"] = pickList["Item"].str.strip()
                     pickList["Item"] = pickList["Item"].astype(str)
                     current_inventory["Item"] = current_inventory["Item"].astype(str)
@@ -442,24 +428,91 @@ def formatFile(file1, label_file_explorer):
                                     for key in item_match:
                                         if key == x:
                                             lm = item_match.get(key)
-                                            lm.append(inv_idx+7)
+                                            lm.append(inv_idx)
                                 
                                 if (98 > score > min_score):
                                     
                                     for key in close_match:
                                         if key == x:
                                             lc = close_match.get(key)
-                                            lc.append(inv_idx+7)
+                                            lc.append(inv_idx)
+                    #takes entries from dictionary and populates them into dataframe
+                    def inv_report(i):
+                        
+                        cols = [8, 9, 10, 11]
+                        
+                        #item = pickList.iat[i-1, purch_item_index]
+                        #print('item = ', item)
+                        
+                        for i in range(1, row_num+1):
+                            item = pickList.iat[i-1, purch_item_index]
+                            qty = pickList['Project Quantity'].values[i-2]
+                            #print(item_match)
+                            print('item = ', item)
+                           
+                            for key in item_match:
+                                print('key = ', key)
+                                lm = item_match.get(key)
+                                print('length of lm = ', len(lm))
+                                
+                                if  len(lm) > 0:
+                                    if item == key:
+                                        print('item = key')
+                                        if qty < 1:
+                                            for c in cols:
+                                                try:
+                                                    cell_value = pickList.iloc[i-1][c]
+                                                    print('cell value = ', cell_value)
+                                                    try:
+                                                        purchSheet.write(i, c, cell_value, bg_red)
+                                                    except:
+                                                        purchSheet.write(i, c, '', bg_red)
+                                                except:
+                                                    pass
+                                        if qty >= 1:        
+                                            purchSheet.write(i, pickList.columns.get_loc('Notes'),
+                                                            'Check Stock - (' + str(len(lm)) + ' in Inventory)', bg_purple)
+                                            for c in cols:
+                                                cell_value = pickList.iloc[i-1][c]
+                                                print('cell value = ', cell_value)
+                                                purchSheet.write(i, c, cell_value, bg_purple)
+                                            #location = current_inventory.iat[i, inv_loc_index]
+                                            #location = location.iloc[0]
+                                    
+                                    if item != key:
+                                        print('item != key')
+                                        pass
 
-                    def inv_report():
-                        #takes entries from dictionary and populates them into dataframe
+                                else:
+                                    pass
+
+
+                                    #location = str(location)
+                                    #print('locatin type = ', type(location))
+                                    #if qty >= 1:
+                                    #    if location == 'nan':
+                                    #        purchSheet.write(i, pickList.columns.get_loc('Warehouse Location'), 'Not Specified', bg_purple)
+
+                                    #    else:
+                                    #        purchSheet.write(i, pickList.columns.get_loc('Warehouse Location'), str(location), bg_purple)
+
                         
-                        
-                        pass
 
                     
                     # Setting conditional formatting (green if ready to order, yellow if not ready;
-                    # (purple if in stock - later implementation))             
+                    # (purple if in stock - later implementation))       
+
+                    for i in range(0, inventory_length):
+                    
+                        inv_item = current_inventory.iat[i, inv_item_index]
+                        match_items(inv_item, pickList['Item'], 85, i)
+
+
+
+
+
+
+
                     def check_status(i):
                         #print('rows = ', row_num)
                         cols = [8, 9, 10, 11]
@@ -470,12 +523,8 @@ def formatFile(file1, label_file_explorer):
                             item = item.lower()
                             #print('item = ', item)
                             qty = pickList['Project Quantity'].values[i-2]
-
-
-                            #print('i=', i)
-                            #print(status)
-
-                
+                            
+                            
                             if i==0:
                                 pass
                                                                                                                                        
@@ -513,7 +562,7 @@ def formatFile(file1, label_file_explorer):
                                         except:
                                             pass
                                         
-                            if qty == -1:
+                            if qty <= -1:
                                 for c in cols:
                                         try:
                                             cell_value = pickList.iloc[i-1][c]
@@ -525,7 +574,7 @@ def formatFile(file1, label_file_explorer):
                                             pass
 
 
-                            if item in current_inventory["Item"].values:
+                            """ #if item in current_inventory["Item"].values:
                                 i=i
                                 #print("item matches")
                                 if i==0:
@@ -534,7 +583,7 @@ def formatFile(file1, label_file_explorer):
                                 elif qty != -1:
                                     for c in cols:
                                         try:
-                                            cell_value = pickList.iloc[i-1][c]
+                                        cell_value = pickList.iloc[i-1][c]
                                             try:
                                                 purchSheet.write(i, c, cell_value, bg_purple)
                                             except:
@@ -555,22 +604,20 @@ def formatFile(file1, label_file_explorer):
 
                                     else:
                                         purchSheet.write(i, pickList.columns.get_loc('Warehouse Location'), str(location), bg_purple)
-
                                 
                                 #print('location = ', location)
 
        
                             #print('end of loop')
-                            i = i+1
+                            i = i+1 """
 
                     i=0
                     check_status(i)
+                    inv_report(i) 
 
                     
 
-                    for i in range(0, inventory_length):
-                        inv_item = current_inventory.iat[i, inv_item_index]
-                        match_items(inv_item, pickList['Item'], 85, i)
+
                     
 
                     #applying filters to column headers
@@ -609,7 +656,7 @@ def formatFile(file1, label_file_explorer):
                     InvReport.set_column(7,9, 12)
                     
                     purch_match = matching_items.drop_duplicates(subset=['Item_y'], keep='last', inplace=False)
-                    print(purch_match)
+                    #print(purch_match)
                     row_num_match = len(matching_items)
                     
                     for i in range(0, len(matching_items)):
@@ -653,7 +700,7 @@ def formatFile(file1, label_file_explorer):
                             
                             
                         if matched_items['Item'].str.contains(purch_item).any() == False:
-                            print('item matches: ', purch_item)
+                            #print('item matches: ', purch_item)
                             matched_items.loc[i+3, 'Item'] = purch_item
                             matched_items.loc[i+3, 'Description'] = purch_desc
                             matched_items.loc[i+3, 'Qty'] = purch_qty
@@ -692,7 +739,7 @@ def formatFile(file1, label_file_explorer):
                         
                     close_match_header = len(matching_items)+3
                     
-                    print('close_match_header row: ', close_match_header)
+                    #print('close_match_header row: ', close_match_header)
                     
                     header_start = xl_rowcol_to_cell((close_match_header+2), 0)
                     header_end = xl_rowcol_to_cell((close_match_header+2), 9)
@@ -733,7 +780,8 @@ def formatFile(file1, label_file_explorer):
                     InvReport.write(location_cell, 'Warehouse Location', cell_format)
                     InvReport.write(tag_cell, 'Tag #', cell_format)
 
-                    print(pickList)
+                    #print(pickList)
+                    #print(current_inventory)
 
                 
                     #saving file to user specified location

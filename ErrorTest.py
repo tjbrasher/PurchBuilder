@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import *
 from PIL import ImageTk
+from PIL import Image
 
 
 def resetFileBox(self):
@@ -56,7 +57,36 @@ class ErrorWindow(tk.Toplevel):
                         fill = "white", font=("Segoe UI Variable Text Semibold", 11), width = 280, justify=CENTER)
 
         okButton = tk.Button(self, text = "OK", font=("Segoe UI Variable Text Semibold", 8), width = 10, height = 1, bg = "silver", cursor="hand2")
-        okButton.place(x=112.5, y=86)
+        #okButton.place(x=112.5, y=86)
+
+
+        ok_btn_normal = Image.open("Buttons\\ok_btn_normal.png")
+        ok_btn_normal_resize = ok_btn_normal.resize((85,55))
+        ok_btn_image_normal = ImageTk.PhotoImage(ok_btn_normal_resize, master=self)
+
+        ok_btn_pressed = Image.open("Buttons\\ok_btn_pressed.png")
+        ok_pressed_resize = ok_btn_pressed.resize((85,55))
+        ok_pressed_image = ImageTk.PhotoImage(ok_pressed_resize, master=self)
+
+        ok = self.c.create_image(147.5, 98, image=ok_btn_image_normal, tags=["ok_normal_state", "ok_hover_state","ok_click_state"])
+        
+        
+        def ok_hoverEvent(event):    
+            self.c.config(cursor="hand2")        
+            self.c.itemconfigure(ok, image=ok_pressed_image)
+            
+            #print('entered hover state')
+            
+        def ok_normalState(event):    
+            self.c.config(cursor="arrow")        
+            self.c.itemconfigure(ok, image=ok_btn_image_normal)
+
+        
+        self.c.tag_bind("ok_hover_state", '<Enter>', ok_hoverEvent)
+
+        self.c.tag_bind("ok_normal_state", '<Leave>', ok_normalState)
+
+
               
         def OKClick(label_file_explorer):
             resetFileBox(label_file_explorer)
@@ -64,7 +94,9 @@ class ErrorWindow(tk.Toplevel):
             self.destroy()            
             
               
-        okButton.configure(command = lambda: OKClick(label_file_explorer))
+        #okButton.configure(command = lambda: OKClick(label_file_explorer))
+
+        self.c.tag_bind("ok_click_state", '<Button-1>', lambda x: OKClick(label_file_explorer))   
 
                 
 def showError(label_file_explorer):
