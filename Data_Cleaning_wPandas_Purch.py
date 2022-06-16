@@ -151,6 +151,7 @@ def formatFile(file1, label_file_explorer):
     #setting up dataframe and reading file into dataframe
     pd.set_option('display.max_columns', None)
     pickList = pd.read_csv(file1._file)
+    client = pickList.iloc[1]['Client']
     
         
     while True:
@@ -211,9 +212,11 @@ def formatFile(file1, label_file_explorer):
             columns = ['Tag #', 'Mfg.', 'Mfg. Part #', 'Description', 'Qty', 'Location', 'Shelf Category', 'Category']
             current_inventory = current_inventory.reindex(columns, copy=True, axis=1)
 
+
             for i in range(0, len(current_inventory)):
                 current_inventory.replace(to_replace={'Mfg.':['Anixter', 'Belden Cable']}, value= "Belden", inplace=True)
                 current_inventory.replace(to_replace={'Mfg.':['West Penn', 'WPW']}, value='West Penn Wire', inplace=True)
+                current_inventory.replace(to_replace={'Mfg.':["L'Acoustics",]}, value='L-Acoustics', inplace=True)
                 current_inventory.replace(to_replace={'Mfg.':['EV', 'ElectroVoice', 'Electro Voice']}, value='Electro-Voice', inplace=True)
                 current_inventory.replace(to_replace={'Mfg.':['MAP', 'Middle Atlantic Products']}, value='Middle Atlantic', inplace=True)
 
@@ -234,6 +237,7 @@ def formatFile(file1, label_file_explorer):
             get_fileName()
             
             project_number = pickList.iloc[2]['Project ID']
+           
 
             current_date = date.today()
             current_date_string = str(current_date)
@@ -244,7 +248,7 @@ def formatFile(file1, label_file_explorer):
             
             file_name = file_name.replace("_pick_list", "")
             
-            file_name = project_number + "_" + file_name + '_' + current_date_string + '_PURCH'
+            file_name = project_number + "_" + client + "_" + file_name + '_' + current_date_string + '_PURCH'
 
             #print('filename is: ',project_number + "_" + file_name[:-4] + '_' + current_date_string + '_PURCH')
             
