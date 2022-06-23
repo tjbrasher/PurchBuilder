@@ -73,9 +73,35 @@ class sortWindow(tk.Toplevel):
         
         
         #setting and placing "Done" button to close window
-        doneButton = tk.Button(self, text = "Done", font=("Segoe UI Variable Text Semibold", 8), width = 10, height = 1, bg="silver", cursor="hand2")                               
-        doneButton.place(x=62.5, y=250)
+        done_btn_normal = Image.open("Buttons\\done_btn_normal.png")
+        done_btn_normal_resize = done_btn_normal.resize((85,55))
+        done_btn_image_normal = ImageTk.PhotoImage(done_btn_normal_resize, master=self)
+
+        done_btn_pressed = Image.open("Buttons\\done_btn_pressed.png")
+        done_pressed_resize = done_btn_pressed.resize((85,55))
+        done_pressed_image = ImageTk.PhotoImage(done_pressed_resize, master=self)
         
+        done_btn_hover = Image.open("Buttons\\done_btn_hover.png")
+        done_hover_resize = done_btn_hover.resize((85,55))
+        done_hover_image = ImageTk.PhotoImage(done_hover_resize, master=self)
+
+        done = self.c.create_image(97, 262, image=done_btn_image_normal, tags=["done_normal_state", "done_hover_state","done_click_state"])
+
+        def done_hoverEvent(event):    
+            self.c.config(cursor="hand2")        
+            self.c.itemconfigure(done, image=done_hover_image)
+            
+            print('entered hover state')
+            
+        def done_normalState(event):    
+            self.c.config(cursor="arrow")        
+            self.c.itemconfigure(done, image=done_btn_image_normal)
+
+        self.c.tag_bind("done_hover_state", '<Enter>', done_hoverEvent)
+
+        self.c.tag_bind("done_normal_state", '<Leave>', done_normalState)
+            
+
         
         #setting button state variables
         bt1SelectState = IntVar()
@@ -245,6 +271,7 @@ class sortWindow(tk.Toplevel):
             
         #function to close window and continue program on clicking "Done" button              
         def doneClick():
+            self.c.itemconfigure(done, image=done_pressed_image)
             setButtons()
             SortList()
             self.grab_release()
@@ -253,7 +280,7 @@ class sortWindow(tk.Toplevel):
 
 
         #assigning function to "Done" button
-        doneButton.configure(command = lambda: doneClick())
+        self.c.tag_bind("done_click_state", '<Button-1>', lambda x: doneClick())   
 
                 
 

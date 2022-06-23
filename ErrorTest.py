@@ -68,12 +68,16 @@ class ErrorWindow(tk.Toplevel):
         ok_pressed_resize = ok_btn_pressed.resize((85,55))
         ok_pressed_image = ImageTk.PhotoImage(ok_pressed_resize, master=self)
 
+        ok_btn_hover = Image.open("Buttons\\ok_btn_hover.png")
+        ok_hover_resize = ok_btn_hover.resize((85,55))
+        ok_hover_image = ImageTk.PhotoImage(ok_hover_resize, master=self)
+
         ok = self.c.create_image(147.5, 98, image=ok_btn_image_normal, tags=["ok_normal_state", "ok_hover_state","ok_click_state"])
         
         
         def ok_hoverEvent(event):    
             self.c.config(cursor="hand2")        
-            self.c.itemconfigure(ok, image=ok_pressed_image)
+            self.c.itemconfigure(ok, image=ok_hover_image)
             
             #print('entered hover state')
             

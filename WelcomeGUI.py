@@ -1,4 +1,5 @@
 from logging import root
+from multiprocessing.connection import wait
 import tkinter as tk
 import tkinter.filedialog
 from tkinter import ttk
@@ -111,12 +112,16 @@ class mainApp(Tk):
         purch_pressed_resize = purch_btn_pressed.resize((85,55))
         purch_pressed_image = ImageTk.PhotoImage(purch_pressed_resize, master=self)
 
+        purch_btn_hover = Image.open("Buttons\\purch_btn_hover.png")
+        purch_hover_resize = purch_btn_hover.resize((85,55))
+        purch_hover_image = ImageTk.PhotoImage(purch_hover_resize, master=self)
+
         purch = self.c.create_image(window_ctr_x-65, window_ctr_y+52, image=purch_btn_image_normal, tags=["purch_normal_state", "purch_hover_state","purch_click_state"])
         
         
         def purch_hoverEvent(event):    
             self.c.config(cursor="hand2")        
-            self.c.itemconfigure(purch, image=purch_pressed_image)
+            self.c.itemconfigure(purch, image=purch_hover_image)
             
             #print('entered hover state')
             
@@ -129,7 +134,8 @@ class mainApp(Tk):
         self.c.tag_bind("purch_hover_state", '<Enter>', purch_hoverEvent)
 
         self.c.tag_bind("purch_normal_state", '<Leave>', purch_normalState)
-        
+
+                
 
 
         def purchClick():
@@ -157,12 +163,16 @@ class mainApp(Tk):
         jbir_pressed_resize = jbir_btn_pressed.resize((85,55))
         jbir_pressed_image = ImageTk.PhotoImage(jbir_pressed_resize, master=self)
 
+        jbir_btn_hover = Image.open("Buttons\\jbir_btn_hover.png")
+        jbir_hover_resize = jbir_btn_hover.resize((85,55))
+        jbir_hover_image = ImageTk.PhotoImage(jbir_hover_resize, master=self)
+
         jbir = self.c.create_image(window_ctr_x+72.5, window_ctr_y+52, image=jbir_btn_image_normal, tags=["jbir_normal_state", "jbir_hover_state","jbir_click_state"])
         
         
         def jbir_hoverEvent(event):    
             self.c.config(cursor="hand2")        
-            self.c.itemconfigure(jbir, image=jbir_pressed_image)
+            self.c.itemconfigure(jbir, image=jbir_hover_image)
             
             #print('entered hover state')
             

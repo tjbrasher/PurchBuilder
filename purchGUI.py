@@ -135,12 +135,16 @@ class purchWindow(TkinterDnD.Tk, tk.Toplevel):
         submit_pressed_resize = submit_btn_pressed.resize((85,55))
         submit_pressed_image = ImageTk.PhotoImage(submit_pressed_resize, master=self)
 
+        submit_btn_hover = Image.open("Buttons\\submit_btn_hover.png")
+        submit_hover_resize = submit_btn_hover.resize((85,55))
+        submit_hover_image = ImageTk.PhotoImage(submit_hover_resize, master=self)
+
         submit = self.c.create_image(win_ctr_x-5, win_ctr_y+62.5, image=submit_btn_image_normal, tags=["submit_normal_state", "submit_hover_state","submit_click_state"])
         
         
         def submit_hoverEvent(event):    
             self.c.config(cursor="hand2")        
-            self.c.itemconfigure(submit, image=submit_pressed_image)
+            self.c.itemconfigure(submit, image=submit_hover_image)
             
             #print('entered hover state')
             
