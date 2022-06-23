@@ -123,6 +123,7 @@ class promptWindow(tk.Toplevel):
               
         def NoClick():
             self.c.itemconfigure(no, image=no_pressed_image)
+            sys.exit()
             self.grab_release()
             self.destroy()
             self.master.destroy()

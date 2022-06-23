@@ -327,6 +327,13 @@ def formatFile(file1, label_file_explorer):
                         'bottom': 1})
                     
                     merge_format.set_center_across()
+
+                    align_right = purchList.add_format({'text_wrap': True,
+                                                        'align': 'right'})
+                    align_left = purchList.add_format({'text_wrap': True,
+                                                       'align': 'left'})
+                    align_center = purchList.add_format({'text_wrap': True,
+                                                       'align': 'center'})
  
  
                     
@@ -350,13 +357,15 @@ def formatFile(file1, label_file_explorer):
                     purchSheet.set_column(0, 0, 10)
                     purchSheet.set_column(1, 5, 9)
                     purchSheet.set_column(6, 6, 12)
-                    purchSheet.set_column(7, 7, 33)
-                    purchSheet.set_column(8, 8, 11)
-                    purchSheet.set_column(9, 9, 25)
+                    purchSheet.set_column(7, 7, 33, align_left)
+                    purchSheet.set_column(8, 8, 8)
+                    purchSheet.set_column(9, 9, 25, align_left)
                     purchSheet.set_column(10, 11, 40)
-                    purchSheet.set_column(12, 12, 12)
-                    purchSheet.set_column(13, 13, 16)
+                    purchSheet.set_column(12, 12, 12, align_left)
+                    purchSheet.set_column(13, 13, 16, align_left)
                     purchSheet.set_column(14, 14, 14)
+
+                    
                     
 
                     
@@ -407,10 +416,24 @@ def formatFile(file1, label_file_explorer):
 
                     
                     #initializing conditional formatting options
-                    bg_green = purchList.add_format({'bg_color': '#92D050'})
-                    bg_yellow = purchList.add_format({'bg_color': '#FFFF00'})
-                    bg_purple = purchList.add_format({'bg_color': '#f0b3f5'})
-                    bg_red = purchList.add_format({'bg_color': 'red'})
+                    bg_green = purchList.add_format({'bg_color': '#92D050',
+                                                     'align': 'left'})
+                    bg_yellow = purchList.add_format({'bg_color': '#FFFF00',
+                                                      'align': 'left'})
+                    bg_purple = purchList.add_format({'bg_color': '#f0b3f5',
+                                                      'align': 'left'})
+                    bg_red = purchList.add_format({'bg_color': 'red',
+                                                   'align': 'left'})
+
+                    bg_green_ctr = purchList.add_format({'bg_color': '#92D050',
+                                                     'align': 'center'})
+                    bg_yellow_ctr = purchList.add_format({'bg_color': '#FFFF00',
+                                                      'align': 'center'})
+                    bg_purple_ctr = purchList.add_format({'bg_color': '#f0b3f5',
+                                                      'align': 'center'})
+                    bg_red_ctr = purchList.add_format({'bg_color': 'red',
+                                                   'align': 'center'})
+
                     
                     def match_items(product, items, min_score, inv_idx):
                         max_score = -1
@@ -445,7 +468,7 @@ def formatFile(file1, label_file_explorer):
                     #takes entries from dictionary and populates them into dataframe
                     def inv_report(i):
                         
-                        cols = [8, 9, 10, 11]
+                        cols = [9, 10, 11]
                         
                         #item = pickList.iat[i-1, purch_item_index]
                         #print('item = ', item)
@@ -465,6 +488,8 @@ def formatFile(file1, label_file_explorer):
                                     if item == key:
                                         #print('item = key')
                                         if qty < 1:
+                                            cell_value = pickList.iloc[i-1][8]
+                                            purchSheet.write(i, 8, cell_value, bg_red_ctr)
                                             for c in cols:
                                                 try:
                                                     cell_value = pickList.iloc[i-1][c]
@@ -478,6 +503,8 @@ def formatFile(file1, label_file_explorer):
                                         if qty >= 1:        
                                             purchSheet.write(i, pickList.columns.get_loc('Notes'),
                                                             'Check Stock - (' + str(len(lm)) + ' in Inventory)', bg_purple)
+                                            cell_value = pickList.iloc[i-1][8]
+                                            purchSheet.write(i, 8, cell_value, bg_purple_ctr)
                                             for c in cols:
                                                 cell_value = pickList.iloc[i-1][c]
                                                 #print('cell value = ', cell_value)
@@ -521,7 +548,7 @@ def formatFile(file1, label_file_explorer):
 
                     def check_status(i):
                         #print('rows = ', row_num)
-                        cols = [8, 9, 10, 11]
+                        cols = [9, 10, 11]
                         for i in range(1, row_num1):
                             status = pickList['Status'].values[i-2]
                             purchSheet.set_row(i, 19.5)
@@ -541,6 +568,8 @@ def formatFile(file1, label_file_explorer):
                                 if i==0:
                                     pass
                                 else:
+                                    cell_value = pickList.iloc[i-1][8]
+                                    purchSheet.write(i, 8, cell_value, bg_green_ctr)
                                     for c in cols:
                                         try:
                                             cell_value = pickList.iloc[i-1][c]
@@ -550,7 +579,22 @@ def formatFile(file1, label_file_explorer):
                                                 purchSheet.write(i, c, '', bg_green)
                                         except:
                                             pass
-                                        
+
+                                if qty <= 0:
+                                    cell_value = pickList.iloc[i-1][8]
+                                    purchSheet.write(i, 8, cell_value, bg_red_ctr)
+                                    for c in cols:
+                                            try:
+                                                cell_value = pickList.iloc[i-1][c]
+                                                try:
+                                                    purchSheet.write(i, c, cell_value, bg_red)
+                                                except:
+                                                    purchSheet.write(i, c, '', bg_red)
+                                            except:
+                                                pass
+
+
+                                            
                                                     
                             elif status == 'Not Ordered':
                                 #print('item is not ready to order')
@@ -558,6 +602,8 @@ def formatFile(file1, label_file_explorer):
                                 if i==0:
                                     pass
                                 else:
+                                    cell_value = pickList.iloc[i-1][8]
+                                    purchSheet.write(i, 8, cell_value, bg_yellow_ctr)
                                     for c in cols:
                                         try:
                                             cell_value = pickList.iloc[i-1][c]
@@ -568,7 +614,9 @@ def formatFile(file1, label_file_explorer):
                                         except:
                                             pass
                                         
-                            if qty <= -1:
+                            if qty <= 0:
+                                cell_value = pickList.iloc[i-1][8]
+                                purchSheet.write(i, 8, cell_value, bg_red_ctr)
                                 for c in cols:
                                         try:
                                             cell_value = pickList.iloc[i-1][c]
@@ -578,6 +626,7 @@ def formatFile(file1, label_file_explorer):
                                                 purchSheet.write(i, c, '', bg_red)
                                         except:
                                             pass
+
 
 
                             """ #if item in current_inventory["Item"].values:
@@ -625,7 +674,7 @@ def formatFile(file1, label_file_explorer):
 
 
                     
-
+                   
                     #applying filters to column headers
                     purchSheet.autofilter(0, 0, 0, col_num)
                     
