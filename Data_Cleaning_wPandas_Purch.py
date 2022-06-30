@@ -172,7 +172,8 @@ def formatFile(file1, label_file_explorer):
 
             #formatting data in 'Cost' column to allow proper sorting
             pickList['Cost'] = pickList['Cost'].map(lambda x: x.lstrip('$'))
-            pickList['Cost'] = (pickList['Cost'].str.split()).apply(lambda x: float(x[0].replace(',','')))
+            #pickList['Cost'] = (pickList['Cost'].str.split()).apply(lambda x: str(x[0].replace(',','')))
+            pickList['Cost'] = pickList['Cost'].replace('\$|,', '', regex=True)
             
             
             #setting 'Cost' column to type float
@@ -196,6 +197,8 @@ def formatFile(file1, label_file_explorer):
                     'Cost Extended', 'Status']
 
             pickList = pickList.reindex(columns, axis = 1)
+            pickList = pickList.fillna('')
+
             
             
             #reads the csv, takes only the first column and creates a set out of it.
@@ -212,6 +215,7 @@ def formatFile(file1, label_file_explorer):
 
             columns = ['Tag #', 'Mfg.', 'Mfg. Part #', 'Description', 'Qty', 'Location', 'Shelf Category', 'Category']
             current_inventory = current_inventory.reindex(columns, copy=True, axis=1)
+            current_inventory = current_inventory.fillna('')
 
 
             for i in range(0, len(current_inventory)):
@@ -220,6 +224,7 @@ def formatFile(file1, label_file_explorer):
                 current_inventory.replace(to_replace={'Mfg.':["L'Acoustics",]}, value='L-Acoustics', inplace=True)
                 current_inventory.replace(to_replace={'Mfg.':['EV', 'ElectroVoice', 'Electro Voice']}, value='Electro-Voice', inplace=True)
                 current_inventory.replace(to_replace={'Mfg.':['MAP', 'Middle Atlantic Products']}, value='Middle Atlantic', inplace=True)
+                current_inventory.replace(to_replace={'Mfg.':['Covid', 'covid']}, value='COVID', inplace=True)
 
 
             current_inventory['Mfg. Part #'] = current_inventory['Mfg. Part #'].astype(str)
@@ -278,7 +283,7 @@ def formatFile(file1, label_file_explorer):
                     #pickList.to_csv(saveAs, index=False, line_terminator="\n")
                     #print(file1._file)
                     writer = pd.ExcelWriter(saveAs, engine='xlsxwriter')
-                    pickList.to_excel(writer, sheet_name= sheetName, index=False)
+                    pickList.to_excel(writer, sheet_name= sheetName, index=False, header=True)
                     purchList = writer.book
                     #saveAs_xlsm = purchList.filename = saveAs[-1]+"m"
                     #print("new file name: ", saveAs_xlsm)
@@ -395,9 +400,11 @@ def formatFile(file1, label_file_explorer):
                     row_num = len(pickList)
                     row_num1 = row_num+2
                     purch_item_index = pickList.columns.get_loc('Item')
+                    purch_qty_index = pickList.columns.get_loc('Project Quantity')
                     inv_item_index = current_inventory.columns.get_loc('Item')
                     inv_loc_index = current_inventory.columns.get_loc('Location')
                     inv_shelf_index = current_inventory.columns.get_loc('Shelf Category')
+                    inv_mfg_index = current_inventory.columns.get_loc('Mfg.')
                     inventory_length = len(current_inventory)
                     purch_length = len(pickList)
                     pickList = pickList.reset_index(drop=True)
@@ -441,12 +448,13 @@ def formatFile(file1, label_file_explorer):
                         for x in items:
                             location = current_inventory.iat[i, inv_loc_index]
                             shelf = current_inventory.iat[i, inv_shelf_index]
+                            mfg = current_inventory.iat[i, inv_mfg_index]
                             purch_idx = pickList[pickList['Item'] == x].index[0]
                             #print('x = ', x)
                             #print('product = ', product)
                             score = fuzz.token_set_ratio(product, x)
                             #print('x = ', x, ' product = ', product, ' score = ', score)
-                            if location == "DEMO" or shelf == "DEMO":
+                            if location == "DEMO" or shelf == "DEMO" or mfg == "COVID":
                                 break
                             
                             else:
@@ -457,14 +465,24 @@ def formatFile(file1, label_file_explorer):
                                     for key in item_match:
                                         if key == x:
                                             lm = item_match.get(key)
-                                            lm.append(inv_idx)
+                                            if key not in lm:
+                                                lm.append(inv_idx)
+                                                #print(inv_idx, ' added to list')
+                                            else:
+                                                #print(inv_idx, ' not added to list')
+                                                pass
                                 
                                 if (98 > score > min_score):
                                     
                                     for key in close_match:
                                         if key == x:
                                             lc = close_match.get(key)
-                                            lc.append(inv_idx)
+                                            if key not in lc:
+                                                lc.append(inv_idx)
+                                                #print(inv_idx, ' added to list')
+                                            else:
+                                                #print(inv_idx, ' not added to list')
+                                                pass
                     #takes entries from dictionary and populates them into dataframe
                     def inv_report(i):
                         
@@ -475,7 +493,7 @@ def formatFile(file1, label_file_explorer):
                         
                         for i in range(1, row_num+1):
                             item = pickList.iat[i-1, purch_item_index]
-                            qty = pickList['Project Quantity'].values[i-2]
+                            qty = pickList.iat[i-1, purch_qty_index]
                             #print(item_match)
                             #print('item = ', item)
                            
@@ -549,7 +567,7 @@ def formatFile(file1, label_file_explorer):
                     def check_status(i):
                         #print('rows = ', row_num)
                         cols = [9, 10, 11]
-                        for i in range(1, row_num1):
+                        for i in range(2, row_num1):
                             status = pickList['Status'].values[i-2]
                             purchSheet.set_row(i, 19.5)
                             item = pickList.iat[i-2, purch_item_index]
@@ -567,6 +585,19 @@ def formatFile(file1, label_file_explorer):
                                 i = i-1
                                 if i==0:
                                     pass
+                                if qty <= 0:
+                                    cell_value = pickList.iloc[i-1][8]
+                                    purchSheet.write(i, 8, cell_value, bg_red_ctr)
+                                    for c in cols:
+                                            try:
+                                                cell_value = pickList.iloc[i-1][c]
+                                                try:
+                                                    purchSheet.write(i, c, cell_value, bg_red)
+                                                    purchSheet.write(i, 14, "Not Ordered")
+                                                except:
+                                                    purchSheet.write(i, c, '', bg_red)
+                                            except:
+                                                pass
                                 else:
                                     cell_value = pickList.iloc[i-1][8]
                                     purchSheet.write(i, 8, cell_value, bg_green_ctr)
@@ -580,22 +611,7 @@ def formatFile(file1, label_file_explorer):
                                         except:
                                             pass
 
-                                if qty <= 0:
-                                    cell_value = pickList.iloc[i-1][8]
-                                    purchSheet.write(i, 8, cell_value, bg_red_ctr)
-                                    for c in cols:
-                                            try:
-                                                cell_value = pickList.iloc[i-1][c]
-                                                try:
-                                                    purchSheet.write(i, c, cell_value, bg_red)
-                                                except:
-                                                    purchSheet.write(i, c, '', bg_red)
-                                            except:
-                                                pass
-
-
-                                            
-                                                    
+            
                             elif status == 'Not Ordered':
                                 #print('item is not ready to order')
                                 i= i-1
@@ -714,141 +730,169 @@ def formatFile(file1, label_file_explorer):
                     #print(purch_match)
                     row_num_match = len(matching_items)
                     
-                    close_match_header = len(close_match)+3
 
-                    print('item match = ', item_match)
-                    
-                    for i in range(1, row_num+1):
-                        for key in item_match:
-                        
-                            print('key = ', key)
-                            lm = item_match.get(key)
-                            item = pickList.iat[i-1, purch_item_index]
-                            print('item = ', item)
-                            print('length of lm = ', len(lm))
+                    #print('item match = ', item_match)
 
-                        
-                            if  len(lm) > 0:
-                                if item == key:
-                                    print('item match = ', item_match)
-                                    purch_item_row_idx = pickList[pickList['Item'] == key].index[0]
-                                    purch_item = pickList.loc[purch_item_row_idx, 'Item']
-                                    purch_desc = pickList.loc[purch_item_row_idx, 'Description']
-                                    purch_qty = pickList.loc[purch_item_row_idx, 'Project Quantity']
+                    r = 1                   
+                    def write_inv_report(r, inv_list, match):
 
-                                    InvReport.write(i, 0, purch_item, outer_border_all_format)
-                                    InvReport.write(i, 1, purch_desc, outer_border_all_format)
-                                    InvReport.write(i, 2, purch_qty, outer_border_all_format)
-                                   
-                                    for i in range(0, len(lm)):
-                                        print('item matches: ', purch_item)
+                        for i in range(1, row_num+1):
+                            for key in match:
+                            
+                                inv_list = match.get(key)
+                                item = pickList.iat[i-1, purch_item_index]
+                                qty = pickList.iat[i-1, purch_qty_index]
+                                l=1
 
-                                        inv_mfg = current_inventory['Mfg.'].values[lm[i]]
-                                        inv_model = current_inventory['Mfg. Part #'].values[lm[i]]
-                                        inv_desc = current_inventory['Description'].values[lm[i]]
-                                        inv_qty = current_inventory['Qty'].values[lm[i]]
-                                        inv_location = current_inventory['Location'].values[lm[i]]
-                                        inv_tag = current_inventory['Tag #'].values[lm[i]]
+                                if qty > 0:
+                                    #print('qty > 0')
 
-                                        #InvReport.write(i+3, 0, '', outer_last_border_format)
-                                        #InvReport.write(i+3, 1, '', outer_last_border_format)
-                                        #InvReport.write(i+3, 2, '', outer_last_border_format)
+                                    if item == key:
+                                        if  len(inv_list) == 1:
+                                            #print('item match = ', match)
+                                            #print('inv_list == 1')
+                                            purch_item_row_idx = pickList[pickList['Item'] == key].index[0]
+                                            purch_item = pickList.loc[purch_item_row_idx, 'Item']
+                                            purch_desc = pickList.loc[purch_item_row_idx, 'Description']
+                                            purch_qty = pickList.loc[purch_item_row_idx, 'Project Quantity']
+
+
+                                            InvReport.write(r+2, 0, purch_item, outer_border_all_format)
+                                            InvReport.write(r+2, 1, purch_desc, outer_border_all_format)
+                                            InvReport.write(r+2, 2, purch_qty, outer_border_all_format)
+                                            
                                         
-                                        InvReport.write(i+3, 4, inv_mfg, outer_last_border_format)
-                                        InvReport.write(i+3, 5, inv_model, outer_last_border_format)
-                                        InvReport.write(i+3, 6, inv_desc, outer_last_border_format)
-                                        InvReport.write(i+3, 7, inv_qty, outer_last_border_format)
-                                        InvReport.write(i+3, 8, inv_location, outer_last_border_format)
-                                        InvReport.write(i+3, 9, inv_tag, outer_last_border_format)
+
+                                            for i in range(0, len(inv_list)):
+                                                #print('item matches: ', purch_item)
+
+                                                inv_mfg = current_inventory['Mfg.'].values[inv_list[i]]
+                                                inv_model = current_inventory['Mfg. Part #'].values[inv_list[i]]
+                                                inv_desc = current_inventory['Description'].values[inv_list[i]]
+                                                inv_qty = current_inventory['Qty'].values[inv_list[i]]
+                                                inv_location = current_inventory['Location'].values[inv_list[i]]
+                                                inv_tag = current_inventory['Tag #'].values[inv_list[i]]
+
+                                                #InvReport.write(i+3, 0, '', outer_last_border_format)
+                                                #InvReport.write(i+3, 1, '', outer_last_border_format)
+                                                #InvReport.write(i+3, 2, '', outer_last_border_format)
+                                        
+                                                InvReport.write(r+2, 4, inv_mfg, outer_last_border_format)
+                                                InvReport.write(r+2, 5, inv_model, outer_last_border_format)
+                                                InvReport.write(r+2, 6, inv_desc, outer_last_border_format)
+                                                InvReport.write(r+2, 7, inv_qty, outer_last_border_format)
+                                                InvReport.write(r+2, 8, inv_location, outer_last_border_format)
+                                                InvReport.write(r+2, 9, inv_tag, outer_last_border_format)
+
+                                                r= r+1
+
+
+                                        if  len(inv_list) > 1:
+                                            if l == 1:
+                                                i=0
+                                                #print('item match = ', match)
+                                                #print('l == 0')
+                                                purch_item_row_idx = pickList[pickList['Item'] == key].index[0]
+                                                purch_item = pickList.loc[purch_item_row_idx, 'Item']
+                                                purch_desc = pickList.loc[purch_item_row_idx, 'Description']
+                                                purch_qty = pickList.loc[purch_item_row_idx, 'Project Quantity']
+
+                                                inv_mfg = current_inventory['Mfg.'].values[inv_list[i]]
+                                                inv_model = current_inventory['Mfg. Part #'].values[inv_list[i]]
+                                                inv_desc = current_inventory['Description'].values[inv_list[i]]
+                                                inv_qty = current_inventory['Qty'].values[inv_list[i]]
+                                                inv_location = current_inventory['Location'].values[inv_list[i]]
+                                                inv_tag = current_inventory['Tag #'].values[inv_list[i]]
+
+                                            
+                                                InvReport.write(r+2, 0, purch_item, outer_border_format)
+                                                InvReport.write(r+2, 1, purch_desc, outer_border_format)
+                                                InvReport.write(r+2, 2, purch_qty, outer_border_format) 
+
+                                                InvReport.write(r+2, 4, inv_mfg, outer_last_border_format)
+                                                InvReport.write(r+2, 5, inv_model, outer_last_border_format)
+                                                InvReport.write(r+2, 6, inv_desc, outer_last_border_format)
+                                                InvReport.write(r+2, 7, inv_qty, outer_last_border_format)
+                                                InvReport.write(r+2, 8, inv_location, outer_last_border_format)
+                                                InvReport.write(r+2, 9, inv_tag, outer_last_border_format)
+
+
+                                                r = r+1                          
+                                            
+                                            for i in range(1, len(inv_list)):
+                                                #print('item matches: ', purch_item)
+                                                l = l+1
+                                                #print('l = ', l)
+                                                #print('len(inv_list) = ', len(inv_list))
+                                                #print('inv list = ', inv_list)
+
+                                                if l <= (len(inv_list)):
+                                                    if l == len(inv_list):
+                                                        #print('l == len(inv_list)')
+                                                        inv_mfg = current_inventory['Mfg.'].values[inv_list[i]]
+                                                        inv_model = current_inventory['Mfg. Part #'].values[inv_list[i]]
+                                                        inv_desc = current_inventory['Description'].values[inv_list[i]]
+                                                        inv_qty = current_inventory['Qty'].values[inv_list[i]]
+                                                        inv_location = current_inventory['Location'].values[inv_list[i]]
+                                                        inv_tag = current_inventory['Tag #'].values[inv_list[i]]
+
+                                                        InvReport.write(r+2, 0, "", outer_last_border_format)
+                                                        InvReport.write(r+2, 1, "", outer_last_border_format)
+                                                        InvReport.write(r+2, 2, "", outer_last_border_format)
+                                                        
+                                                        
+                                                        InvReport.write(r+2, 4, inv_mfg, outer_last_border_format)
+                                                        InvReport.write(r+2, 5, inv_model, outer_last_border_format)
+                                                        InvReport.write(r+2, 6, inv_desc, outer_last_border_format)
+                                                        InvReport.write(r+2, 7, inv_qty, outer_last_border_format)
+                                                        InvReport.write(r+2, 8, inv_location, outer_last_border_format)
+                                                        InvReport.write(r+2, 9, inv_tag, outer_last_border_format)
+
+                                                        r = r+1
+
+                                                    if l < len(inv_list):
+                                                        #print('l < len(inv_list)')
+                                                        inv_mfg = current_inventory['Mfg.'].values[inv_list[i]]
+                                                        inv_model = current_inventory['Mfg. Part #'].values[inv_list[i]]
+                                                        inv_desc = current_inventory['Description'].values[inv_list[i]]
+                                                        inv_qty = current_inventory['Qty'].values[inv_list[i]]
+                                                        inv_location = current_inventory['Location'].values[inv_list[i]]
+                                                        inv_tag = current_inventory['Tag #'].values[inv_list[i]]
+
+                                                        InvReport.write(r+2, 0, "", outer_border_format)
+                                                        InvReport.write(r+2, 1, "", outer_border_format)
+                                                        InvReport.write(r+2, 2, "", outer_border_format)
+                                                        
+
+                                                        InvReport.write(r+2, 4, inv_mfg, outer_last_border_format)
+                                                        InvReport.write(r+2, 5, inv_model, outer_last_border_format)
+                                                        InvReport.write(r+2, 6, inv_desc, outer_last_border_format)
+                                                        InvReport.write(r+2, 7, inv_qty, outer_last_border_format)
+                                                        InvReport.write(r+2, 8, inv_location, outer_last_border_format)
+                                                        InvReport.write(r+2, 9, inv_tag, outer_last_border_format)
+
+
+                                                        r = r+1
+                                
                                 else:
                                     pass
-                            else:
-                                pass
+                                    #print('qty <= 0')
 
-                    #    for i in range(0, len(matching_items)):
-                    #            purch_item_match = matching_items['Item_x'].values[i]
-                    #            #purch_item_check = InvReport.read(i+3, 0)
-                    #            purch_item = matching_items['Item_y'].values[i]
-                    #            purch_desc = matching_items['Description_y'].values[i]
-                    #            purch_qty = matching_items['Project Quantity'].values[i]
-                    #            inv_mfg = matching_items['Mfg.'].values[i]
-                    #            inv_model = matching_items['Mfg. Part #'].values[i]
-                    #            inv_desc = matching_items['Description_x'].values[i]
-                    #            inv_qty = matching_items['Qty'].values[i]
-                    #            inv_location = matching_items['Location'].values[i]
-                    #            inv_tag = matching_items['Tag #'].values[i]
-                            
-                    #    if matched_items['Item'].str.contains(purch_item).any():
-                    #        if i == (row_num_match-1):
-                    """             InvReport.write(i+3, 0, '', outer_last_border_format)
-                                InvReport.write(i+3, 1, '', outer_last_border_format)
-                                InvReport.write(i+3, 2, '', outer_last_border_format)
-                                
-                                InvReport.write(i+3, 4, inv_mfg, outer_last_border_format)
-                                InvReport.write(i+3, 5, inv_model, outer_last_border_format)
-                                InvReport.write(i+3, 6, inv_desc, outer_last_border_format)
-                                InvReport.write(i+3, 7, inv_qty, outer_last_border_format)
-                                InvReport.write(i+3, 8, inv_location, outer_last_border_format)
-                                InvReport.write(i+3, 9, inv_tag, outer_last_border_format)
-                     """            
-                    #    else:
-                    """             InvReport.write(i+3, 0, '', outer_border_format)
-                                InvReport.write(i+3, 1, '', outer_border_format)
-                                InvReport.write(i+3, 2, '', outer_border_format)
-                                
-                                InvReport.write(i+3, 4, inv_mfg, outer_border_format)
-                                InvReport.write(i+3, 5, inv_model, outer_border_format)
-                                InvReport.write(i+3, 6, inv_desc, outer_border_format)
-                                InvReport.write(i+3, 7, inv_qty, outer_border_format)
-                                InvReport.write(i+3, 8, inv_location, outer_border_format)
-                                InvReport.write(i+3, 9, inv_tag, outer_border_format)
- """
-                    #    if matched_items['Item'].str.contains(purch_item).any() == False:
-                    """         #print('item matches: ', purch_item)
-                            matched_items.loc[i+3, 'Item'] = purch_item
-                            matched_items.loc[i+3, 'Description'] = purch_desc
-                            matched_items.loc[i+3, 'Qty'] = purch_qty
-                     """        
-                    #        if i == (row_num_match-1):
-                    """             InvReport.write(i+3, 0, purch_item, outer_border_all_format)
-                                InvReport.write(i+3, 1, purch_desc, outer_border_all_format)
-                                InvReport.write(i+3, 2, purch_qty, outer_border_all_format)
-                                
-                                InvReport.write(i+3, 4, inv_mfg, outer_border_all_format)
-                                InvReport.write(i+3, 5, inv_model,outer_border_all_format)
-                                InvReport.write(i+3, 6, inv_desc, outer_border_all_format)
-                                InvReport.write(i+3, 7, inv_qty, outer_border_all_format)
-                                InvReport.write(i+3, 8, inv_location, outer_border_all_format)
-                                InvReport.write(i+3, 9, inv_tag, outer_border_all_format)
-                                
- """
-                    #       else:
-                    """             InvReport.write(i+3, 0, purch_item, outer_first_border_format)
-                                InvReport.write(i+3, 1, purch_desc, outer_first_border_format)
-                                InvReport.write(i+3, 2, purch_qty, outer_first_border_format)
-                                
-                                InvReport.write(i+3, 4, inv_mfg, outer_first_border_format)
-                                InvReport.write(i+3, 5, inv_model, outer_first_border_format)
-                                InvReport.write(i+3, 6, inv_desc, outer_first_border_format)
-                                InvReport.write(i+3, 7, inv_qty, outer_first_border_format)
-                                InvReport.write(i+3, 8, inv_location, outer_first_border_format)
-                                InvReport.write(i+3, 9, inv_tag, outer_first_border_format) 
-                     """
-                    #else:
-                    #        break
-                                                                                                  
-    
-                        
+                                #print('key = ', key)
+                                #print('item = ', item)
+                                #print('length of inv_list = ', len(inv_list))
+                                #print('inv_list = ', inv_list)
+                                #print('match = ', match)
 
-                    print('i = ', i)
-                    print('row_num_match = ', row_num_match)
+                                
+                                                    
+                        return r
 
 
-                        
-                        
-                        
-                        
-                    close_match_header = len(close_match)+3
+                    r2 = write_inv_report(1, lm, item_match)
+                    
+                    
+                    close_match_header = r2+3
                     
                     #print('close_match_header row: ', close_match_header)
                     
@@ -872,7 +916,7 @@ def formatFile(file1, label_file_explorer):
                     location_cell = xl_rowcol_to_cell((close_match_header+4), 8)
                     tag_cell = xl_rowcol_to_cell((close_match_header+4), 9)
                     
-                    close_match_start_row = close_match_header+5
+                    close_match_start_row = close_match_header+3
                     
 
                     InvReport.merge_range(header_start + ':' + header_end, 'Close Matches', merge_format)
@@ -893,6 +937,8 @@ def formatFile(file1, label_file_explorer):
 
                     #print(pickList)
                     #print(current_inventory)
+                    
+                    write_inv_report(close_match_start_row, lc, close_match)
 
                 
                     #saving file to user specified location
