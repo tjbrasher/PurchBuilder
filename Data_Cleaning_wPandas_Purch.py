@@ -935,8 +935,8 @@ def formatFile(file1, label_file_explorer):
                     InvReport.write(location_cell, 'Warehouse Location', cell_format)
                     InvReport.write(tag_cell, 'Tag #', cell_format)
 
-                    #print(pickList)
-                    #print(current_inventory)
+                    # #print(pickList)
+                    # #print(current_inventory)
                     
                     write_inv_report(close_match_start_row, lc, close_match)
 
